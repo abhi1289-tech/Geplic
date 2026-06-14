@@ -54,7 +54,51 @@ export default function CreatePactPage(){
   async function handleCreate(e:React.FormEvent){
 
     e.preventDefault();
+    if (repaymentDate) {
 
+  const dateRegex =
+    /^\d{4}-\d{2}-\d{2}$/;
+
+  if (!dateRegex.test(repaymentDate)) {
+
+    alert("Invalid repayment date");
+
+    setLoading(false);
+
+    return;
+  }
+
+}
+if (startDate) {
+
+  const dateRegex =
+    /^\d{4}-\d{2}-\d{2}$/;
+
+  if (!dateRegex.test(startDate)) {
+
+    alert("Invalid start date");
+
+    setLoading(false);
+
+    return;
+  }
+
+}
+if (deliveryDate) {
+
+  const dateRegex =
+    /^\d{4}-\d{2}-\d{2}$/;
+
+  if (!dateRegex.test(deliveryDate)) {
+
+    alert("Invalid delivery date");
+
+    setLoading(false);
+
+    return;
+  }
+
+}
     if(!user) return;
 
     try{
@@ -62,6 +106,22 @@ export default function CreatePactPage(){
       setLoading(true);
 
       const email = user.email?.toLowerCase() || "";
+      if (category === "Loan" && repaymentDate) {
+
+  const selectedDate = new Date(repaymentDate);
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  if (selectedDate < today) {
+
+    alert("Repayment date cannot be in the past");
+
+    setLoading(false);
+
+    return;
+  }
+}
 
 
       const profileSnap = await getDoc(
@@ -416,11 +476,16 @@ router.push(`/agreement-builder/${pactId}`);
         </label>
 
         <input
-          type="date"
-          className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
-          value={repaymentDate}
-          onChange={(e)=>setRepaymentDate(e.target.value)}
-        />
+  type="date"
+    onFocus={(e) =>
+    e.target.showPicker?.()
+  }
+  min={new Date().toISOString().split("T")[0]}
+  max="2099-12-31"
+  className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
+  value={repaymentDate}
+  onChange={(e)=>setRepaymentDate(e.target.value)}
+/>
       </div>
 
     </div>
@@ -478,7 +543,12 @@ router.push(`/agreement-builder/${pactId}`);
 
         <input
           type="date"
+    onFocus={(e) =>
+    e.target.showPicker?.()
+  }
           className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
+          min={new Date().toISOString().split("T")[0]}
+  max="2099-12-31"
           value={deliveryDate}
           onChange={(e)=>setDeliveryDate(e.target.value)}
         />
@@ -578,7 +648,12 @@ router.push(`/agreement-builder/${pactId}`);
 
         <input
           type="date"
+    onFocus={(e) =>
+    e.target.showPicker?.()
+  }
           className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
+          min={new Date().toISOString().split("T")[0]}
+  max="2099-12-31"
           value={startDate}
           onChange={(e)=>setStartDate(e.target.value)}
         />

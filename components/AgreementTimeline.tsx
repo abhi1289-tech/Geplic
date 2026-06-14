@@ -130,6 +130,11 @@ export default function AgreementTimeline({ pactId }:{ pactId:string }){
         ? "bg-violet-400 shadow-[0_0_15px_rgba(192,132,252,0.9)]"
         : ""
     }
+    ${
+  log.action === "AGREEMENT_VOIDED"
+    ? "bg-red-400 shadow-[0_0_15px_rgba(248,113,113,0.9)]"
+    : ""
+}
   `}
 />
 
@@ -150,6 +155,7 @@ export default function AgreementTimeline({ pactId }:{ pactId:string }){
 {log.action === "OFFER_REJECTED" && "Offer Rejected"}
 
 {log.action === "AGREEMENT_COMPLETED" && "Agreement Completed"}
+{log.action === "AGREEMENT_VOIDED" && "Agreement Voided"}
 
               </p>
 

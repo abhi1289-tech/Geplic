@@ -412,34 +412,38 @@ export default function DashboardPage() {
                       {/* Status */}
                       <span
                         className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em]
-                        ${
-                          pact.status === "completed" ||
-                          pact.status === "signed"
-                            ? "border border-green-500/20 bg-green-500/10 text-green-400"
-                            : pact.status === "pending"
-                            ? "border border-yellow-500/20 bg-yellow-500/10 text-yellow-300"
-                            : pact.status === "proposed"
-                            ? "border border-cyan-500/20 bg-cyan-500/10 text-cyan-300"
-                            : pact.status === "rejected"
-                            ? "border border-red-500/20 bg-red-500/10 text-red-400"
-                            : "border border-white/10 bg-white/5 text-white/70"
-                        }`}
+                       ${
+  pact.status === "completed" ||
+  pact.status === "signed"
+    ? "border border-green-500/20 bg-green-500/10 text-green-400"
+    : pact.status === "pending"
+    ? "border border-yellow-500/20 bg-yellow-500/10 text-yellow-300"
+    : pact.status === "proposed"
+    ? "border border-cyan-500/20 bg-cyan-500/10 text-cyan-300"
+    : pact.status === "rejected"
+    ? "border border-red-500/20 bg-red-500/10 text-red-400"
+    : pact.status === "voided"
+    ? "border border-red-500/20 bg-red-500/10 text-red-400"
+    : "border border-white/10 bg-white/5 text-white/70"
+}`}
                       >
 
                         <span
                           className={`h-2 w-2 rounded-full
                           ${
-                            pact.status === "completed" ||
-                            pact.status === "signed"
-                              ? "bg-green-400"
-                              : pact.status === "pending"
-                              ? "bg-yellow-300"
-                              : pact.status === "proposed"
-                              ? "bg-cyan-300"
-                              : pact.status === "rejected"
-                              ? "bg-red-400"
-                              : "bg-white/50"
-                          }`}
+  pact.status === "completed" ||
+  pact.status === "signed"
+    ? "bg-green-400"
+    : pact.status === "pending"
+    ? "bg-yellow-300"
+    : pact.status === "proposed"
+    ? "bg-cyan-300"
+    : pact.status === "rejected"
+    ? "bg-red-400"
+    : pact.status === "voided"
+    ? "bg-red-400"
+    : "bg-white/50"
+}`}
                         />
 
                         {pact.status}

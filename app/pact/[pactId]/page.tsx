@@ -165,7 +165,13 @@ export default function PactPage(){
   }
 
   async function acceptOffer(){
-    
+    if (pact.status === "voided") {
+
+  alert("This agreement has been voided.");
+
+  return;
+
+}
 
     let hash = null;
     const agreementData = {
@@ -224,8 +230,51 @@ hash = await generateHash(agreementData);
     );
 
   }
+  async function voidAgreement() {
 
+  if (
+    pact.status !== "draft" &&
+    pact.status !== "pending"
+  ) {
+    alert("Only draft or pending agreements can be voided.");
+    return;
+  }
+
+  const confirmed = window.confirm(
+    "Are you sure you want to void this agreement?"
+  );
+
+  if (!confirmed) return;
+
+  await updateDoc(
+    doc(db, "pacts", pactId),
+    {
+      status: "voided",
+      voidedAt: new Date(),
+      agreementLocked: true
+    }
+  );
+
+  await logAction(
+    pactId,
+    "AGREEMENT_VOIDED",
+    user?.email || ""
+  );
+
+  setPact({
+    ...pact,
+    status: "voided",
+    agreementLocked: true
+  });
+}
   async function rejectOffer(){
+    if (pact.status === "voided") {
+
+  alert("This agreement has been voided.");
+
+  return;
+
+}
 
   await updateDoc(
   doc(db,"pacts",pactId),
@@ -289,6 +338,15 @@ hash = await generateHash(agreementData);
     if(status === "rejected"){
       return <span className={`${base} bg-red-600 text-white`}>Rejected</span>;
     }
+    if(status === "voided"){
+  return (
+    <span
+      className={`${base} bg-red-900 text-red-300`}
+    >
+      Voided
+    </span>
+  );
+}
 
     return null;
 
@@ -312,9 +370,14 @@ hash = await generateHash(agreementData);
           {getStatusBadge(pact?.status)}
         </div>
 
-        {pact?.agreementLocked && (
+        {pact?.status == "pending" && pact?.status !== "voided" && (
           <p className="text-yellow-400 text-sm mt-2">
             🔒 Agreement terms are locked after the offer was sent.
+          </p>
+        )}
+         {pact?.status == "voided" && (
+          <p className="text-red-400 text-sm mt-2">
+            🚫 Agreement is inactive.
           </p>
         )}
         <div className="mt-10 rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-md shadow-[0_0_30px_rgba(0,153,255,0.08)]">
@@ -377,7 +440,9 @@ hash = await generateHash(agreementData);
 
         {/* ACCEPT / REJECT */}
 
-        {pact.status === "pending" && role === "partyB" && (
+        {pact.status === "pending" &&
+ pact.status !== "voided" &&
+ role === "partyB" && (
 
           <div className="mt-6 space-y-4">
 
@@ -449,27 +514,7 @@ hash = await generateHash(agreementData);
   >
     Complete Agreement
   </button>
-  {pact?.status === "rejected" && (
-
-  <div className="mt-10 rounded-3xl border border-red-500/20 bg-red-500/5 p-8 backdrop-blur-xl">
-
-    <div className="flex items-center gap-3">
-
-      <div className="h-3 w-3 rounded-full bg-red-400 shadow-[0_0_15px_rgba(248,113,113,0.9)]" />
-
-      <h2 className="text-2xl font-bold text-white">
-        Agreement Rejected
-      </h2>
-
-    </div>
-
-    <p className="mt-3 text-white/50">
-      This agreement was rejected and is no longer active.
-    </p>
-
-  </div>
-
-)}
+  
 
 </div>
 
@@ -488,31 +533,47 @@ hash = await generateHash(agreementData);
        
 
 
-        
-  {pact.status !== "rejected" && (
+  <div className="mt-8 flex flex-wrap gap-3">
 
-<button
-  onClick={() =>
-    router.push(`/agreement-builder/${pactId}`)
-  }
-  className="mt-8 rounded-xl border border-white/10 bg-white/[0.03] px-6 py-3 font-medium text-white transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/[0.06]"
->
-  {pact.status === "draft"
-    ? "Edit Document"
-    : "View Agreement"}
-</button>
+  {pact.status !== "rejected" &&
+   pact.status !== "voided" && (
 
-)}
-        {pact.status !== "draft" && (
+    <button
+      onClick={() =>
+        router.push(`/agreement-builder/${pactId}`)
+      }
+      className="rounded-xl border border-white/10 bg-white/[0.03] px-6 py-3 font-medium text-white transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/[0.06]"
+    >
+      {pact.status === "draft"
+        ? "Edit Document"
+        : "View Agreement"}
+    </button>
 
-  <button
-    onClick={downloadAgreement}
-    className="mt-3 rounded-xl border border-white/10 bg-white/[0.03] px-6 py-3 font-medium text-white transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/[0.06]"
-  >
-    Download Agreement
-  </button>
+  )}
 
-)}
+  {pact.status !== "draft" && (
+    <button
+      onClick={downloadAgreement}
+      className="rounded-xl border border-white/10 bg-white/[0.03] px-6 py-3 font-medium text-white transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/[0.06]"
+    >
+      Download Agreement
+    </button>
+  )}
+
+  {role === "partyA" &&
+   (pact.status === "draft" ||
+    pact.status === "pending") && (
+
+    <button
+      onClick={voidAgreement}
+      className="rounded-xl border border-red-500/30 bg-red-500/10 px-6 py-3 font-semibold text-red-300 transition-all duration-300 hover:bg-red-500/20"
+    >
+      Void Agreement
+    </button>
+
+  )}
+
+</div>
 
         
         {pact?.status === "completed" && (
@@ -577,6 +638,48 @@ hash = await generateHash(agreementData);
     </div>
 
   </div>
+
+)}
+{pact?.status === "rejected" && (
+
+  <div className="mt-10 rounded-3xl border border-red-500/20 bg-red-500/5 p-8 backdrop-blur-xl">
+
+    <div className="flex items-center gap-3">
+
+      <div className="h-3 w-3 rounded-full bg-red-400 shadow-[0_0_15px_rgba(248,113,113,0.9)]" />
+
+      <h2 className="text-2xl font-bold text-white">
+        Agreement Rejected
+      </h2>
+
+    </div>
+
+    <p className="mt-3 text-white/50">
+      This agreement was rejected and is no longer active.
+    </p>
+
+  </div>
+
+)}
+{pact?.status === "voided" && (
+
+<div className="mt-10 rounded-3xl border border-red-500/20 bg-red-500/5 p-8 backdrop-blur-xl">
+
+  <div className="flex items-center gap-3">
+
+    <div className="h-3 w-3 rounded-full bg-red-400" />
+
+    <h2 className="text-2xl font-bold text-white">
+      Agreement Voided
+    </h2>
+
+  </div>
+
+  <p className="mt-3 text-white/50">
+    This agreement was voided by the creator before completion.
+  </p>
+
+</div>
 
 )}
 <AgreementTimeline pactId={pactId} />

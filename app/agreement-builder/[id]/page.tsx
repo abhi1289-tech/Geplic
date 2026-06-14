@@ -22,6 +22,7 @@ import BrandLogo from "@/components/BrandLogo";
 export default function AgreementBuilderPage() {
   const params = useParams();
   const router = useRouter();
+  const [sending, setSending] = useState(false);
 
   const pactId = params?.id as string;
 
@@ -182,21 +183,71 @@ setClauses(
   
 
   async function sendAgreement() {
-    if (!pactId) return;
+
+  if (!pactId || sending) return;
+
+  try {
+
+    setSending(true);
 
     await updateDoc(doc(db, "pacts", pactId), {
       status: "pending",
       lockedAt: serverTimestamp(),
     });
 
+    await logAction(
+      pactId,
+      "OFFER_SENT",
+      pact.creatorEmail
+    );
+
     setPact((prev: any) => ({
       ...prev,
       status: "pending",
     }));
-    router.push(`/pact/${pactId}`);
 
     alert("Agreement sent successfully.");
+
+    router.push(`/pact/${pactId}`);
+
+  } finally {
+
+    setSending(false);
+
   }
+}
+async function voidAgreement() {
+
+  if (!pactId) return;
+
+  const confirmed = confirm(
+    "Are you sure you want to void this agreement?"
+  );
+
+  if (!confirmed) return;
+
+  await updateDoc(
+    doc(db, "pacts", pactId),
+    {
+      status: "voided",
+      voidedAt: serverTimestamp(),
+    }
+  );
+
+  await logAction(
+    pactId,
+    "AGREEMENT_VOIDED",
+    pact.creatorEmail
+  );
+
+  setPact((prev:any) => ({
+    ...prev,
+    status: "voided",
+  }));
+
+  alert("Agreement voided.");
+
+}
   
 
 
@@ -272,12 +323,25 @@ setClauses(
            
             {isPartyA && pact.status === "draft" && (
               <button
-                onClick={sendAgreement}
-                className="rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-5 py-2 text-sm font-semibold text-black transition hover:scale-[1.02]"
-              >
-                Send Agreement
-              </button>
+  onClick={sendAgreement}
+  disabled={sending}
+  className="rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-5 py-2 text-sm font-semibold text-black transition hover:scale-[1.02] disabled:opacity-50"
+>
+  {sending ? "Sending..." : "Send Agreement"}
+</button>
             )}
+            {isPartyA &&
+ (pact.status === "draft" ||
+  pact.status === "pending") && (
+
+<button
+  onClick={voidAgreement}
+  className="rounded-xl border border-red-500/40 px-5 py-2 text-sm font-semibold text-red-400 hover:bg-red-500/10"
+>
+  Void Agreement
+</button>
+
+)}
 
             <button
               onClick={() => router.push("/dashboard")}
@@ -311,6 +375,9 @@ setClauses(
     : pact.status === "completed"
     ? "GEPLIC VERIFIED"
 
+    : pact.status === "voided"
+? "VOID"
+
     : "GEPLIC"
 }
             </h1>
@@ -329,9 +396,15 @@ setClauses(
 
             <p className="mt-2 text-black/60">
               Status:{" "}
-              <span className="font-semibold uppercase">
-                {pact.status || "draft"}
-              </span>
+              <span
+  className={`font-semibold uppercase ${
+    pact.status === "voided"
+      ? "text-red-600"
+      : ""
+  }`}
+>
+  {pact.status || "draft"}
+</span>
             </p>
           </div>
 
@@ -391,7 +464,10 @@ setClauses(
     </p>
 
     <p className="mt-1 text-sm text-emerald-600">
-      This agreement can no longer be edited because it has already been proposed or completed.
+      {pact.status === "voided"
+ ? "This agreement has been voided and can no longer be used."
+ : "This agreement can no longer be edited because it has already been proposed or completed."
+}
     </p>
 
   </div>
