@@ -1,14 +1,20 @@
 export function RentTemplate(data: any) {
   return `
 
-    <div style="line-height:1.9; font-size:18px;">
+    <div style="
+  line-height:1.7;
+  font-size:16px;
+  word-break:break-word;
+  overflow-wrap:anywhere;
+">
 
       <h1 style="
-        text-align:center;
-        font-size:34px;
-        font-weight:800;
-        margin-bottom:40px;
-      ">
+  text-align:center;
+  font-weight:800;
+  font-size:26px;
+  margin-bottom:24px;
+  line-height:1.2;
+">
         RENT AGREEMENT
       </h1>
 
@@ -16,7 +22,7 @@ export function RentTemplate(data: any) {
         This Rent Agreement is entered into between:
       </p>
 
-      <div style="margin-top:30px;">
+      <div style="margin-top:20px;">
 
         <p>
           <strong>Owner (Party A):</strong>
@@ -35,30 +41,35 @@ export function RentTemplate(data: any) {
 
       </div>
 
-      <div style="margin-top:50px;">
+      <div style="margin-top:32px;">
 
         <h2 style="
-          font-size:24px;
-          font-weight:700;
-          margin-bottom:18px;
-        ">
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:12px;
+  line-height:1.3;
+">
           1. PROPERTY DETAILS
         </h2>
 
         <p>
-          <strong>Property Address:</strong>
-          ${data.propertyAddress || "Not Specified"}
-        </p>
+  <strong>Property Address:</strong>
+</p>
+
+<p style="margin-top:8px;">
+  ${data.propertyAddress || "Not Specified"}
+</p>
 
       </div>
 
-      <div style="margin-top:50px;">
+      <div style="margin-top:32px;">
 
         <h2 style="
-          font-size:24px;
-          font-weight:700;
-          margin-bottom:18px;
-        ">
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:12px;
+  line-height:1.3;
+">
           2. RENT DETAILS
         </h2>
 
@@ -74,13 +85,14 @@ export function RentTemplate(data: any) {
 
       </div>
 
-      <div style="margin-top:50px;">
+      <div style="margin-top:32px;">
 
         <h2 style="
-          font-size:24px;
-          font-weight:700;
-          margin-bottom:18px;
-        ">
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:12px;
+  line-height:1.3;
+">
           3. TENURE
         </h2>
 
@@ -96,20 +108,21 @@ export function RentTemplate(data: any) {
 
       </div>
 
-      <div style="margin-top:50px;">
+      <div style="margin-top:32px;">
 
         <h2 style="
-          font-size:24px;
-          font-weight:700;
-          margin-bottom:18px;
-        ">
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:12px;
+  line-height:1.3;
+">
           4. TERMS
         </h2>
 
         <ol style="
-          padding-left:22px;
-          margin-top:20px;
-        ">
+  padding-left:18px;
+  margin-top:12px;
+">
 
           <li>
             Tenant agrees to pay rent on time.
@@ -131,13 +144,14 @@ export function RentTemplate(data: any) {
 
       </div>
 
-      <div style="margin-top:60px;">
+      <div style="margin-top:40px;">
 
         <h2 style="
-          font-size:24px;
-          font-weight:700;
-          margin-bottom:18px;
-        ">
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:12px;
+  line-height:1.3;
+">
           5. ACKNOWLEDGEMENT
         </h2>
 

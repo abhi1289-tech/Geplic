@@ -195,7 +195,7 @@ export default function DashboardPage() {
       </header>
 
       {/* ================= MAIN ================= */}
-      <main className="mx-auto max-w-6xl px-8 py-12">
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-8 sm:py-12">
 
         {/* ================= HERO SECTION ================= */}
         <div className="grid gap-10 lg:grid-cols-[1.4fr_0.9fr] lg:items-start">
@@ -214,7 +214,7 @@ export default function DashboardPage() {
               {/* ⚔️ Welcome */}
               <div>
 
-                <h2 className="text-4xl font-black leading-[1.05] tracking-tight">
+                <h2 className="text-3xl sm:text-4xl font-black leading-[1.05] tracking-tight">
 
                   Welcome back,
                   <span className="bg-gradient-to-r from-white to-cyan-300 bg-clip-text text-transparent">
@@ -239,18 +239,18 @@ export default function DashboardPage() {
         </div>
 
         {/* ================= ACTION BUTTONS ================= */}
-        <div className="mt-12 flex flex-wrap gap-4">
+        <div className="mt-12 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
 
           <button
             onClick={() => router.push("/pact/new")}
-            className="rounded-2xl bg-gradient-to-r from-cyan-400 to-violet-500 px-6 py-3 font-semibold text-black transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(0,200,255,0.18)] active:scale-[0.98]"
+            className="w-full sm:w-auto rounded-2xl bg-gradient-to-r from-cyan-400 to-violet-500 px-6 py-3 font-semibold text-black transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(0,200,255,0.18)] active:scale-[0.98]"
           >
             Create Pact
           </button>
 
           <button
             onClick={() => router.push("/verify")}
-            className="rounded-2xl border border-white/10 bg-black/30 px-6 py-3 font-medium text-white transition-all duration-300 hover:border-cyan-400/20 hover:bg-white/[0.03]"
+            className="w-full sm:w-auto rounded-2xl border border-white/10 bg-black/30 px-6 py-3 font-medium text-white transition-all duration-300 hover:border-cyan-400/20 hover:bg-white/[0.03]"
           >
             Verify Agreement
           </button>
@@ -459,7 +459,7 @@ export default function DashboardPage() {
 
                     {/* Counterparty */}
                     {pact.counterpartyEmail && (
-                      <p className="mt-2 text-sm text-white/50">
+                      <p className="mt-2 break-all text-sm text-white/50">
                         Counterparty: {pact.counterpartyEmail}
                       </p>
                     )}

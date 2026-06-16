@@ -250,21 +250,22 @@ router.push(`/agreement-builder/${pactId}`);
 
   return(
 
-    <div className="min-h-screen bg-black text-white bg-[radial-gradient(circle_at_top,#0ea5e920,transparent_35%)]">
+    <div className="min-h-screen pb-10 bg-black text-white bg-[radial-gradient(circle_at_top,#0ea5e920,transparent_35%)]">
 
-      <main className="mx-auto max-w-4xl px-6 py-12 transition-all duration-500 hover:-translate-y-[2px]">
+      <main className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 transition-all duration-500 hover:-translate-y-[2px]">
 
 <form
   onSubmit={handleCreate}
-  className="space-y-6 rounded-3xl border border-white/10 bg-black/40 p-8 backdrop-blur-xl shadow-[0_0_80px_rgba(0,200,255,0.08)] hover:shadow-[0_0_120px_rgba(0,200,255,0.12)] transition-all duration-500">
+  className="space-y-6 rounded-3xl border border-white/10 bg-black/40 p-5 sm:p-8 ..."
+>
 
         <div>
 
-  <h1 className="text-5xl font-bold tracking-tight bg-gradient-to-r from-white via-cyan-100 to-cyan-300 bg-clip-text text-transparent">
+  <h1 className="text-4xl sm:text-5xl font-bold tracking-tight bg-gradient-to-r from-white via-cyan-100 to-cyan-300 bg-clip-text text-transparent">
     Create Agreement
   </h1>
 
-  <p className="mt-3 text-lg text-white/50">
+  <p className="mt-3 text-base sm:text-lg text-white/50">
     Create secure digital agreements in minutes.
   </p>
 
@@ -289,7 +290,7 @@ router.push(`/agreement-builder/${pactId}`);
           border border-white/10
           bg-[#0A0A0A]
           px-5
-          py-4
+          py-4 min-h-[60px]
           text-left
           text-white
           transition-all
@@ -372,7 +373,7 @@ router.push(`/agreement-builder/${pactId}`);
 
 </div>
 
-  <div className="pt-6">
+  <div className="pt-4 sm:pt-6">
   <h2 className="flex items-center gap-3 text-xs font-semibold tracking-[0.3em] text-cyan-400">
     <span className="h-px w-8 bg-cyan-400/60"></span>
     Agreement Info
@@ -516,7 +517,7 @@ router.push(`/agreement-builder/${pactId}`);
 
         <textarea
           placeholder="Describe the service agreement"
-          className="min-h-[140px] w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
+          className="min-h-[180px] sm:min-h-[140px] w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
           value={serviceDescription}
           onChange={(e)=>setServiceDescription(e.target.value)}
         />
@@ -575,7 +576,7 @@ router.push(`/agreement-builder/${pactId}`);
 
     <textarea
       placeholder="Write the promise details"
-      className="min-h-[180px] w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
+      className="min-h-[220px] sm:min-h-[180px] w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
       value={promiseText}
       onChange={(e)=>setPromiseText(e.target.value)}
     />
@@ -607,7 +608,7 @@ router.push(`/agreement-builder/${pactId}`);
 
         <textarea
           placeholder="Property Address"
-          className="min-h-[120px] w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
+          className="[min-h-[160px] sm:min-h-[120px] w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
           value={propertyAddress}
           onChange={(e)=>setPropertyAddress(e.target.value)}
         />
@@ -682,7 +683,7 @@ router.push(`/agreement-builder/${pactId}`);
         <button
           type="submit"
           disabled={loading}
-          className="relative overflow-hidden w-full rounded-2xl bg-gradient-to-r from-cyan-400 to-purple-500 py-4 font-semibold text-black transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_0_35px_rgba(120,119,255,0.35)] active:scale-[0.99]"
+          className="relative overflow-hidden w-full rounded-2xl bg-gradient-to-r from-cyan-400 to-purple-500 py-5 font-semibold text-black transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_0_35px_rgba(120,119,255,0.35)] active:scale-[0.99]"
         >
           <>
           <span className="relative z-10">

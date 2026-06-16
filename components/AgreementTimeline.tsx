@@ -75,7 +75,7 @@ export default function AgreementTimeline({ pactId }:{ pactId:string }){
   </div>
 
 )}
-    <div className="relative border-l border-white/10 pl-6 space-y-5">
+    <div className="relative space-y-5 border-l border-white/10 pl-4 sm:pl-6">
 
       {logs.map((log:any,index:number)=>(
 
@@ -138,7 +138,7 @@ export default function AgreementTimeline({ pactId }:{ pactId:string }){
   `}
 />
 
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
 
             <div>
 
@@ -159,13 +159,13 @@ export default function AgreementTimeline({ pactId }:{ pactId:string }){
 
               </p>
 
-              <p className="mt-1 text-sm text-white/50">
-                {log.userEmail}
-              </p>
+              <p className="mt-1 break-all text-sm text-white/50">
+  {log.userEmail}
+</p>
 
             </div>
 
-            <div className="rounded-full border border-white/10 bg-black/40 px-3 py-1 text-xs text-white/50">
+            <div className="w-fit rounded-full border border-white/10 bg-black/40 px-3 py-1 text-xs text-white/50">
               {new Date(
                 log.createdAt?.seconds * 1000
               ).toLocaleString()}

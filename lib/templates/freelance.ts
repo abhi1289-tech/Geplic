@@ -1,14 +1,20 @@
 export function FreelanceTemplate(data: any) {
   return `
 
-    <div style="line-height:1.9; font-size:18px;">
+    <div style="
+  line-height:1.7;
+  font-size:16px;
+  word-break:break-word;
+  overflow-wrap:anywhere;
+">
 
       <h1 style="
-        text-align:center;
-        font-size:34px;
-        font-weight:800;
-        margin-bottom:40px;
-      ">
+  text-align:center;
+  font-weight:800;
+  font-size:26px;
+  margin-bottom:24px;
+  line-height:1.2;
+">
         FREELANCE SERVICE AGREEMENT
       </h1>
 
@@ -16,7 +22,7 @@ export function FreelanceTemplate(data: any) {
         This Service Agreement is entered into between:
       </p>
 
-      <div style="margin-top:30px;">
+      <div style="margin-top:20px;">
 
         <p>
           <strong>Client (Party A):</strong>
@@ -35,13 +41,14 @@ export function FreelanceTemplate(data: any) {
 
       </div>
 
-      <div style="margin-top:50px;">
+      <div style="margin-top:32px;">
 
         <h2 style="
-          font-size:24px;
-          font-weight:700;
-          margin-bottom:18px;
-        ">
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:12px;
+  line-height:1.3;
+">
           1. SERVICE DETAILS
         </h2>
 
@@ -62,19 +69,20 @@ export function FreelanceTemplate(data: any) {
 
       </div>
 
-      <div style="margin-top:50px;">
+      <div style="margin-top:32px;">
 
         <h2 style="
-          font-size:24px;
-          font-weight:700;
-          margin-bottom:18px;
-        ">
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:12px;
+  line-height:1.3;
+">
           2. TERMS
         </h2>
 
         <ol style="
-          padding-left:22px;
-          margin-top:20px;
+          padding-left:18px;
+          margin-top:12px;
         ">
 
           <li>
@@ -101,13 +109,14 @@ export function FreelanceTemplate(data: any) {
 
       </div>
 
-      <div style="margin-top:60px;">
+      <div style="margin-top:40px;">
 
         <h2 style="
-          font-size:24px;
-          font-weight:700;
-          margin-bottom:18px;
-        ">
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:12px;
+  line-height:1.3;
+">
           3. ACKNOWLEDGEMENT
         </h2>
 

@@ -302,21 +302,20 @@ async function voidAgreement() {
       {/* TOP BAR */}
 
       <header className="border-b border-gray-800 bg-black">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
-          <BrandLogo />
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">          <BrandLogo />
 
-          <div className="flex items-center gap-3">
+          <div className="flex w-full flex-wrap items-center justify-center gap-2 sm:w-auto sm:justify-end">
             {isPartyA && pact.status === "draft" && (
             <button
               onClick={saveContinue}
-              className="rounded-xl border border-white/10 px-5 py-2 text-sm transition hover:border-cyan-400/20 hover:text-cyan-300"
+              className="rounded-xl border border-white/10 px-3 sm:px-5 py-2 text-sm transition hover:border-cyan-400/20 hover:text-cyan-300"
             >
               Save & Continue
             </button>)}
 
             <button
               onClick={downloadPDF}
-              className="rounded-xl border border-white/10 px-5 py-2 text-sm transition hover:border-cyan-400/20 hover:text-cyan-300"
+              className="rounded-xl border border-white/10 px-3 sm:px-5 py-2 text-sm transition hover:border-cyan-400/20 hover:text-cyan-300"
             >
               Download PDF
             </button>
@@ -325,7 +324,7 @@ async function voidAgreement() {
               <button
   onClick={sendAgreement}
   disabled={sending}
-  className="rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-5 py-2 text-sm font-semibold text-black transition hover:scale-[1.02] disabled:opacity-50"
+  className="rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-3 sm:px-5 py-2 text-sm font-semibold text-black transition hover:scale-[1.02] disabled:opacity-50"
 >
   {sending ? "Sending..." : "Send Agreement"}
 </button>
@@ -336,7 +335,7 @@ async function voidAgreement() {
 
 <button
   onClick={voidAgreement}
-  className="rounded-xl border border-red-500/40 px-5 py-2 text-sm font-semibold text-red-400 hover:bg-red-500/10"
+  className="rounded-xl border border-red-500/40 px-3 sm:px-5 py-2 text-sm font-semibold text-red-400 hover:bg-red-500/10"
 >
   Void Agreement
 </button>
@@ -345,7 +344,7 @@ async function voidAgreement() {
 
             <button
               onClick={() => router.push("/dashboard")}
-              className="rounded-xl border border-white/10 px-5 py-2 text-sm transition hover:border-white/20"
+              className="rounded-xl border border-white/10 px-3 sm:px-5 py-2 text-sm transition hover:border-white/20"
             >
               Dashboard
             </button>
@@ -355,22 +354,22 @@ async function voidAgreement() {
 
       {/* DOCUMENT */}
 
-      <main className="mx-auto max-w-5xl px-6 py-10">
+      <main className="mx-auto max-w-6xl px-2 sm:px-6 py-4 sm:py-10">
         <div 
           ref={documentRef}
           style={{ background: "#ffffff" }}
-          className="relative overflow-hidden rounded-[32px] border border-white/10 bg-white p-12 text-black shadow-2xl"
+          className="relative overflow-hidden rounded-[20px] sm:rounded-[32px] border border-white/10 bg-white p-4 sm:p-12 text-black shadow-2xl"
         >
           {/* WATERMARK */}
 
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <h1 className="rotate-[-30deg] text-7xl font-black tracking-[0.4em] text-gray-200">
+            <h1 className="rotate-[-30deg] text-2xl sm:text-7xl font-black tracking-[0.15em] sm:tracking-[0.4em] text-gray-200">
               {
   pact.status === "draft"
     ? "DRAFT"
 
     : pact.status === "pending"
-    ? "PENDING ACCEPTANCE"
+    ? "PENDING"
 
     : pact.status === "completed"
     ? "GEPLIC VERIFIED"
@@ -386,7 +385,7 @@ async function voidAgreement() {
           {/* DOCUMENT HEADER */}
 
           <div className="relative z-10 border-b border-gray-200 pb-8">
-            <h1 className="text-5xl font-black tracking-tight">
+            <h1 className="text-3xl sm:text-5xl font-black tracking-tight break-words">
               DIGITAL AGREEMENT
             </h1>
 
@@ -411,12 +410,12 @@ async function voidAgreement() {
           {/* PARTIES */}
 
           <div className="relative z-10 mt-10 grid gap-8 md:grid-cols-2">
-            <div className="rounded-2xl border border-gray-200 p-6">
+            <div className="rounded-2xl border border-gray-200 p-4 sm:p-6">
               <p className="text-sm uppercase tracking-[0.3em] text-black/50">
                 Party A
               </p>
 
-              <h2 className="mt-4 text-2xl font-bold">
+              <h2 className="mt-4 break-words text-xl sm:text-2xl font-bold">
                 {pact.creatorName || "Not Available"}
               </h2>
               <p className="mt-2 text-black/60">
@@ -424,12 +423,12 @@ async function voidAgreement() {
 </p>
             </div>
 
-            <div className="rounded-2xl border border-gray-200 p-6">
+            <div className="rounded-2xl border border-gray-200 p-4 sm:p-6">
               <p className="text-sm uppercase tracking-[0.3em] text-black/50">
                 Party B
               </p>
 
-              <h2 className="mt-4 text-2xl font-bold">
+              <h2 className="mt-4 break-words text-xl sm:text-2xl font-bold">
                 {pact.counterpartyName || "Not Available"}
               </h2>
               <p className="mt-2 text-black/60">
@@ -448,7 +447,7 @@ async function voidAgreement() {
             
 
             <div
-  className={`mt-6 rounded-3xl border p-8 transition-all ${
+  className={`mt-6 rounded-3xl border p-4 sm:p-8 transition-all ${
     pact.status === "draft"
       ? "border-gray-200 bg-gray-50"
       : "border-emerald-200 bg-emerald-50/40"
@@ -484,7 +483,7 @@ async function voidAgreement() {
   onInput={(e) =>
     setClauses(e.currentTarget.innerHTML)
   }
-  className={`min-h-[400px] text-lg leading-9 outline-none ${
+  className={`min-h-[400px] text-base sm:text-lg leading-7 sm:leading-9 outline-none ${
     pact.status !== "draft"
       ? "cursor-not-allowed opacity-90"
       : ""
@@ -515,7 +514,7 @@ async function voidAgreement() {
 
     {/* PARTY A */}
 
-    <div className="rounded-3xl border border-gray-200 p-6">
+    <div className="rounded-3xl border border-gray-200 p-4 sm:p-6">
 
       <p className="text-sm uppercase tracking-[0.3em] text-black/50">
         Agreement Creator
@@ -545,7 +544,7 @@ async function voidAgreement() {
 
     {/* PARTY B */}
 
-    <div className="rounded-3xl border border-gray-200 p-6">
+    <div className="rounded-3xl border border-gray-200 p-4 sm:p-6">
 
       <p className="text-sm uppercase tracking-[0.3em] text-black/50">
         Counterparty Acceptance
@@ -621,13 +620,13 @@ async function voidAgreement() {
     Verification Link
   </p>
 
-  <p className="mt-2 break-all text-sm text-black/70">
+  <p className="mt-2 break-all text-[11px] sm:text-sm text-black/70">
     https://geplic.com/verify/{pact.documentHash}
   </p>
 
 </div>
 
-                <p className="mt-2 break-all text-sm text-black/60">
+                <p className="mt-2 break-all text-[11px] sm:text-sm text-black/60">
                   {pact.documentHash || "Not Available"}
                 </p>
               </div>
