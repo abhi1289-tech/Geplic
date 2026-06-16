@@ -353,9 +353,9 @@ hash = await generateHash(agreementData);
   }
   return(
 
-    <div className="min-h-screen bg-black text-white bg-[radial-gradient(circle_at_top,rgba(0,153,255,0.12),transparent_35%)]">
+    <div className="min-h-screen overflow-x-hidden bg-black text-white bg-[radial-gradient(circle_at_top,rgba(0,153,255,0.12),transparent_35%)]">
       
-      <main className="mx-auto max-w-5xl px-8 py-12">
+      <main className="mx-auto max-w-5xl px-4 sm:px-8 py-8 sm:py-12">
 
         <button
           onClick={()=>router.push("/dashboard")}
@@ -364,7 +364,9 @@ hash = await generateHash(agreementData);
           ← Back to Dashboard
         </button>
 
-        <h1 className="text-5xl font-bold tracking-tight">Agreement</h1>
+        <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
+  Agreement
+</h1>
 
         <div className="mt-3 text-lg text-white/50">
           {getStatusBadge(pact?.status)}
@@ -380,7 +382,7 @@ hash = await generateHash(agreementData);
             🚫 Agreement is inactive.
           </p>
         )}
-        <div className="mt-10 rounded-3xl border border-white/10 bg-white/[0.03] p-8 backdrop-blur-md shadow-[0_0_30px_rgba(0,153,255,0.08)]">
+        <div className="mt-10 rounded-3xl border border-white/10 bg-white/[0.03] p-5 sm:p-8 backdrop-blur-md shadow-[0_0_30px_rgba(0,153,255,0.08)]">
         <h2 className="mb-8 text-2xl font-semibold tracking-tight">
           Agreement Summary
         </h2>
@@ -400,19 +402,23 @@ hash = await generateHash(agreementData);
 
             {category==="Freelance / Service" && (
               <>
-                <p><strong>Service:</strong> {fields.serviceDescription}</p>
+                <p className="break-words">
+  <strong>Service:</strong> {fields.serviceDescription}
+</p>
                 <p><strong>Payment Amount:</strong> ₹{fields.paymentAmount}</p>
                 <p><strong>Delivery Date:</strong> {fields.deliveryDate}</p>
               </>
             )}
 
             {category==="General Promise" && (
-              <p>{fields.promiseText}</p>
+              <p className="break-words">
+  {fields.promiseText}
+</p>
             )}
 
             {category==="Rent Agreement" && (
               <>
-                <p><strong>Property Address:</strong> {fields.propertyAddress}</p>
+                <p className="break-words"><strong>Property Address:</strong> {fields.propertyAddress}</p>
                 <p><strong>Monthly Rent:</strong> ₹{fields.monthlyRent}</p>
                 <p><strong>Security Deposit:</strong> ₹{fields.securityDeposit}</p>
                 <p><strong>Start Date:</strong> {fields.startDate}</p>
@@ -619,7 +625,7 @@ hash = await generateHash(agreementData);
           Completed On
         </p>
 
-        <p className="mt-2 text-xl font-semibold text-white">
+        <p className="mt-2 break-words text-base sm:text-xl font-semibold text-white">
 
           {pact.acceptedAt
             ? new Date(

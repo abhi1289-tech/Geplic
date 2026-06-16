@@ -63,9 +63,9 @@ export default function AgreementTimeline({ pactId }:{ pactId:string }){
 
       <div className="h-3 w-3 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.9)]" />
 
-      <h2 className="text-2xl font-semibold tracking-tight">
-        Agreement Timeline
-      </h2>
+      <h2 className="text-xl sm:text-2xl font-semibold tracking-tight">
+  Agreement Timeline
+</h2>
 
     </div>
     {logs.length === 0 && (
@@ -81,7 +81,7 @@ export default function AgreementTimeline({ pactId }:{ pactId:string }){
 
         <div
           key={index}
-          className="relative rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-md transition-all duration-300 hover:border-cyan-400/30 hover:bg-white/[0.05]"
+          className="relative w-full min-w-0 rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-md transition-all duration-300 hover:border-cyan-400/30 hover:bg-white/[0.05]"
         >
 
           <div
@@ -142,7 +142,7 @@ export default function AgreementTimeline({ pactId }:{ pactId:string }){
 
             <div>
 
-              <p className="text-lg font-semibold text-white">
+              <p className="text-base sm:text-lg font-semibold text-white">
 
                 {log.action === "PACT_CREATED" && "Pact Created"}
 
@@ -165,11 +165,22 @@ export default function AgreementTimeline({ pactId }:{ pactId:string }){
 
             </div>
 
-            <div className="w-fit rounded-full border border-white/10 bg-black/40 px-3 py-1 text-xs text-white/50">
-              {new Date(
-                log.createdAt?.seconds * 1000
-              ).toLocaleString()}
-            </div>
+            <div className="
+  rounded-full
+  border
+  border-white/10
+  bg-black/40
+  px-3
+  py-1
+  text-xs
+  text-white/50
+  self-start
+  break-words
+">
+  {new Date(
+    log.createdAt?.seconds * 1000
+  ).toLocaleString()}
+</div>
 
           </div>
 
