@@ -2,6 +2,7 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { logAction } from "@/lib/audit";
+import BrandLogo from "@/components/BrandLogo";
 import { useEffect, useState } from "react";
 import AgreementTimeline from "@/components/AgreementTimeline";
 import {
@@ -354,7 +355,14 @@ hash = await generateHash(agreementData);
   return(
 
     <div className="min-h-screen overflow-x-hidden bg-black text-white bg-[radial-gradient(circle_at_top,rgba(0,153,255,0.12),transparent_35%)]">
+      {/* ================= HEADER ================= */}
+            <header className="sticky top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-xl">
       
+              <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+      
+               <BrandLogo />
+               </div>
+               </header>
       <main className="mx-auto max-w-5xl px-4 sm:px-8 py-8 sm:py-12">
 
         <button

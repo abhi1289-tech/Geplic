@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 
 import { db } from "@/lib/firebase";
+import BrandLogo from "@/components/BrandLogo";
 
 export default function VerifyPage(){
 
@@ -60,8 +61,9 @@ export default function VerifyPage(){
   }
 
   return(
-
+    
     <div className="min-h-screen bg-black text-white flex items-center justify-center px-6">
+      
 
       <div className="w-full max-w-2xl rounded-3xl border border-white/10 bg-white/[0.03] p-10 backdrop-blur-xl shadow-[0_0_80px_rgba(0,200,255,0.06)]">
 

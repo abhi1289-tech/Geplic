@@ -298,7 +298,7 @@ async function voidAgreement() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white bg-[radial-gradient(circle_at_top,rgba(0,153,255,0.12),transparent_35%)]">
       {/* TOP BAR */}
 
       <header className="border-b border-gray-800 bg-black">
