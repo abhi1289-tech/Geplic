@@ -124,21 +124,18 @@ export function RentTemplate(data: any) {
   margin-top:12px;
 ">
 
-          <li>
-            Tenant agrees to pay rent on time.
-          </li>
-
-          <li style="margin-top:12px;">
-            Security deposit shall be handled as mutually agreed.
-          </li>
-
-          <li style="margin-top:12px;">
-            Changes are allowed only while the agreement remains in draft state.
-          </li>
-
-          <li style="margin-top:12px;">
-            Geplic maintains an audit trail for transparency purposes.
-          </li>
+          ${
+  (data.clauses || [])
+    .map(
+      (term:string,index:number)=>
+      `
+      <li style="margin-top:12px;">
+        ${term}
+      </li>
+      `
+    )
+    .join("")
+}
 
         </ol>
 

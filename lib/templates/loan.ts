@@ -80,31 +80,27 @@ ${data.agreementDate || "Not Available"}
           2. TERMS
         </h2>
 
-        <ol style="
-         padding-left:18px;
-margin-top:12px;
-        ">
+        <ol
+  style="
+    padding-left:18px;
+    margin-top:12px;
+  "
+>
 
-          <li>
-            Party B agrees to repay the loan amount
-            on or before the repayment date.
-          </li>
+${
+  (data.clauses || [])
+    .map(
+      (term:string,index:number)=>
+      `
+      <li style="margin-top:12px;">
+        ${term}
+      </li>
+      `
+    )
+    .join("")
+}
 
-          <li style="margin-top:12px;">
-            Interest shall apply as stated above.
-          </li>
-
-          <li style="margin-top:12px;">
-            Any modification is allowed only while
-            the agreement remains in draft state.
-          </li>
-
-          <li style="margin-top:12px;">
-            Geplic maintains an audit trail for
-            transparency purposes.
-          </li>
-
-        </ol>
+</ol>
 
       </div>
 

@@ -38,8 +38,10 @@ const isPartyA =
 const isPartyB =
   currentUser?.email?.toLowerCase() ===
   pact?.counterpartyEmail?.toLowerCase();
-
-  const [clauses, setClauses] = useState("");
+  
+  const [terms, setTerms] = useState<string[]>([]);
+  const [templateFields, setTemplateFields] =
+  useState<any>({});
 
   const documentRef = useRef<any>(null);
 
@@ -77,10 +79,21 @@ let monthlyRent = "";
 let securityDeposit = "";
 let startDate = "";
 let durationMonths = "";
+let clauses: string[] = [];
 
 if (!templateSnap.empty) {
 
   const templateData = templateSnap.docs[0].data();
+  setTemplateFields(
+  templateData?.fields || {}
+);
+  const defaultClauses =
+  templateData?.fields?.clauses || [];
+
+  const savedTerms =
+  templateData?.fields?.clauses || [];
+
+setTerms(savedTerms);
 
   promiseText =
     templateData?.fields?.promiseText || "";
@@ -117,6 +130,9 @@ if (!templateSnap.empty) {
 
   durationMonths =
     templateData?.fields?.durationMonths || "";
+  
+  clauses =
+    templateData?.fields?.clauses || [];
 }
 const agreementDate =
   data.createdAt?.seconds
@@ -148,11 +164,10 @@ const generatedTemplate =
     securityDeposit,
     startDate,
     durationMonths,
+    clauses,
   }
 )
-setClauses(
-  data.clauses || generatedTemplate
-);
+
 
         }
       } catch (error) {
@@ -170,12 +185,39 @@ setClauses(
 
   if (!pactId) return;
 
-  await updateDoc(doc(db, "pacts", pactId), {
+  const templateQuery = query(
+    collection(db, "templates"),
+    where("pactId", "==", pactId)
+  );
 
-    clauses,
-    updatedAt: serverTimestamp(),
+  const templateSnap = await getDocs(
+    templateQuery
+  );
 
-  });
+  if (templateSnap.empty) {
+
+    alert("Template not found");
+    return;
+
+  }
+
+  const templateDoc =
+    templateSnap.docs[0];
+
+  const templateData =
+    templateDoc.data();
+
+  await updateDoc(
+    doc(
+      db,
+      "templates",
+      templateDoc.id
+    ),
+    {
+      "fields.clauses": terms,
+      updatedAt: serverTimestamp(),
+    }
+  );
 
   router.push(`/pact/${pactId}`);
 
@@ -359,13 +401,23 @@ async function voidAgreement() {
       <main className="mx-auto max-w-6xl px-2 sm:px-6 py-4 sm:py-10">
         <div 
           ref={documentRef}
-          style={{ background: "#ffffff" }}
+          style={{ backgroundColor: "#F7FFF7", backgroundImage:
+      "repeating-linear-gradient(45deg, rgba(16,185,129,0.015) 0px, rgba(16,185,129,0.015) 2px, transparent 2px, transparent 12px)"}}
+          
           className="relative overflow-hidden rounded-[20px] sm:rounded-[32px] border border-white/10 bg-white p-4 sm:p-12 text-black shadow-2xl"
         >
           {/* WATERMARK */}
 
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <h1 className="rotate-[-30deg] text-2xl sm:text-7xl font-black tracking-[0.15em] sm:tracking-[0.4em] text-gray-200">
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+           <h1 className="
+  rotate-[-30deg]
+  text-[180px]
+  font-black
+  tracking-[1rem]
+  text-emerald-600
+  opacity-[0.05]
+  select-none
+  ">
               {
   pact.status === "draft"
     ? "DRAFT"
@@ -418,10 +470,10 @@ async function voidAgreement() {
               </p>
 
               <h2 className="mt-4 break-words text-xl sm:text-2xl font-bold">
-                {pact.creatorName || "Not Available"}
-              </h2>
+  {pact.creatorName || pact.creatorEmail}
+</h2>
               <p className="mt-2 text-black/60">
-  {pact.creatorDesignation || "No designation"}
+  {pact.creatorDesignation || "Agreement Creator"}
 </p>
             </div>
 
@@ -431,10 +483,10 @@ async function voidAgreement() {
               </p>
 
               <h2 className="mt-4 break-words text-xl sm:text-2xl font-bold">
-                {pact.counterpartyName || "Not Available"}
+                {pact.counterpartyName || pact.counterpartyEmail}
               </h2>
               <p className="mt-2 text-black/60">
-  {pact.counterpartyDesignation || "No designation"}
+  {pact.counterpartyDesignation || "Counterparty"}
 </p>
             </div>
           </div>
@@ -476,37 +528,202 @@ async function voidAgreement() {
 )}
 
 
-              <div
-  contentEditable={
-  pact.status === "draft" &&
-  isPartyA
-}
-  suppressContentEditableWarning
-  onInput={(e) =>
-    setClauses(e.currentTarget.innerHTML)
-  }
-  className={`min-h-[400px] text-base sm:text-lg leading-7 sm:leading-9 outline-none ${
-    pact.status !== "draft"
-      ? "cursor-not-allowed opacity-90"
-      : ""
-  }`}
->
-  {loading ? (
-    "Loading..."
-  ) : (
+              <div className="space-y-4">
+                <div className="rounded-2xl border border-emerald-200 bg-white p-6">
+
+  <h3 className="text-2xl font-bold text-center">
+    {pact.contractType?.toUpperCase()} AGREEMENT
+  </h3>
+
+  <div className="mt-6 space-y-3">
+
+    <p>
+      <strong>Party A:</strong>{" "}
+      {pact.creatorName || pact.creatorEmail}
+    </p>
+
+    <p>
+      <strong>Party B:</strong>{" "}
+      {pact.counterpartyName || pact.counterpartyEmail}
+    </p>
+
+    <p>
+      <strong>Agreement Date:</strong>{" "}
+      {pact.createdAt?.seconds
+        ? new Date(
+            pact.createdAt.seconds * 1000
+          ).toLocaleDateString()
+        : "Not Available"}
+    </p>
+
+  </div>
+
+</div>
+ <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+
+  <span className="
+    rotate-[-30deg]
+    text-[120px]
+    font-black
+    tracking-[1rem]
+    text-gray-200
+    opacity-30
+  ">
+    {pact.status === "draft"
+      ? "DRAFT"
+      : pact.status === "pending"
+      ? "PENDING"
+      : pact.status === "completed"
+      ? "VERIFIED"
+      : "VOID"}
+  </span>
+
+</div>
+{/* AGREEMENT DETAILS */}
+
+<div className="mb-8 rounded-2xl border border-emerald-200 bg-white p-6">
+
+  <h3 className="text-xl font-bold mb-4">
+    Agreement Details
+  </h3>
+
+{pact.contractType === "Loan" && ( <div className="space-y-2"> <p><strong>Loan Amount:</strong> ₹{templateFields.loanAmount}</p> <p><strong>Interest Rate:</strong> {templateFields.interestRate}%</p> <p><strong>Repayment Date:</strong> {templateFields.repaymentDate}</p> </div>
+)}
+
+{pact.contractType === "Freelance / Service" && ( <div className="space-y-2"> <p><strong>Service Description:</strong> {templateFields.serviceDescription}</p> <p><strong>Payment Amount:</strong> ₹{templateFields.paymentAmount}</p> <p><strong>Delivery Date:</strong> {templateFields.deliveryDate}</p> </div>
+)}
+
+{pact.contractType === "Rent Agreement" && ( <div className="space-y-2"> <p><strong>Property Address:</strong> {templateFields.propertyAddress}</p> <p><strong>Monthly Rent:</strong> ₹{templateFields.monthlyRent}</p> <p><strong>Security Deposit:</strong> ₹{templateFields.securityDeposit}</p> <p><strong>Start Date:</strong> {templateFields.startDate}</p> <p><strong>Duration:</strong> {templateFields.durationMonths} Months</p> </div>
+)}
+
+{pact.contractType === "General Promise" && ( <div className="space-y-2"> <p>{templateFields.promiseText}</p> </div>
+)}
+
+</div>
+
+  {terms.map((term, index) => (
+
     <div
-      dangerouslySetInnerHTML={{
-        __html: clauses,
+  key={index}
+  className="flex items-start gap-3"
+>
+
+  <div className="mt-3 text-lg font-bold">
+    {index + 1}.
+  </div>
+
+  <div className="flex-1">
+
+    <textarea
+      value={term}
+      disabled={
+        pact.status !== "draft" ||
+        !isPartyA
+      }
+      onChange={(e) => {
+
+        const updated = [...terms];
+
+        updated[index] =
+          e.target.value;
+
+        setTerms(updated);
+
       }}
+      className="
+        min-h-[80px]
+        w-full
+        resize-none
+        rounded-2xl
+        border
+        border-emerald-200
+        bg-white
+        p-4
+        outline-none
+      "
     />
+
+  </div>
+
+  {pact.status === "draft" &&
+   isPartyA &&
+   terms.length > 1 && (
+
+    <button
+      type="button"
+      onClick={() => {
+
+        const updated =
+          terms.filter(
+            (_, i) => i !== index
+          );
+
+        setTerms(updated);
+
+      }}
+      className="
+        rounded-xl
+        border
+        border-red-300
+        px-3
+        py-2
+        text-red-600
+        hover:bg-red-50
+      "
+    >
+      ✕
+    </button>
+
   )}
+    </div>
+
+  ))}
+
+  {pact.status === "draft" &&
+    isPartyA && (
+
+    <button
+      onClick={() =>
+        setTerms([
+          ...terms,
+          ""
+        ])
+      }
+      className="
+        rounded-xl
+        border
+        border-cyan-500/30
+        px-5
+        py-3
+        text-cyan-600
+      "
+    >
+      + Add New Term
+    </button>
+
+  )}
+
+</div>
+<div className="mt-10 rounded-2xl border border-emerald-200 bg-white p-6">
+
+  <h3 className="text-xl font-bold">
+    Acknowledgement
+  </h3>
+
+  <p className="mt-4">
+    Both parties acknowledge that they have
+    reviewed and accepted the terms of this
+    Loan Agreement.
+  </p>
+
 </div>
             </div>
           </div>
+         
 
           {/* DIGITAL ACCEPTANCE */}
 
-<div className="relative z-10 mt-14 border-t border-gray-200 pt-10">
+<div className="relative z-10 mt-14 border-t border-emerald-200 pt-10">
 
   <h2 className="text-3xl font-bold tracking-tight">
     Digital Acceptance
@@ -584,7 +801,7 @@ async function voidAgreement() {
 
       ) : (
 
-        <div className="mt-6 flex h-40 items-center justify-center rounded-2xl border border-dashed border-gray-300 text-black/40">
+        <div className="mt-6 flex h-40 items-center justify-center rounded-2xl border border-dashed border-emerald-200 text-black/40">
 
           Waiting for counterparty acceptance
 
@@ -598,42 +815,98 @@ async function voidAgreement() {
 
 </div>
 
-          {/* FOOTER */}
+          <div className="relative z-10 mt-14 border-t border-emerald-200 pt-8">
 
-          <div className="relative z-10 mt-14 border-t border-gray-200 pt-8">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <p className="text-sm uppercase tracking-[0.3em] text-black/50">
-                  Verification
-                </p>
+  <div className="grid md:grid-cols-3 items-center gap-8">
 
-                <p className="mt-2 text-sm text-black/60">
-                  Verified on Geplic
-                </p>
-              </div>
+    {/* LEFT */}
 
-              <div>
-                <p className="text-sm uppercase tracking-[0.3em] text-black/50">
-                  SHA-256 Hash
-                </p>
-                <div className="mt-6 border-t border-black/10 pt-6">
+    <div>
+      <p className="text-sm uppercase tracking-[0.3em] text-emerald-700">
+        Verification
+      </p>
 
-  <p className="text-[10px] uppercase tracking-[0.3em] text-black/40">
-    Verification Link
-  </p>
+      <p className="mt-2 text-sm text-black/70">
+        Verified on Geplic
+      </p>
+      <p className="mt-1 text-xs text-black/50">
+  Generated on {new Date().toLocaleDateString()}
+</p>
+    </div>
 
-  <p className="mt-2 break-all text-[11px] sm:text-sm text-black/70">
-    https://geplic.com/verify/{pact.documentHash}
-  </p>
+    {/* CENTER SEAL */}
+    
+
+    
+
+  <div className="flex justify-center">
+
+    <div className="
+      relative
+      h-40
+      w-40
+      rounded-full
+      border-[6px]
+      border-emerald-300
+      flex
+      items-center
+      justify-center
+      bg-emerald-50
+    ">
+
+      <div
+        className="
+          absolute
+          inset-2
+          rounded-full
+          border-2
+          border-emerald-400
+        "
+      />
+
+      <div className="text-center">
+
+        <div className="text-4xl">
+          ✓
+        </div>
+
+        <p className="text-xs font-bold tracking-wider text-emerald-700">
+          GEPLIC VERIFIED
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+    {/* RIGHT */}
+
+    <div className="text-right">
+
+      <p className="text-sm uppercase tracking-[0.3em] text-emerald-700">
+        SHA-256 Hash
+      </p>
+
+      <p className="mt-2 break-all text-sm text-black/70">
+        {pact.documentHash || "Not Available"}
+      </p>
+
+      <p className="mt-6 text-xs uppercase tracking-[0.3em] text-emerald-700">
+        Verification Link
+      </p>
+
+      <p className="mt-2 break-all text-sm text-black/70">
+        https://geplic.com/verify/{pact.documentHash}
+      </p>
+
+    </div>
+
+  </div>
 
 </div>
-
-                <p className="mt-2 break-all text-[11px] sm:text-sm text-black/60">
-                  {pact.documentHash || "Not Available"}
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
       </main>
     </div>

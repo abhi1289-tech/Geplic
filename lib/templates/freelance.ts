@@ -85,25 +85,18 @@ export function FreelanceTemplate(data: any) {
           margin-top:12px;
         ">
 
-          <li>
-            Party B agrees to provide the described service.
-          </li>
-
-          <li style="margin-top:12px;">
-            Party A agrees to pay the agreed amount upon completion or as mutually agreed.
-          </li>
-
-          <li style="margin-top:12px;">
-            The service should be delivered on or before the delivery date.
-          </li>
-
-          <li style="margin-top:12px;">
-            Changes are permitted only while the agreement remains in draft state.
-          </li>
-
-          <li style="margin-top:12px;">
-            Geplic maintains an audit trail for transparency purposes.
-          </li>
+          ${
+  (data.clauses || [])
+    .map(
+      (term:string,index:number)=>
+      `
+      <li style="margin-top:12px;">
+        ${term}
+      </li>
+      `
+    )
+    .join("")
+}
 
         </ol>
 

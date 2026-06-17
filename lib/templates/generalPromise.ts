@@ -94,30 +94,18 @@ ${data.agreementDate || "Not Available"}
   margin-top:12px;
 ">
 
-          <li>
-            Both parties voluntarily agree to the terms
-            stated in this agreement.
-          </li>
-
-          <li style="margin-top:12px;">
-            Any modification is only permitted while
-            the agreement remains in draft state.
-          </li>
-
-          <li style="margin-top:12px;">
-            Once the agreement is proposed or signed,
-            editing becomes restricted.
-          </li>
-
-          <li style="margin-top:12px;">
-            Geplic maintains a digital audit trail
-            for transparency purposes.
-          </li>
-
-          <li style="margin-top:12px;">
-            Both parties acknowledge that this agreement
-            represents mutual consent.
-          </li>
+          ${
+  (data.clauses || [])
+    .map(
+      (term:string,index:number)=>
+      `
+      <li style="margin-top:12px;">
+        ${term}
+      </li>
+      `
+    )
+    .join("")
+}
 
         </ol>
 

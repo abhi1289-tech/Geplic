@@ -48,12 +48,13 @@ export default function Home() {
       <section className="mx-auto max-w-6xl px-6 py-24 text-center">
 
         <h1 className="text-5xl md:text-7xl font-black tracking-tight bg-gradient-to-r from-white via-cyan-200 to-cyan-400 bg-clip-text text-transparent">
-          Create Digital Agreements
+          Create Agreements.
+Track Acceptance.
+Verify Authenticity.
         </h1>
 
         <p className="mx-auto mt-6 max-w-3xl text-lg text-white/60">
-          Create, negotiate, accept and verify agreements online with
-          transparent audit trails and digital verification.
+          Create, send, accept and verify digital agreements with audit trails, acceptance records and document verification.
         </p>
 
         <div className="mt-10 flex flex-wrap justify-center gap-4">
@@ -80,61 +81,97 @@ export default function Home() {
         </div>
 
       </section>
+      
+      <section className="mx-auto max-w-6xl px-6 py-24">
+
+  <div className="mx-auto max-w-4xl text-center">
+
+    <h2 className="text-4xl font-bold">
+      Everyday Agreements Are Easy To Forget
+    </h2>
+
+    <p className="mt-8 text-lg leading-8 text-white/60">
+
+      People lend money.
+
+      Freelancers take projects.
+
+      Friends make commitments.
+
+      Landlords and tenants agree on terms.
+
+    </p>
+
+    <p className="mt-6 text-lg leading-8 text-white/60">
+
+      Most of these agreements happen through chats,
+      calls and verbal conversations.
+
+      Months later, details become unclear.
+
+    </p>
+
+    <p className="mt-6 text-lg leading-8 text-cyan-300">
+
+      Geplic helps document those commitments with
+      digital records, acceptance history,
+      audit trails and verification.
+
+    </p>
+
+  </div>
+
+</section>
 
       {/* FLOW */}
 
       <section className="mx-auto max-w-6xl px-6 py-12">
 
-        <h2 className="text-center text-4xl font-bold">
-          Agreement Lifecycle
-        </h2>
+  <h2 className="text-center text-4xl font-bold">
+    Agreement Lifecycle
+  </h2>
 
-        <div className="mt-14 grid gap-6 md:grid-cols-6">
+  <div className="mt-14 flex flex-wrap justify-center gap-6">
 
-          {[
-  {
-    title:"Create",
-    desc:"Create agreement draft"
-  },
-  {
-    title:"Edit",
-    desc:"Modify terms before sending"
-  },
-  {
-    title:"Send",
-    desc:"Share with counterparty"
-  },
-  {
-    title:"Review",
-    desc:"Counterparty reviews terms"
-  },
-  {
-    title:"Accept",
-    desc:"Digital acceptance recorded"
-  },
-  {
-    title:"Complete / Void",
-    desc:"Finalize or cancel agreement"
-  }
-].map((step) => (
-            <div
+    {[
+      {
+        title:"Draft",
+        color:"border-gray-500/30 bg-gray-500/10 text-gray-300",
+        desc:"Agreement created and editable"
+      },
+      {
+        title:"Pending Acceptance",
+        color:"border-yellow-500/30 bg-yellow-500/10 text-yellow-300",
+        desc:"Offer sent to counterparty"
+      },
+      {
+        title:"Completed",
+        color:"border-green-500/30 bg-green-500/10 text-green-300",
+        desc:"Agreement digitally accepted"
+      },
+      {
+        title:"Voided",
+        color:"border-red-500/30 bg-red-500/10 text-red-300",
+        desc:"Agreement cancelled"
+      }
+    ].map((step) => (
+      <div
   key={step.title}
-  className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-center"
+  className={`rounded-3xl border p-8 text-center ${step.color}`}
 >
-  <p className="font-semibold">
-    {step.title}
-  </p>
+        <h3 className="text-xl font-bold">
+          {step.title}
+        </h3>
 
-  <p className="mt-2 text-sm text-white/50">
-    {step.desc}
-  </p>
-</div>
-          ))}
+        <p className="mt-3 text-sm opacity-80">
+          {step.desc}
+        </p>
+      </div>
+    ))}
 
-        </div>
+  </div>
 
-      </section>
-
+</section>
       {/* AGREEMENT TYPES */}
 
       <section className="mx-auto max-w-6xl px-6 py-16">
@@ -146,31 +183,102 @@ export default function Home() {
         <div className="mt-12 grid gap-6 md:grid-cols-2">
 
           {[
-            "Loan Agreement",
-            "Freelance Service",
-            "General Promise",
-            "Rent Agreement",
+            {
+title:"Loan Agreement",
+desc:"Document personal loans between friends and family."
+},
+            {
+title:"Freelance Service",
+desc:"Record services, payments and delivery expectations."
+},
+            {
+title:"General Promise",
+desc:"Capture commitments and mutual understandings."
+},
+            {
+title:"Rent Agreement",
+desc:"Track rental terms, deposits and tenancy details."
+            }
           ].map((item) => (
             <div
-              key={item}
+              key={item.title}
               className="rounded-3xl border border-white/10 bg-white/[0.03] p-8"
             >
-              <h3 className="text-xl font-semibold">
-                {item}
+              <h3 className="text-xl font-semibold text-cyan-300">
+                {item.title}
               </h3>
+              <p className="mt-2 text-sm text-white/50">
+                {item.desc}
+              </p>
             </div>
           ))}
 
         </div>
 
       </section>
+      <section className="mx-auto max-w-6xl px-6 py-20">
+
+<h2 className="text-center text-4xl font-bold">
+Why Use Geplic?
+</h2>
+
+<div className="mt-12 overflow-hidden rounded-3xl border border-white/10">
+
+<table className="w-full">
+
+<thead>
+<tr className="border-b border-white/10">
+<th className="p-5 text-left">WhatsApp</th>
+<th className="p-5 text-left">Geplic</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr className="border-b border-white/10">
+<td className="p-5 text-white/50">
+Messages can be deleted
+</td>
+
+<td className="p-5 text-cyan-300">
+Permanent audit trail
+</td>
+</tr>
+
+<tr className="border-b border-white/10">
+<td className="p-5 text-white/50">
+No agreement verification
+</td>
+
+<td className="p-5 text-cyan-300">
+Hash verification
+</td>
+</tr>
+
+<tr className="border-b border-white/10">
+<td className="p-5 text-white/50">
+Hard to track approvals
+</td>
+
+<td className="p-5 text-cyan-300">
+Digital acceptance records
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
 
       {/* FEATURES */}
 
       <section className="mx-auto max-w-6xl px-6 py-16">
 
         <h2 className="text-center text-4xl font-bold">
-          Why Geplic
+          Platform Features
         </h2>
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -187,7 +295,7 @@ export default function Home() {
               key={feature}
               className="rounded-3xl border border-white/10 bg-white/[0.03] p-8"
             >
-              <h3 className="font-semibold">
+              <h3 className="font-semibold text-green-300">
                 {feature}
               </h3>
             </div>
@@ -196,7 +304,33 @@ export default function Home() {
         </div>
 
       </section>
+<section className="mx-auto max-w-6xl px-6 py-20">
 
+<h2 className="text-center text-4xl font-bold">
+Coming Soon
+</h2>
+
+<div className="mt-12 grid gap-6 md:grid-cols-2">
+
+<div className="rounded-3xl border border-white/10 p-8 text-yellow-300">
+Legally Executable Agreements
+</div>
+
+<div className="rounded-3xl border border-white/10 p-8 text-yellow-300">
+eSign Integration
+</div>
+
+<div className="rounded-3xl border border-white/10 p-8 text-yellow-300">
+Stamp Duty Support
+</div>
+
+<div className="rounded-3xl border border-white/10 p-8 text-yellow-300">
+Business Agreements
+</div>
+
+</div>
+
+</section>
       {/* CTA */}
 
       <section className="mx-auto max-w-4xl px-6 py-24 text-center">

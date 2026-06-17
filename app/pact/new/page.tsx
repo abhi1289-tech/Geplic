@@ -186,35 +186,70 @@ creatorDesignation: profile.designation || "",
       let fields:any = {};
 
   if(category==="Loan"){
+
   fields = {
     loanAmount:Number(loanAmount),
     interestRate,
-    repaymentDate
-  };
-}
+    repaymentDate,
 
+    clauses:[
+      "Party B agrees to repay the loan amount on or before the repayment date.",
+      "Interest shall apply as stated above.",
+      "Any modification is allowed only while the agreement remains in draft state.",
+      "Geplic maintains an audit trail for transparency purposes."
+    ]
+  };
+
+}
 if(category==="Freelance / Service"){
+
   fields = {
     serviceDescription,
     paymentAmount:Number(paymentAmount),
-    deliveryDate
+    deliveryDate,
+
+    clauses:[
+      "Party B agrees to provide the described service.",
+      "Party A agrees to pay the agreed amount.",
+      "The service should be delivered on or before the delivery date.",
+      "Changes are permitted only while the agreement remains in draft state.",
+      "Geplic maintains an audit trail for transparency purposes."
+    ]
   };
+
 }
 
 if(category==="General Promise"){
   fields = {
-    promiseText
+    promiseText,
+
+    clauses:[
+      "Both parties voluntarily agree to the terms stated in this agreement.",
+      "Any modification is only permitted while the agreement remains in draft state.",
+      "Once the agreement is proposed or signed, editing becomes restricted.",
+      "Geplic maintains a digital audit trail for transparency purposes.",
+      "Both parties acknowledge that this agreement represents mutual consent."
+    ]
   };
 }
 
 if(category==="Rent Agreement"){
+
   fields = {
     propertyAddress,
     monthlyRent:Number(monthlyRent),
     securityDeposit:Number(securityDeposit),
     startDate,
-    durationMonths:Number(durationMonths)
+    durationMonths:Number(durationMonths),
+
+    clauses:[
+      "Tenant agrees to pay rent on time.",
+      "Security deposit shall be handled as mutually agreed.",
+      "Changes are allowed only while the agreement remains in draft state.",
+      "Geplic maintains an audit trail for transparency purposes."
+    ]
   };
+
 }
 
       /* CREATE TEMPLATE */
