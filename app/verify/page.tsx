@@ -10,10 +10,12 @@ import {
 } from "firebase/firestore";
 
 import { db } from "@/lib/firebase";
-import BrandLogo from "@/components/BrandLogo";
+import { useRouter } from "next/navigation";
+import AppHeader from "@/components/AppHeader";
 
 export default function VerifyPage(){
 
+  const router = useRouter();
   const [hash,setHash] = useState("");
   const [loading,setLoading] = useState(false);
   const [result,setResult] = useState<any>(null);
@@ -60,18 +62,33 @@ export default function VerifyPage(){
 
   }
 
-  return(
-    
-    <div className="min-h-screen bg-black text-white flex items-center justify-center px-6">
-      
 
-      <div className="w-full max-w-2xl rounded-3xl border border-white/10 bg-white/[0.03] p-10 backdrop-blur-xl shadow-[0_0_80px_rgba(0,200,255,0.06)]">
+return(
 
-        <h1 className="text-3xl font-bold mb-2">
+<div className="min-h-screen bg-black text-white overflow-x-hidden bg-[radial-gradient(circle_at_top,rgba(0,153,255,0.15),transparent_35%)]">
+    {/* HEADER */}
+
+    <AppHeader
+  rightContent={
+    <button
+      onClick={() => router.push("/dashboard")}
+className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-5 py-2 text-sm text-white/70 transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/[0.06] hover:text-white"    >
+      Dashboard
+    </button>
+  }
+/>
+
+    {/* CONTENT */}
+
+    <main className="mx-auto max-w-6xl px-6 py-12">
+
+      <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 sm:p-10 backdrop-blur-xl shadow-[0_0_80px_rgba(0,200,255,0.06)]">
+
+        <h1 className="mb-2 text-3xl font-bold">
           Verify Agreement
         </h1>
 
-        <p className="text-white/60 mb-6">
+        <p className="mb-6 text-white/60">
           Paste the document verification hash below.
         </p>
 
@@ -90,25 +107,24 @@ export default function VerifyPage(){
           {loading ? "Verifying..." : "Verify Document"}
         </button>
 
-        {/* VERIFIED */}
-
         {result && (
 
           <div className="mt-8 rounded-xl border border-green-500/30 bg-green-500/10 p-6">
 
-            <h2 className="text-2xl font-semibold text-green-400 mb-2">
+            <h2 className="mb-2 text-2xl font-semibold text-green-400">
               ✅ Agreement Verified
             </h2>
+
             <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-green-400/20 bg-green-400/10 px-4 py-2 text-sm text-green-300">
 
-  <div className="h-2 w-2 rounded-full bg-green-400" />
+              <div className="h-2 w-2 rounded-full bg-green-400" />
 
-  Hash Integrity Verified
+              Hash Integrity Verified
 
-</div>
+            </div>
 
-            <p className="text-sm text-white/70">
-              This agreement exists on Geplic and its integrity has been successfully verified.
+            <p className="mt-4 text-sm text-white/70">
+              This agreement has been verified against Geplic records. The document hash matches the completed agreement stored on the platform.
             </p>
 
             <div className="mt-6 space-y-2 text-sm">
@@ -124,37 +140,37 @@ export default function VerifyPage(){
               <p>
                 <strong>Party B:</strong> {result.counterpartyEmail}
               </p>
+
               <p>
-  <strong>Accepted By:</strong>{" "}
-  {result.acceptedByName || "Unavailable"}
-</p>
+                <strong>Accepted By:</strong>{" "}
+                {result.acceptedByName || "Unavailable"}
+              </p>
 
-<p>
-  <strong>Designation:</strong>{" "}
-  {result.acceptedByDesignation || "Unavailable"}
-</p>
+              <p>
+                <strong>Designation:</strong>{" "}
+                {result.acceptedByDesignation || "Unavailable"}
+              </p>
 
-<p>
-  <strong>Completed At:</strong>{" "}
-  {result.acceptedAt?.seconds
-    ? new Date(
-        result.acceptedAt.seconds * 1000
-      ).toLocaleString()
-    : "Unavailable"}
-</p>
+              <p>
+                <strong>Completed At:</strong>{" "}
+                {result.acceptedAt?.seconds
+                  ? new Date(
+                      result.acceptedAt.seconds * 1000
+                    ).toLocaleString()
+                  : "Unavailable"}
+              </p>
+
             </div>
 
           </div>
 
         )}
 
-        {/* NOT FOUND */}
-
         {notFound && (
 
           <div className="mt-8 rounded-xl border border-red-500/30 bg-red-500/10 p-6">
 
-            <h2 className="text-2xl font-semibold text-red-400 mb-2">
+            <h2 className="mb-2 text-2xl font-semibold text-red-400">
               ❌ Verification Failed
             </h2>
 
@@ -168,8 +184,9 @@ export default function VerifyPage(){
 
       </div>
 
-    </div>
+    </main>
 
-  );
+  </div>
 
+);
 }

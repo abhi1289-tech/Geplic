@@ -15,6 +15,7 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
+import AppHeader from "@/components/AppHeader";
 
 export default function DashboardPage() {
 
@@ -166,33 +167,23 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-black text-white bg-[radial-gradient(circle_at_top,rgba(0,153,255,0.12),transparent_35%)]">
 
       {/* ================= HEADER ================= */}
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-xl">
+      <AppHeader
+  rightContent={
+  <><button
+            onClick={() => router.push("/profile")}
+            className="rounded-full border border-cyan-400/20 px-4 py-2 text-sm text-cyan-300 transition hover:border-cyan-400/50"
+          >
+            Profile
+          </button><button
+            onClick={handleLogout}
+            disabled={logoutLoading}
+            className="rounded-full border border-white/10 px-4 py-2 text-sm text-white/70 transition hover:border-cyan-400/30 hover:text-cyan-300"
+          >
+              {logoutLoading ? "Logging out..." : "Logout"}
+            </button></>
 
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-
-         <BrandLogo />
-
-<div className="flex items-center gap-3">
-
-  <button
-    onClick={() => router.push("/profile")}
-    className="rounded-full border border-cyan-400/20 px-4 py-2 text-sm text-cyan-300 transition hover:border-cyan-400/50"
-  >
-    Profile
-  </button>
-
-  <button
-    onClick={handleLogout}
-    disabled={logoutLoading}
-    className="rounded-full border border-white/10 px-4 py-2 text-sm text-white/70 transition hover:border-cyan-400/30 hover:text-cyan-300"
-  >
-    {logoutLoading ? "Logging out..." : "Logout"}
-  </button>
-
-</div>
-</div>
-
-      </header>
+} 
+/>
 
       {/* ================= MAIN ================= */}
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-8 sm:py-12">

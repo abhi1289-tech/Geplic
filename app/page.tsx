@@ -1,5 +1,6 @@
 "use client";
 
+import AppHeader from "@/components/AppHeader";
 import BrandLogo from "@/components/BrandLogo";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
@@ -13,42 +14,34 @@ export default function Home() {
 
       {/* NAVBAR */}
 
-      <header className="border-b border-white/10">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
+      <AppHeader
+  rightContent={
+    user ? (
+      <button
+        onClick={() => router.push("/dashboard")}
+        className="rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-5 py-2 font-semibold text-black"
+      >
+        Dashboard
+      </button>
+    ) : (
+      <>
+        <button
+          onClick={() => router.push("/login")}
+          className="rounded-xl border border-white/10 px-5 py-2"
+        >
+          Login
+        </button>
 
-          <BrandLogo />
-
-          <div className="flex items-center gap-3">
-
-            {user ? (
-              <button
-                onClick={() => router.push("/dashboard")}
-                className="rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-5 py-2 font-semibold text-black"
-              >
-                Dashboard
-              </button>
-            ) : (
-              <>
-                <button
-                  onClick={() => router.push("/login")}
-                  className="rounded-xl border border-white/10 px-5 py-2"
-                >
-                  Login
-                </button>
-
-                <button
-                  onClick={() => router.push("/signup")}
-                  className="rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-5 py-2 font-semibold text-black"
-                >
-                  Sign Up
-                </button>
-              </>
-            )}
-
-          </div>
-
-        </div>
-      </header>
+        <button
+          onClick={() => router.push("/signup")}
+          className="rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-5 py-2 font-semibold text-black"
+        >
+          Sign Up
+        </button>
+      </>
+    )
+  }
+/>
 
       {/* HERO */}
 
@@ -99,19 +92,43 @@ export default function Home() {
         <div className="mt-14 grid gap-6 md:grid-cols-6">
 
           {[
-            "Create",
-            "Edit",
-            "Send",
-            "Review",
-            "Accept",
-            "Complete / Void",
-          ].map((step) => (
+  {
+    title:"Create",
+    desc:"Create agreement draft"
+  },
+  {
+    title:"Edit",
+    desc:"Modify terms before sending"
+  },
+  {
+    title:"Send",
+    desc:"Share with counterparty"
+  },
+  {
+    title:"Review",
+    desc:"Counterparty reviews terms"
+  },
+  {
+    title:"Accept",
+    desc:"Digital acceptance recorded"
+  },
+  {
+    title:"Complete / Void",
+    desc:"Finalize or cancel agreement"
+  }
+].map((step) => (
             <div
-              key={step}
-              className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-center"
-            >
-              <p className="font-semibold">{step}</p>
-            </div>
+  key={step.title}
+  className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-center"
+>
+  <p className="font-semibold">
+    {step.title}
+  </p>
+
+  <p className="mt-2 text-sm text-white/50">
+    {step.desc}
+  </p>
+</div>
           ))}
 
         </div>
@@ -204,7 +221,51 @@ export default function Home() {
         </button>
 
       </section>
+    {/* FOOTER */}
 
+<footer className="mt-24 border-t border-white/10">
+
+  <div className="mx-auto max-w-6xl px-6 py-10">
+
+    <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
+
+      <div className="text-center md:text-left">
+
+        <BrandLogo />
+
+        <p className="mt-2 text-sm text-white/50">
+          Create, manage and verify digital agreements.
+        </p>
+
+      </div>
+
+      <div className="flex flex-wrap justify-center gap-6 text-sm text-white/60">
+
+        <button
+          onClick={() => router.push("/privacy")}
+          className="hover:text-white"
+        >
+          Privacy Policy
+        </button>
+
+        <button
+          onClick={() => router.push("/terms")}
+          className="hover:text-white"
+        >
+          Terms
+        </button>
+
+      </div>
+
+    </div>
+
+    <div className="mt-8 border-t border-white/10 pt-6 text-center text-sm text-white/40">
+      © {new Date().getFullYear()} Geplic. All rights reserved.
+    </div>
+
+  </div>
+
+</footer>
     </div>
   );
 }

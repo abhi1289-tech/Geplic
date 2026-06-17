@@ -127,7 +127,7 @@ export default function AgreementTimeline({ pactId }:{ pactId:string }){
 
     ${
       log.action === "AGREEMENT_COMPLETED"
-        ? "bg-violet-400 shadow-[0_0_15px_rgba(192,132,252,0.9)]"
+        ? "bg-green-400 shadow-[0_0_15px_rgba(74,222,128,0.9)]"
         : ""
     }
     ${

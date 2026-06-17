@@ -5,6 +5,7 @@ import { logAction } from "@/lib/audit";
 import BrandLogo from "@/components/BrandLogo";
 import { useEffect, useState } from "react";
 import AgreementTimeline from "@/components/AgreementTimeline";
+import AppHeader from "@/components/AppHeader";
 import {
   doc,
   getDoc,
@@ -356,21 +357,17 @@ hash = await generateHash(agreementData);
 
     <div className="min-h-screen overflow-x-hidden bg-black text-white bg-[radial-gradient(circle_at_top,rgba(0,153,255,0.12),transparent_35%)]">
       {/* ================= HEADER ================= */}
-            <header className="sticky top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-xl">
-      
-              <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-      
-               <BrandLogo />
-               </div>
-               </header>
+            <AppHeader
+  rightContent={
+    <button
+      onClick={() => router.push("/dashboard")}
+      className="mb-6 inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-5 py-2 text-sm text-white/70 transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/[0.06] hover:text-white"
+    >
+      Dashboard
+    </button>
+  }
+/>
       <main className="mx-auto max-w-5xl px-4 sm:px-8 py-8 sm:py-12">
-
-        <button
-          onClick={()=>router.push("/dashboard")}
-          className="mb-6 inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-5 py-2 text-sm text-white/70 transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/[0.06] hover:text-white"
-        >
-          ← Back to Dashboard
-        </button>
 
         <h1 className="text-3xl sm:text-5xl font-bold tracking-tight">
   Agreement

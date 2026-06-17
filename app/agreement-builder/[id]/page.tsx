@@ -18,6 +18,7 @@ import { logAction } from "@/lib/audit";
 import { auth } from "@/lib/firebase";
 import html2pdf from "html2pdf.js";
 import BrandLogo from "@/components/BrandLogo";
+import AppHeader from "@/components/AppHeader";
 
 export default function AgreementBuilderPage() {
   const params = useParams();
@@ -301,8 +302,8 @@ async function voidAgreement() {
     <div className="min-h-screen bg-black text-white bg-[radial-gradient(circle_at_top,rgba(0,153,255,0.12),transparent_35%)]">
       {/* TOP BAR */}
 
-      <header className="border-b border-gray-800 bg-black">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-6">          <BrandLogo />
+      <AppHeader 
+      rightContent={
 
           <div className="flex w-full flex-wrap items-center justify-center gap-2 sm:w-auto sm:justify-end">
             {isPartyA && pact.status === "draft" && (
@@ -344,13 +345,14 @@ async function voidAgreement() {
 
             <button
               onClick={() => router.push("/dashboard")}
-              className="rounded-xl border border-white/10 px-3 sm:px-5 py-2 text-sm transition hover:border-white/20"
+              className="rounded-xl border border-white/10 px-3 sm:px-5 py-2 text-sm transition hover:border-cyan-400/40 hover:bg-white/[0.06] hover:text-white"
             >
               Dashboard
             </button>
           </div>
-        </div>
-      </header>
+      
+}
+/>
 
       {/* DOCUMENT */}
 

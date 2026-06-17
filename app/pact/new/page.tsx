@@ -2,6 +2,7 @@
 
 import { logAction } from "@/lib/audit";
 import { useState } from "react";
+import AppHeader from "@/components/AppHeader";
 import {
   addDoc,
   collection,
@@ -251,7 +252,26 @@ router.push(`/agreement-builder/${pactId}`);
   return(
 
     <div className="min-h-screen pb-10 bg-black text-white bg-[radial-gradient(circle_at_top,#0ea5e920,transparent_35%)]">
+      <AppHeader
+  rightContent={
+    <button
+      onClick={() => {
 
+        const confirmed = window.confirm(
+          "Leave this page? Any information entered will be lost."
+        );
+
+        if (confirmed) {
+          router.push("/dashboard");
+        }
+
+      }}
+      className="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/70 hover:text-white"
+    >
+      Dashboard
+    </button>
+  }
+/>
       <main className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 transition-all duration-500 hover:-translate-y-[2px]">
 
 <form
