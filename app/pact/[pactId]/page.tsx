@@ -180,6 +180,13 @@ const [otherReason,setOtherReason] = useState("");
   return;
 
 }
+ if (!acceptName.trim()) {
+
+    alert("Full Name is required.");
+    return;
+
+  }
+
 
     let hash = null;
     const agreementData = {
@@ -312,12 +319,6 @@ hash = await generateHash(agreementData);
 
   setShowRejectModal(false);
 }
-
-  
-
-  function downloadAgreement(){
-    window.print();
-  }
 
   if(loading){
     return <div className="p-6 text-white">Loading pact...</div>;
@@ -533,8 +534,11 @@ hash = await generateHash(agreementData);
 
   <button
     onClick={acceptOffer}
-    disabled={!acceptConsent}
-    className="mt-6 rounded-2xl bg-gradient-to-r from-cyan-400 to-violet-500 px-6 py-3 font-semibold text-black transition-all duration-300 hover:scale-[1.01] disabled:opacity-40"
+    disabled={
+  !acceptConsent ||
+  !acceptName.trim()
+}
+    className="mt-6 rounded-2xl bg-gradient-to-r from-cyan-400 to-violet-500 px-6 py-3 font-semibold text-black transition-all duration-300 hover:scale-[1.01] disabled:opacity-40 disabled:cursor-not-allowed"
   >
     Complete Agreement
   </button>
@@ -568,20 +572,14 @@ hash = await generateHash(agreementData);
       }
       className="rounded-xl border border-white/10 bg-white/[0.03] px-6 py-3 font-medium text-white transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/[0.06]"
     >
-      {pact.status === "draft" && role === "partyB"
-        ? "View Document"
-        : "Edit Agreement"}
+      {
+        pact.status === "draft" &&
+        role === "partyA"
+          ? "Edit Agreement"
+          : "View Document"
+      }
     </button>
 
-  )}
-
-  {pact.status !== "draft" && (
-    <button
-      onClick={downloadAgreement}
-      className="rounded-xl border border-white/10 bg-white/[0.03] px-6 py-3 font-medium text-white transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/[0.06]"
-    >
-      Download Agreement
-    </button>
   )}
 
   {role === "partyA" &&
@@ -682,6 +680,19 @@ hash = await generateHash(agreementData);
       This agreement was rejected and is no longer active.
     </p>
 
+    <div className="mt-6 rounded-2xl border border-red-500/20 bg-black/20 p-4">
+
+      <p className="text-sm text-white/50">
+        Rejection Reason
+      </p>
+
+      <p className="mt-2 break-words whitespace-pre-wrap text-red-300">
+  {pact.rejectionReason || "No reason provided"}
+</p>
+
+
+    </div>
+
   </div>
 
 )}
@@ -757,6 +768,7 @@ hash = await generateHash(agreementData);
     {rejectReason === "Other" && (
 
       <textarea
+        maxLength={500}
         value={otherReason}
         onChange={(e)=>
           setOtherReason(e.target.value)

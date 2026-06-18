@@ -16,7 +16,8 @@ import { db } from "@/lib/firebase";
 import { generateAgreementTemplate } from "@/lib/templates";
 import { logAction } from "@/lib/audit";
 import { auth } from "@/lib/firebase";
-import html2pdf from "html2pdf.js";
+import { pdf } from "@react-pdf/renderer";
+import AgreementPDF from "@/components/pdf/AgreementPDF";
 import BrandLogo from "@/components/BrandLogo";
 import AppHeader from "@/components/AppHeader";
 
@@ -294,36 +295,32 @@ async function voidAgreement() {
   
 
 
-  async function downloadPDF() {
-    if (!documentRef.current) return;
+ async function downloadPDF() {
 
-    const opt = {
-      margin: 0.5,
+  const blob = await pdf(
+    <AgreementPDF
+      pact={pact}
+      templateFields={templateFields}
+      terms={terms}
+    />
+  ).toBlob();
 
-      filename: `${pact?.title || "agreement"}.pdf`,
+  const url =
+    URL.createObjectURL(blob);
 
-      image: {
-        type: "jpeg" as "jpeg",
-        quality: 1,
-      },
+  const a =
+    document.createElement("a");
 
-      html2canvas: {
-        scale: 2,
-      },
+  a.href = url;
 
-      jsPDF: {
-        unit: "in",
-        format: "a4",
-        orientation: "portrait" as "portrait",
-      },
-    };
+  a.download =
+    `agreement-${pactId}.pdf`;
 
-    await html2pdf()
-      .set(opt)
-      .from(documentRef.current)
-      .save();
-  }
+  a.click();
 
+  URL.revokeObjectURL(url);
+
+}
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-black text-white">

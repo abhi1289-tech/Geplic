@@ -5,6 +5,8 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import BrandLogo from "@/components/BrandLogo";
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -16,6 +18,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
   async function handleForgotPassword() {
 
   if (!email.trim()) {
@@ -75,6 +78,22 @@ export default function LoginPage() {
     } finally {
       setLoading(false);
     }
+     const searchParams = useSearchParams();
+
+useEffect(() => {
+
+  if (
+    searchParams?.get("reason") ===
+    "session-expired"
+  ) {
+
+    alert(
+      "Session expired due to inactivity. Please sign in again."
+    );
+
+  }
+
+}, [searchParams]);
   };
 
   return (

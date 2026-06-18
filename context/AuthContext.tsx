@@ -38,39 +38,105 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useState<UserProfile | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(
-  auth,
-  async (firebaseUser) => {
+  const unsubscribe = onAuthStateChanged(
+    auth,
+    async (firebaseUser) => {
 
-    setUser(firebaseUser);
+      setUser(firebaseUser);
 
-    if (firebaseUser) {
+      if (firebaseUser) {
 
-      const userRef = doc(
-        db,
-        "users",
-        firebaseUser.uid
-      );
+        const userRef = doc(
+          db,
+          "users",
+          firebaseUser.uid
+        );
 
-      const userSnap = await getDoc(userRef);
+        const userSnap = await getDoc(userRef);
 
-      if (userSnap.exists()) {
-        setProfile(userSnap.data() as UserProfile);
+        if (userSnap.exists()) {
+          setProfile(
+            userSnap.data() as UserProfile
+          );
+        }
+
+      } else {
+
+        setProfile(null);
+
       }
 
-    } else {
-
-      setProfile(null);
+      setLoading(false);
 
     }
+  );
 
-    setLoading(false);
+  let timeout: NodeJS.Timeout;
 
-  }
-);
+  const resetTimer = () => {
 
-    return () => unsubscribe();
-  }, []);
+    clearTimeout(timeout);
+
+    timeout = setTimeout(async () => {
+
+  await auth.signOut();
+
+  window.location.href = "/login?reason=session-expired";
+
+}, 30 * 60 * 1000);//30 minutes
+  };
+
+  window.addEventListener(
+    "mousemove",
+    resetTimer
+  );
+
+  window.addEventListener(
+    "keydown",
+    resetTimer
+  );
+
+  window.addEventListener(
+    "click",
+    resetTimer
+  );
+
+  window.addEventListener(
+    "touchstart",
+    resetTimer
+  );
+
+  resetTimer();
+
+  return () => {
+
+    unsubscribe();
+
+    clearTimeout(timeout);
+
+    window.removeEventListener(
+      "mousemove",
+      resetTimer
+    );
+
+    window.removeEventListener(
+      "keydown",
+      resetTimer
+    );
+
+    window.removeEventListener(
+      "click",
+      resetTimer
+    );
+
+    window.removeEventListener(
+      "touchstart",
+      resetTimer
+    );
+
+  };
+
+}, []);
 
   return (
     <AuthContext.Provider
