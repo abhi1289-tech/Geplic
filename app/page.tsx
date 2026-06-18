@@ -131,7 +131,7 @@ Verify Authenticity.
     Agreement Lifecycle
   </h2>
 
-  <div className="mt-14 flex flex-wrap justify-center gap-6">
+  <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
 
     {[
       {
@@ -157,7 +157,21 @@ Verify Authenticity.
     ].map((step) => (
       <div
   key={step.title}
-  className={`rounded-3xl border p-8 text-center ${step.color}`}
+  className={`
+    min-h-[200px]
+    rounded-3xl
+    border
+    p-8
+    flex
+    flex-col
+    justify-center
+    items-center
+    text-center
+    transition-all
+    hover:-translate-y-1
+    hover:shadow-xl
+    ${step.color}
+  `}
 >
         <h3 className="text-xl font-bold">
           {step.title}
@@ -204,10 +218,10 @@ desc:"Track rental terms, deposits and tenancy details."
               key={item.title}
               className="rounded-3xl border border-white/10 bg-white/[0.03] p-8"
             >
-              <h3 className="text-xl font-semibold text-cyan-300">
+              <h3 className="text-xl font-semibold text-center text-cyan-300">
                 {item.title}
               </h3>
-              <p className="mt-2 text-sm text-white/50">
+              <p className="mt-2 text-sm text-center text-white/50">
                 {item.desc}
               </p>
             </div>
@@ -228,39 +242,39 @@ Why Use Geplic?
 
 <thead>
 <tr className="border-b border-white/10">
-<th className="p-5 text-left">WhatsApp</th>
-<th className="p-5 text-left">Geplic</th>
+<th className="p-5 text-center">WhatsApp</th>
+<th className="p-5 text-center">Geplic</th>
 </tr>
 </thead>
 
 <tbody>
 
 <tr className="border-b border-white/10">
-<td className="p-5 text-white/50">
+<td className="p-5 text-center text-white/50">
 Messages can be deleted
 </td>
 
-<td className="p-5 text-cyan-300">
+<td className="p-5 text-center text-cyan-300">
 Permanent audit trail
 </td>
 </tr>
 
 <tr className="border-b border-white/10">
-<td className="p-5 text-white/50">
+<td className="p-5 text-center text-white/50">
 No agreement verification
 </td>
 
-<td className="p-5 text-cyan-300">
+<td className="p-5 text-center text-cyan-300">
 Hash verification
 </td>
 </tr>
 
 <tr className="border-b border-white/10">
-<td className="p-5 text-white/50">
+<td className="p-5 text-center text-white/50">
 Hard to track approvals
 </td>
 
-<td className="p-5 text-cyan-300">
+<td className="p-5 text-center text-cyan-300">
 Digital acceptance records
 </td>
 </tr>
@@ -295,7 +309,7 @@ Digital acceptance records
               key={feature}
               className="rounded-3xl border border-white/10 bg-white/[0.03] p-8"
             >
-              <h3 className="font-semibold text-green-300">
+              <h3 className="font-semibold text-center text-cyan-300">
                 {feature}
               </h3>
             </div>
@@ -312,19 +326,19 @@ Coming Soon
 
 <div className="mt-12 grid gap-6 md:grid-cols-2">
 
-<div className="rounded-3xl border border-white/10 p-8 text-yellow-300">
+<div className="rounded-3xl border border-white/10 p-8 text-center text-cyan-300">
 Legally Executable Agreements
 </div>
 
-<div className="rounded-3xl border border-white/10 p-8 text-yellow-300">
+<div className="rounded-3xl border border-white/10 p-8 text-center text-cyan-300">
 eSign Integration
 </div>
 
-<div className="rounded-3xl border border-white/10 p-8 text-yellow-300">
+<div className="rounded-3xl border border-white/10 p-8 text-center text-cyan-300">
 Stamp Duty Support
 </div>
 
-<div className="rounded-3xl border border-white/10 p-8 text-yellow-300">
+<div className="rounded-3xl border border-white/10 p-8 text-center text-cyan-300">
 Business Agreements
 </div>
 

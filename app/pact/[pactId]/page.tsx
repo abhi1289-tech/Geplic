@@ -23,9 +23,15 @@ import { generateHash } from "@/lib/hash";
 export default function PactPage(){
 
   const router = useRouter();
+  
   const [acceptName,setAcceptName] = useState("");
   const [acceptDesignation,setAcceptDesignation] = useState("");
   const [acceptConsent,setAcceptConsent] = useState(false);
+  const [showRejectModal,setShowRejectModal] = useState(false);
+
+const [rejectReason,setRejectReason] = useState("");
+
+const [otherReason,setOtherReason] = useState("");
   const params = useParams();
   const pactId = params?.pactId as string;
 
@@ -270,22 +276,27 @@ hash = await generateHash(agreementData);
   });
 }
   async function rejectOffer(){
-    if (pact.status === "voided") {
 
-  alert("This agreement has been voided.");
+  const finalReason =
+    rejectReason === "Other"
+      ? otherReason
+      : rejectReason;
 
-  return;
-
-}
+  if(!finalReason){
+    alert("Please select a reason");
+    return;
+  }
 
   await updateDoc(
-  doc(db,"pacts",pactId),
-  {
-    status:"rejected",
-    rejectedAt:new Date(),
-    agreementLocked:true
-  }
-);
+    doc(db,"pacts",pactId),
+    {
+      status:"rejected",
+      rejectedAt:new Date(),
+      rejectionReason: finalReason,
+      rejectedBy:user?.email || "",
+      agreementLocked:true
+    }
+  );
 
   await logAction(
     pactId,
@@ -295,9 +306,11 @@ hash = await generateHash(agreementData);
 
   setPact({
     ...pact,
-    status:"rejected"
+    status:"rejected",
+    rejectionReason: finalReason
   });
 
+  setShowRejectModal(false);
 }
 
   
@@ -444,7 +457,7 @@ hash = await generateHash(agreementData);
             onClick={sendOffer}
             className="mt-8 rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-6 py-3 font-semibold text-black transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_25px_rgba(34,211,238,0.35)]"
           >
-            Send Offer
+              Send Offer  
           </button>
 
         )}
@@ -531,7 +544,7 @@ hash = await generateHash(agreementData);
 
 )}
             <button
-              onClick={rejectOffer}
+              onClick={() => setShowRejectModal(true)}
               className="rounded-xl border border-red-500/30 bg-red-500/10 px-6 py-3 font-semibold text-red-300 transition-all duration-300 hover:bg-red-500/20 hover:shadow-[0_0_20px_rgba(239,68,68,0.25)]"
             >
               Reject Offer
@@ -555,9 +568,9 @@ hash = await generateHash(agreementData);
       }
       className="rounded-xl border border-white/10 bg-white/[0.03] px-6 py-3 font-medium text-white transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/[0.06]"
     >
-      {pact.status === "draft"
-        ? "Edit Document"
-        : "View Agreement"}
+      {pact.status === "draft" && role === "partyB"
+        ? "View Document"
+        : "Edit Agreement"}
     </button>
 
   )}
@@ -689,6 +702,92 @@ hash = await generateHash(agreementData);
   <p className="mt-3 text-white/50">
     This agreement was voided by the creator before completion.
   </p>
+
+</div>
+
+)}
+{showRejectModal && (
+
+<div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+
+  <div className="w-full max-w-md rounded-3xl border border-white/10 bg-[#111] p-6">
+
+    <h3 className="text-xl font-bold">
+      Reject Agreement
+    </h3>
+
+    <select
+      value={rejectReason}
+      onChange={(e)=>setRejectReason(e.target.value)}
+      className="mt-5 w-full rounded-xl border border-white/10 bg-black px-4 py-3"
+    >
+      <option value="">
+        Select reason
+      </option>
+
+      <option>
+        Agreement terms are unclear
+      </option>
+
+      <option>
+        Incorrect amount/value
+      </option>
+
+      <option>
+        Incorrect dates
+      </option>
+
+      <option>
+        Incorrect party information
+      </option>
+
+      <option>
+        Need additional clauses
+      </option>
+
+      <option>
+        Legal concerns
+      </option>
+
+      <option>
+        Other
+      </option>
+    </select>
+
+    {rejectReason === "Other" && (
+
+      <textarea
+        value={otherReason}
+        onChange={(e)=>
+          setOtherReason(e.target.value)
+        }
+        placeholder="Enter reason"
+        className="mt-4 w-full rounded-xl border border-white/10 bg-black p-4"
+      />
+
+    )}
+
+    <div className="mt-6 flex gap-3">
+
+      <button
+        onClick={() =>
+          setShowRejectModal(false)
+        }
+        className="flex-1 rounded-xl border border-white/10 py-3"
+      >
+        Cancel
+      </button>
+
+      <button
+        onClick={rejectOffer}
+        className="flex-1 rounded-xl bg-red-600 py-3 font-semibold"
+      >
+        Reject
+      </button>
+
+    </div>
+
+  </div>
 
 </div>
 

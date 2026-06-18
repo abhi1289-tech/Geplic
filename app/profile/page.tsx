@@ -9,10 +9,13 @@ import {
 
 import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
+import AppHeader from "@/components/AppHeader";
+import { useRouter } from "next/navigation";
 
 export default function ProfilePage(){
 
   const { user } = useAuth();
+  const router = useRouter();
 
   const [fullName,setFullName] = useState("");
   const [designation,setDesignation] = useState("");
@@ -92,6 +95,19 @@ export default function ProfilePage(){
   return(
 
     <div className="min-h-screen bg-black text-white">
+      {/* HEADER */}
+      
+          <AppHeader
+        rightContent={
+          <button
+            onClick={() => router.push("/dashboard")}
+      className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-5 py-2 text-sm text-white/70 transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/[0.06] hover:text-white"    >
+            Dashboard
+          </button>
+        }
+      />
+      
+          {/* CONTENT */}
 
       <main className="mx-auto max-w-3xl px-6 py-14">
 

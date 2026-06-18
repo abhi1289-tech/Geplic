@@ -344,61 +344,113 @@ async function voidAgreement() {
     <div className="min-h-screen bg-black text-white bg-[radial-gradient(circle_at_top,rgba(0,153,255,0.12),transparent_35%)]">
       {/* TOP BAR */}
 
-      <AppHeader 
-      rightContent={
-
-          <div className="flex w-full flex-wrap items-center justify-center gap-2 sm:w-auto sm:justify-end">
-            {isPartyA && pact.status === "draft" && (
-            <button
-              onClick={saveContinue}
-              className="rounded-xl border border-white/10 px-3 sm:px-5 py-2 text-sm transition hover:border-cyan-400/20 hover:text-cyan-300"
-            >
-              Save & Continue
-            </button>)}
-
-            <button
-              onClick={downloadPDF}
-              className="rounded-xl border border-white/10 px-3 sm:px-5 py-2 text-sm transition hover:border-cyan-400/20 hover:text-cyan-300"
-            >
-              Download PDF
-            </button>
-           
-            {isPartyA && pact.status === "draft" && (
-              <button
-  onClick={sendAgreement}
-  disabled={sending}
-  className="rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-3 sm:px-5 py-2 text-sm font-semibold text-black transition hover:scale-[1.02] disabled:opacity-50"
->
-  {sending ? "Sending..." : "Send Agreement"}
-</button>
-            )}
-            {isPartyA &&
- (pact.status === "draft" ||
-  pact.status === "pending") && (
-
-<button
-  onClick={voidAgreement}
-  className="rounded-xl border border-red-500/40 px-3 sm:px-5 py-2 text-sm font-semibold text-red-400 hover:bg-red-500/10"
->
-  Void Agreement
-</button>
-
-)}
-
-            <button
-              onClick={() => router.push("/dashboard")}
-              className="rounded-xl border border-white/10 px-3 sm:px-5 py-2 text-sm transition hover:border-cyan-400/40 hover:bg-white/[0.06] hover:text-white"
-            >
-              Dashboard
-            </button>
-          </div>
-      
-}
+      <AppHeader
+  rightContent={
+    <button
+      onClick={() => router.push("/dashboard")}
+      className="
+      rounded-xl
+      border
+      border-white/10
+      px-5
+      py-2
+      text-sm
+      transition
+      hover:border-cyan-400/40
+      hover:bg-white/[0.06]
+      hover:text-white
+      "
+    >
+      Dashboard
+    </button>
+  }
 />
+
+<div className="border-t border-white/10 bg-black/20">
+  <div className="mx-auto max-w-6xl px-4 py-4">
+
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+
+      {isPartyA && pact.status === "draft" && (
+        <button
+          onClick={saveContinue}
+          className="
+          rounded-2xl
+          border
+          border-white/10
+          py-4
+          font-medium
+          transition
+          hover:border-cyan-400/20
+          hover:text-cyan-300
+          "
+        >
+          Save & Continue
+        </button>
+      )}
+
+      <button
+        onClick={downloadPDF}
+        className="
+        rounded-2xl
+        border
+        border-white/10
+        py-4
+        font-medium
+        transition
+        hover:border-cyan-400/20
+        hover:text-cyan-300
+        "
+      >
+        Download PDF
+      </button>
+
+      {isPartyA && pact.status === "draft" && (
+        <button
+          onClick={sendAgreement}
+          disabled={sending}
+          className="
+          rounded-2xl
+          bg-gradient-to-r
+          from-cyan-400
+          to-violet-500
+          py-4
+          font-semibold
+          text-black
+          disabled:opacity-50
+          "
+        >
+          {sending ? "Sending..." : "Send Agreement"}
+        </button>
+      )}
+
+      {isPartyA &&
+        (pact.status === "draft" ||
+          pact.status === "pending") && (
+          <button
+            onClick={voidAgreement}
+            className="
+            rounded-2xl
+            border
+            border-red-500/40
+            py-4
+            font-semibold
+            text-red-400
+            hover:bg-red-500/10
+            "
+          >
+            Void Agreement
+          </button>
+      )}
+
+    </div>
+
+  </div>
+</div>
 
       {/* DOCUMENT */}
 
-      <main className="mx-auto max-w-6xl px-2 sm:px-6 py-4 sm:py-10">
+      <main className="mx-auto max-w-6xl px-2 sm:px-6 py-6 sm:py-10">
         <div 
           ref={documentRef}
           style={{ backgroundColor: "#F7FFF7", backgroundImage:
@@ -723,13 +775,13 @@ async function voidAgreement() {
 
           {/* DIGITAL ACCEPTANCE */}
 
-<div className="relative z-10 mt-14 border-t border-emerald-200 pt-10">
+<div className="relative z-10 mt-14 border-t border-emerald-200 pt-6 md:pt-8">
 
   <h2 className="text-3xl font-bold tracking-tight">
     Digital Acceptance
   </h2>
 
-  <div className="mt-8 grid gap-8 md:grid-cols-2">
+  <div className="mt-8 grid gap-4 md:gap-8 md:grid-cols-2">
 
     {/* PARTY A */}
 
@@ -801,7 +853,7 @@ async function voidAgreement() {
 
       ) : (
 
-        <div className="mt-6 flex h-40 items-center justify-center rounded-2xl border border-dashed border-emerald-200 text-black/40">
+        <div className="mt-6 flex h-32 md:h-40 items-center justify-center rounded-2xl border border-dashed border-emerald-200 text-black/40">
 
           Waiting for counterparty acceptance
 
@@ -815,94 +867,56 @@ async function voidAgreement() {
 
 </div>
 
-          <div className="relative z-10 mt-14 border-t border-emerald-200 pt-8">
+          {/* FOOTER */}
 
-  <div className="grid md:grid-cols-3 items-center gap-8">
+<div className="relative z-10 mt-14 border-t border-emerald-200 pt-8">
+
+  <div className="flex justify-between gap-6">
 
     {/* LEFT */}
 
-    <div>
-      <p className="text-sm uppercase tracking-[0.3em] text-emerald-700">
-        Verification
-      </p>
+    <div className="flex-1">
 
-      <p className="mt-2 text-sm text-black/70">
-        Verified on Geplic
-      </p>
-      <p className="mt-1 text-xs text-black/50">
-  Generated on {new Date().toLocaleDateString()}
-</p>
-    </div>
+  <p className="text-sm uppercase tracking-[0.3em] text-emerald-700">
+    Verification
+  </p>
 
-    {/* CENTER SEAL */}
-    
+  <p className="mt-2 text-sm text-black/70">
+    Verified on Geplic
+  </p>
 
-    
+  <p className="mt-1 text-sm text-black/50">
+    Generated on{" "}
+    {pact.createdAt?.seconds
+      ? new Date(
+          pact.createdAt.seconds * 1000
+        ).toLocaleDateString()
+      : "Not Available"}
+  </p>
 
-  <div className="flex justify-center">
-
-    <div className="
-      relative
-      h-40
-      w-40
-      rounded-full
-      border-[6px]
-      border-emerald-300
-      flex
-      items-center
-      justify-center
-      bg-emerald-50
-    ">
-
-      <div
-        className="
-          absolute
-          inset-2
-          rounded-full
-          border-2
-          border-emerald-400
-        "
-      />
-
-      <div className="text-center">
-
-        <div className="text-4xl">
-          ✓
-        </div>
-
-        <p className="text-xs font-bold tracking-wider text-emerald-700">
-          GEPLIC VERIFIED
-        </p>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
+</div>
 
     {/* RIGHT */}
 
-    <div className="text-right">
+    <div className="flex-1 text-right">
 
-      <p className="text-sm uppercase tracking-[0.3em] text-emerald-700">
-        SHA-256 Hash
-      </p>
+  <p className="text-sm uppercase tracking-[0.3em] text-emerald-700">
+    SHA-256 Hash
+  </p>
 
-      <p className="mt-2 break-all text-sm text-black/70">
-        {pact.documentHash || "Not Available"}
-      </p>
+  <p className="mt-2 text-sm text-black/70 break-all">
+    {pact.documentHash || "Not Available"}
+  </p>
 
-      <p className="mt-6 text-xs uppercase tracking-[0.3em] text-emerald-700">
-        Verification Link
-      </p>
+  <p className="mt-5 text-sm uppercase tracking-[0.3em] text-emerald-700">
+    Verification Link
+  </p>
 
-      <p className="mt-2 break-all text-sm text-black/70">
-        https://geplic.com/verify/{pact.documentHash}
-      </p>
+  <p className="mt-2 text-sm text-black/70 break-all">
+    https://geplic.com/verify/{pact.documentHash || ""}
+  </p>
 
-    </div>
+</div>
 
   </div>
 
