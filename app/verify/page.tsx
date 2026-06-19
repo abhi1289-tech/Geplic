@@ -20,6 +20,10 @@ export default function VerifyPage(){
   const [loading,setLoading] = useState(false);
   const [result,setResult] = useState<any>(null);
   const [notFound,setNotFound] = useState(false);
+  const verificationInfo =
+  result
+    ? getVerificationStatus(result.status)
+    : null;
 
   async function verifyDocument(){
 
@@ -44,9 +48,14 @@ export default function VerifyPage(){
 
       }else{
 
-        const pact = snap.docs[0].data();
+        const pactDoc = snap.docs[0];
 
-        setResult(pact);
+const pact = {
+  id: pactDoc.id,
+  ...pactDoc.data(),
+};
+
+setResult(pact);
 
       }
 
@@ -62,7 +71,61 @@ export default function VerifyPage(){
 
   }
 
+function getVerificationStatus(status: string) {
 
+  switch(status){
+
+    case "completed":
+      return {
+        title: "✅ Agreement Verified",
+        color: "green",
+        message:
+          "This agreement has been completed and verified against Geplic records."
+      };
+
+    case "draft":
+      return {
+        title: "⚠ Agreement Draft",
+        color: "yellow",
+        message:
+          "This agreement exists but has not yet been completed."
+      };
+
+    case "pending":
+      return {
+        title: "⏳ Pending Acceptance",
+        color: "yellow",
+        message:
+          "This agreement has been sent but is still awaiting acceptance."
+      };
+
+    case "rejected":
+      return {
+        title: "❌ Agreement Rejected",
+        color: "red",
+        message:
+          "This agreement was rejected by one of the parties."
+      };
+
+    case "voided":
+      return {
+        title: "🚫 Agreement Voided",
+        color: "red",
+        message:
+          "This agreement was voided by its creator before completion."
+      };
+
+    default:
+      return {
+        title: "ℹ Agreement Found",
+        color: "cyan",
+        message:
+          "Agreement located in Geplic records."
+      };
+
+  }
+
+}
 return(
 
 <div className="min-h-screen bg-black text-white overflow-x-hidden bg-[radial-gradient(circle_at_top,rgba(0,153,255,0.15),transparent_35%)]">
@@ -106,14 +169,34 @@ className="inline-flex items-center rounded-full border border-white/10 bg-white
         >
           {loading ? "Verifying..." : "Verify Document"}
         </button>
-
+        const verificationInfo =
+  result
+    ? getVerificationStatus(result.status)
+    : null;
         {result && (
 
-          <div className="mt-8 rounded-xl border border-green-500/30 bg-green-500/10 p-6">
+          <div
+  className={`mt-8 rounded-xl p-6 ${
+    verificationInfo?.color === "green"
+      ? "border border-green-500/30 bg-green-500/10"
+      : verificationInfo?.color === "red"
+      ? "border border-red-500/30 bg-red-500/10"
+      : "border border-yellow-500/30 bg-yellow-500/10"
+  }`}
+>
 
-            <h2 className="mb-2 text-2xl font-semibold text-green-400">
-              ✅ Agreement Verified
-            </h2>
+            <h2
+  className={`mb-2 text-2xl font-semibold ${
+    verificationInfo?.color === "green"
+      ? "text-green-400"
+      : verificationInfo?.color === "red"
+      ? "text-red-400"
+      : "text-yellow-400"
+  }`}
+>
+  {verificationInfo?.title}
+</h2>
+
 
             <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-green-400/20 bg-green-400/10 px-4 py-2 text-sm text-green-300">
 
@@ -124,11 +207,14 @@ className="inline-flex items-center rounded-full border border-white/10 bg-white
             </div>
 
             <p className="mt-4 text-sm text-white/70">
-              This agreement has been verified against Geplic records. The document hash matches the completed agreement stored on the platform.
-            </p>
+  {verificationInfo?.message}
+</p>
 
             <div className="mt-6 space-y-2 text-sm">
-
+              <p>
+  <strong>Agreement ID:</strong>{" "}
+  {result.id || "Unavailable"}
+</p>
               <p>
                 <strong>Status:</strong> {result.status}
               </p>

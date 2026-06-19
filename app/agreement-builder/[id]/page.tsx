@@ -315,7 +315,7 @@ async function voidAgreement() {
   a.href = url;
 
   a.download =
-    `agreement-${pactId}.pdf`;
+  `Geplic-${pact.contractType}-${pactId}.pdf`;
 
   a.click();
 

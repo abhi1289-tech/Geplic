@@ -52,6 +52,10 @@ export default function CreatePactPage(){
   const [startDate,setStartDate] = useState("");
   const [durationMonths,setDurationMonths] = useState("");
 
+  const selfInvite =
+  user?.email?.toLowerCase() ===
+  counterpartyEmail.trim().toLowerCase();
+
   async function handleCreate(e:React.FormEvent){
 
     e.preventDefault();
@@ -194,6 +198,22 @@ if (category === "Rent Agreement") {
       setLoading(true);
 
       const email = user.email?.toLowerCase() || "";
+      const counterparty =
+  counterpartyEmail
+    .toLowerCase()
+    .trim();
+
+if (email === counterparty) {
+
+  alert(
+    "You cannot create an agreement with yourself."
+  );
+
+  setLoading(false);
+
+  return;
+
+}
       if (category === "Loan" && repaymentDate) {
 
   const selectedDate = new Date(repaymentDate);
@@ -558,6 +578,13 @@ router.push(`/agreement-builder/${pactId}`);
       onChange={(e)=>setCounterpartyEmail(e.target.value)}
       required
     />
+    {selfInvite && (
+
+  <p className="text-sm text-red-400">
+    You cannot invite yourself as the counterparty.
+  </p>
+
+)}
 
   </div>
 
@@ -836,8 +863,13 @@ router.push(`/agreement-builder/${pactId}`);
       
         <button
           type="submit"
-          disabled={loading}
-          className="relative overflow-hidden w-full rounded-2xl bg-gradient-to-r from-cyan-400 to-purple-500 py-5 font-semibold text-black transition-all duration-300 hover:scale-[1.01] hover:shadow-[0_0_35px_rgba(120,119,255,0.35)] active:scale-[0.99]"
+          disabled={loading || selfInvite}
+          className={`relative overflow-hidden w-full rounded-2xl py-5 font-semibold transition-all duration-300
+${
+  loading || selfInvite
+    ? "cursor-not-allowed bg-white/10 text-white/40"
+    : "bg-gradient-to-r from-cyan-400 to-purple-500 text-black hover:scale-[1.01] hover:shadow-[0_0_35px_rgba(120,119,255,0.35)]"
+}`}
         >
           <>
           <span className="relative z-10">
