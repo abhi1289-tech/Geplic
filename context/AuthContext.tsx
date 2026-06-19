@@ -81,7 +81,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   await auth.signOut();
 
-  window.location.href = "/login?reason=session-expired";
+  window.location.href = "/login";
 
 }, 30 * 60 * 1000);//30 minutes
   };
