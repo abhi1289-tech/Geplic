@@ -585,16 +585,7 @@ router.push(`/agreement-builder/${pactId}`);
   </p>
 
 )}
-
   </div>
-
-
-
-
-
-  
-  
-
 </div>
 
         {/*LOAN */}

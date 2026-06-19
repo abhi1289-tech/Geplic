@@ -70,6 +70,7 @@ setResult(pact);
     }
 
   }
+  
 
 function getVerificationStatus(status: string) {
 
@@ -169,10 +170,7 @@ className="inline-flex items-center rounded-full border border-white/10 bg-white
         >
           {loading ? "Verifying..." : "Verify Document"}
         </button>
-        const verificationInfo =
-  result
-    ? getVerificationStatus(result.status)
-    : null;
+        
         {result && (
 
           <div
