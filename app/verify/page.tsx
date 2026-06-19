@@ -6,7 +6,9 @@ import {
   collection,
   query,
   where,
-  getDocs
+  getDocs,
+  getDoc,
+  doc
 } from "firebase/firestore";
 
 import { db } from "@/lib/firebase";
@@ -35,29 +37,57 @@ export default function VerifyPage(){
       setNotFound(false);
       setResult(null);
 
-      const q = query(
-        collection(db,"pacts"),
-        where("documentHash","==",hash.trim())
-      );
+      const searchValue = hash.trim();
 
-      const snap = await getDocs(q);
+let pact = null;
 
-      if(snap.empty){
+/* SEARCH BY HASH */
 
-        setNotFound(true);
+const hashQuery = query(
+  collection(db, "pacts"),
+  where("documentHash", "==", searchValue)
+);
 
-      }else{
+const hashSnap = await getDocs(hashQuery);
 
-        const pactDoc = snap.docs[0];
+if (!hashSnap.empty) {
 
-const pact = {
-  id: pactDoc.id,
-  ...pactDoc.data(),
-};
+  pact = {
+    id: hashSnap.docs[0].id,
+    ...hashSnap.docs[0].data(),
+  };
 
-setResult(pact);
+}
 
-      }
+/* SEARCH BY AGREEMENT ID */
+
+if (!pact) {
+
+  const agreementDoc = await getDoc(
+    doc(db, "pacts", searchValue)
+  );
+
+  if (agreementDoc.exists()) {
+
+  pact = {
+    id: agreementDoc.id,
+    ...agreementDoc.data(),
+  };
+
+}
+}
+
+/* RESULT */
+
+if (!pact) {
+
+  setNotFound(true);
+
+} else {
+
+  setResult(pact);
+
+}
 
     }catch(error){
 
@@ -153,13 +183,13 @@ className="inline-flex items-center rounded-full border border-white/10 bg-white
         </h1>
 
         <p className="mb-6 text-white/60">
-          Paste the document verification hash below.
+          Enter an Agreement ID or Document Hash to verify authenticity.
         </p>
 
         <textarea
           value={hash}
           onChange={(e)=>setHash(e.target.value)}
-          placeholder="Paste document hash..."
+          placeholder="Paste Agreement ID or Document Hash..."
           className="h-36 w-full rounded-2xl border border-white/10 bg-black/40 p-5 text-sm text-white outline-none transition-all duration-300 hover:border-cyan-400/30 focus:border-cyan-400/60"
         />
 
@@ -259,7 +289,7 @@ className="inline-flex items-center rounded-full border border-white/10 bg-white
             </h2>
 
             <p className="text-sm text-white/70">
-              No agreement found for this hash.
+              No agreement found for this Agreement ID or Document Hash.
             </p>
 
           </div>
