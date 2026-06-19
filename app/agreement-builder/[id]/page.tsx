@@ -300,6 +300,7 @@ async function voidAgreement() {
   const blob = await pdf(
     <AgreementPDF
       pact={pact}
+      agreementId={pactId}
       templateFields={templateFields}
       terms={terms}
     />
@@ -608,16 +609,19 @@ async function voidAgreement() {
   </div>
 
 </div>
- <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+ <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
 
-  <span className="
+  <span
+    className="
     rotate-[-30deg]
-    text-[120px]
+    text-[180px]
     font-black
     tracking-[1rem]
-    text-gray-200
-    opacity-30
-  ">
+    text-emerald-500/10
+    whitespace-nowrap
+    select-none
+    "
+  >
     {pact.status === "draft"
       ? "DRAFT"
       : pact.status === "pending"

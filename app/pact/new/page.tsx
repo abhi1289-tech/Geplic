@@ -100,6 +100,93 @@ if (deliveryDate) {
   }
 
 }
+/* REQUIRED FIELD VALIDATION */
+
+if (!title.trim()) {
+  alert("Agreement title is required");
+  return;
+}
+
+if (!counterpartyEmail.trim()) {
+  alert("Other party email is required");
+  return;
+}
+
+if (category === "Loan") {
+
+  if (!loanAmount) {
+    alert("Loan amount is required");
+    return;
+  }
+
+  if (!interestRate) {
+    alert("Interest rate is required");
+    return;
+  }
+
+  if (!repaymentDate) {
+    alert("Repayment date is required");
+    return;
+  }
+
+}
+
+if (category === "Freelance / Service") {
+
+  if (!serviceDescription.trim()) {
+    alert("Service description is required");
+    return;
+  }
+
+  if (!paymentAmount) {
+    alert("Payment amount is required");
+    return;
+  }
+
+  if (!deliveryDate) {
+    alert("Delivery date is required");
+    return;
+  }
+
+}
+
+if (category === "General Promise") {
+
+  if (!promiseText.trim()) {
+    alert("Promise details are required");
+    return;
+  }
+
+}
+
+if (category === "Rent Agreement") {
+
+  if (!propertyAddress.trim()) {
+    alert("Property address is required");
+    return;
+  }
+
+  if (!monthlyRent) {
+    alert("Monthly rent is required");
+    return;
+  }
+
+  if (!securityDeposit) {
+    alert("Security deposit is required");
+    return;
+  }
+
+  if (!startDate) {
+    alert("Start date is required");
+    return;
+  }
+
+  if (!durationMonths) {
+    alert("Duration is required");
+    return;
+  }
+
+}
     if(!user) return;
 
     try{
@@ -504,6 +591,7 @@ router.push(`/agreement-builder/${pactId}`);
         </label>
 
         <input
+        required
           type="number"
           placeholder="Loan Amount"
           className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
@@ -518,6 +606,7 @@ router.push(`/agreement-builder/${pactId}`);
         </label>
 
         <input
+          required
           type="number"
           placeholder="Interest Rate (%)"
           className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
@@ -532,6 +621,7 @@ router.push(`/agreement-builder/${pactId}`);
         </label>
 
         <input
+        required
   type="date"
     onFocus={(e) =>
     e.target.showPicker?.()
@@ -571,6 +661,7 @@ router.push(`/agreement-builder/${pactId}`);
         </label>
 
         <textarea
+        required
           placeholder="Describe the service agreement"
           className="min-h-[180px] sm:min-h-[140px] w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
           value={serviceDescription}
@@ -584,6 +675,7 @@ router.push(`/agreement-builder/${pactId}`);
         </label>
 
         <input
+        required
           type="number"
           placeholder="Payment Amount"
           className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
@@ -598,6 +690,7 @@ router.push(`/agreement-builder/${pactId}`);
         </label>
 
         <input
+          required
           type="date"
     onFocus={(e) =>
     e.target.showPicker?.()
@@ -630,6 +723,7 @@ router.push(`/agreement-builder/${pactId}`);
     </div>
 
     <textarea
+    required
       placeholder="Write the promise details"
       className="min-h-[220px] sm:min-h-[180px] w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
       value={promiseText}
@@ -662,6 +756,7 @@ router.push(`/agreement-builder/${pactId}`);
         </label>
 
         <textarea
+        required
           placeholder="Property Address"
           className="[min-h-[160px] sm:min-h-[120px] w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
           value={propertyAddress}
@@ -675,6 +770,7 @@ router.push(`/agreement-builder/${pactId}`);
         </label>
 
         <input
+          required
           type="number"
           placeholder="Monthly Rent"
           className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
@@ -689,6 +785,7 @@ router.push(`/agreement-builder/${pactId}`);
         </label>
 
         <input
+          required
           type="number"
           placeholder="Security Deposit"
           className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
@@ -703,6 +800,7 @@ router.push(`/agreement-builder/${pactId}`);
         </label>
 
         <input
+          required
           type="date"
     onFocus={(e) =>
     e.target.showPicker?.()
@@ -721,6 +819,7 @@ router.push(`/agreement-builder/${pactId}`);
         </label>
 
         <input
+          required
           type="number"
           placeholder="Duration (Months)"
           className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"

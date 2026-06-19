@@ -13,6 +13,7 @@ import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,6 +47,20 @@ export default function LoginPage() {
   }
 
 }
+useEffect(() => {
+
+  if (
+    searchParams?.get("reason") ===
+    "session-expired"
+  ) {
+
+    alert(
+      "Session expired due to inactivity. Please sign in again."
+    );
+
+  }
+
+}, [searchParams]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,22 +93,7 @@ export default function LoginPage() {
     } finally {
       setLoading(false);
     }
-     const searchParams = useSearchParams();
-
-useEffect(() => {
-
-  if (
-    searchParams?.get("reason") ===
-    "session-expired"
-  ) {
-
-    alert(
-      "Session expired due to inactivity. Please sign in again."
-    );
-
-  }
-
-}, [searchParams]);
+     
   };
 
   return (

@@ -16,13 +16,13 @@ const styles = StyleSheet.create({
   },
 
   watermark: {
-    position: "absolute",
-    top: 300,
-    left: 80,
-    fontSize: 70,
-    color: "#10B981",
-    opacity: 0.08,
-  },
+  position: "absolute",
+  top: 240,
+  left: 20,
+  fontSize: 90,
+  color: "#10B981",
+  opacity: 0.05,
+},
 
   title: {
     fontSize: 28,
@@ -136,11 +136,39 @@ export default function AgreementPDF({
     <Document>
       <Page size="A4" style={styles.page}>
 
-        <Text style={styles.watermark}>
-          {pact.status === "completed"
-            ? "GEPLIC VERIFIED"
-            : pact.status?.toUpperCase()}
-        </Text>
+        <Text
+  fixed
+  style={styles.watermark}
+>
+  {pact.status === "completed"
+    ? "GEPLIC VERIFIED"
+    : pact.status === "pending"
+    ? "PENDING"
+    : pact.status === "draft"
+    ? "DRAFT"
+    : pact.status === "voided"
+    ? "VOID"
+    : "GEPLIC"}
+</Text>
+
+<Text
+  fixed
+  style={{
+    ...styles.watermark,
+    top: 520,
+    
+  }}
+>
+  {pact.status === "completed"
+    ? "GEPLIC VERIFIED"
+    : pact.status === "pending"
+    ? "PENDING"
+    : pact.status === "draft"
+    ? "DRAFT"
+    : pact.status === "voided"
+    ? "VOID"
+    : "GEPLIC"}
+</Text>
 
         
 <Text
@@ -243,9 +271,9 @@ export default function AgreementPDF({
               </Text>
 
               <Text>
-                Repayment Date:{" "}
-                {templateFields.repaymentDate}
-              </Text>
+  Repayment Date:{" "}
+  {templateFields.repaymentDate || "Not Specified"}
+</Text>
             </>
           )}
 
