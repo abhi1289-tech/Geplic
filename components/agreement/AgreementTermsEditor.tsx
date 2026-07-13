@@ -71,15 +71,16 @@ export default function AgreementTermsEditor({
                   ).toLocaleDateString()
                 : "Not Available"}
             </p>
-          </div>
-        </div>
-
-        {/* Agreement Details */}
+            {/* Agreement Details */}
 
         <AgreementDetails
           category={pact.contractType}
           fields={templateFields}
         />
+          </div>
+        </div>
+
+        
 
         {/* Terms */}
 
