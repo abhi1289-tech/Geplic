@@ -205,11 +205,13 @@ async function voidAgreement() {
 
   const blob = await pdf(
     <AgreementPDF
-      pact={pact}
-      agreementId={pactId}
-      templateFields={templateFields}
-      terms={terms}
-    />
+  pact={{
+    ...pact,
+    agreementId: pactId,
+  }}
+  templateFields={templateFields}
+  terms={terms}
+/>
   ).toBlob();
 
   const url =
