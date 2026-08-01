@@ -299,12 +299,7 @@ creatorDesignation: profile.designation || "",
     interestRate,
     repaymentDate,
 
-    clauses:[
-      "Party B agrees to repay the loan amount on or before the repayment date.",
-      "Interest shall apply as stated above.",
-      "Any modification is allowed only while the agreement remains in draft state.",
-      "Geplic maintains an audit trail for transparency purposes."
-    ]
+    additionalTerms:[]
   };
 
 }
@@ -315,13 +310,7 @@ if(category==="Freelance / Service"){
     paymentAmount:Number(paymentAmount),
     deliveryDate,
 
-    clauses:[
-      "Party B agrees to provide the described service.",
-      "Party A agrees to pay the agreed amount.",
-      "The service should be delivered on or before the delivery date.",
-      "Changes are permitted only while the agreement remains in draft state.",
-      "Geplic maintains an audit trail for transparency purposes."
-    ]
+    additionalTerms:[]
   };
 
 }
@@ -330,13 +319,7 @@ if(category==="General Promise"){
   fields = {
     promiseText,
 
-    clauses:[
-      "Both parties voluntarily agree to the terms stated in this agreement.",
-      "Any modification is only permitted while the agreement remains in draft state.",
-      "Once the agreement is proposed or signed, editing becomes restricted.",
-      "Geplic maintains a digital audit trail for transparency purposes.",
-      "Both parties acknowledge that this agreement represents mutual consent."
-    ]
+    additionalTerms:[]
   };
 }
 
@@ -349,12 +332,7 @@ if(category==="Rent Agreement"){
     startDate,
     durationMonths:Number(durationMonths),
 
-    clauses:[
-      "Tenant agrees to pay rent on time.",
-      "Security deposit shall be handled as mutually agreed.",
-      "Changes are allowed only while the agreement remains in draft state.",
-      "Geplic maintains an audit trail for transparency purposes."
-    ]
+    additionalTerms:[]
   };
 
 }

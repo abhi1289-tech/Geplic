@@ -1,0 +1,329 @@
+/* ==========================================================
+   GEPlic Agreement Print Styles
+   ========================================================== */
+
+
+/* ==========================================================
+   PAGE SETUP
+   ========================================================== */
+
+@page{
+
+    size:A4 portrait;
+
+    margin:12mm;
+
+}
+
+
+/* ==========================================================
+   PRINT
+   ========================================================== */
+
+@media print{
+
+    /* ==========================================
+       GLOBAL
+    ========================================== */
+
+    html,
+    body{
+
+        margin:0;
+
+        padding:0;
+
+        background:#FFFFFF !important;
+
+        color:#000000 !important;
+
+        -webkit-print-color-adjust:exact;
+
+        print-color-adjust:exact;
+
+    }
+
+    *{
+
+        box-sizing:border-box;
+
+    }
+
+
+    /* ==========================================
+       DOCUMENT
+    ========================================== */
+
+    .agreement-document{
+
+        width:100%;
+
+        max-width:none;
+
+        margin:0;
+
+        border:none;
+
+        border-radius:0;
+
+        box-shadow:none;
+
+        overflow:visible;
+
+    }
+
+
+    /* ==========================================
+       REMOVE SCREEN EFFECTS
+    ========================================== */
+
+    .agreement-background{
+
+        display:none;
+
+    }
+
+    .agreement-watermark{
+
+        opacity:.03;
+
+    }
+
+
+    /* ==========================================
+       PAGE BREAK CONTROL
+    ========================================== */
+
+    .agreement-header,
+
+    .agreement-parties,
+
+    .agreement-section,
+
+    .agreement-acceptance,
+
+    .agreement-footer,
+
+    .party-card,
+
+    .acceptance-card,
+
+    .notice-card,
+
+    .term{
+
+        break-inside:avoid;
+
+        page-break-inside:avoid;
+
+    }
+
+
+    .term{
+
+        orphans:3;
+
+        widows:3;
+
+    }
+
+
+    h1,
+    h2,
+    h3,
+    h4{
+
+        page-break-after:avoid;
+
+    }
+
+
+    p{
+
+        orphans:3;
+
+        widows:3;
+
+    }
+
+
+    /* ==========================================
+       LINKS
+    ========================================== */
+
+    a{
+
+        color:inherit;
+
+        text-decoration:none;
+
+    }
+
+
+    /* ==========================================
+       HASH / CODE
+    ========================================== */
+
+    code{
+
+        white-space:pre-wrap;
+
+        word-break:break-word;
+
+        overflow-wrap:anywhere;
+
+    }
+
+
+    /* ==========================================
+       IMAGES
+    ========================================== */
+
+    img{
+
+        max-width:100%;
+
+        page-break-inside:avoid;
+
+    }
+
+
+    /* ==========================================
+       TEXTAREA
+    ========================================== */
+
+    textarea{
+
+        border:none;
+
+        outline:none;
+
+        resize:none;
+
+        overflow:hidden;
+
+        background:transparent;
+
+    }
+
+
+    /* ==========================================
+       HIDE INTERACTIVE ELEMENTS
+    ========================================== */
+
+    button,
+
+    .add-term-button,
+
+    .term-delete{
+
+        display:none !important;
+
+    }
+
+
+    /* ==========================================
+       PDF FRIENDLY
+    ========================================== */
+
+    input{
+
+        border:none;
+
+        outline:none;
+
+        background:transparent;
+
+    }
+
+
+
+    @media print {
+
+.acceptance-grid{
+
+    display:grid !important;
+
+    grid-template-columns:repeat(2,1fr) !important;
+
+    gap:28px !important;
+
+}
+
+@media print{
+
+.agreement-page{
+
+    page-break-after:always;
+
+}
+
+.agreement-page:last-child{
+
+    page-break-after:auto;
+
+}
+
+}
+
+.acceptance-card{
+
+    margin-bottom:20px;
+
+}
+
+.footer-grid{
+
+    display:block !important;
+
+}
+
+.footer-section{
+
+    margin-bottom:24px;
+
+}
+
+.party-grid,
+.agreement-parties{
+
+    display:grid !important;
+
+    grid-template-columns:repeat(2,1fr) !important;
+
+    gap:28px !important;
+
+}
+
+.party-card{
+
+    margin-bottom:20px;
+
+}
+
+}
+@media print{
+
+.agreement-parties{
+
+    display:grid !important;
+
+    grid-template-columns:repeat(2,1fr) !important;
+
+    gap:24px !important;
+
+}
+
+.acceptance-grid{
+
+    display:grid !important;
+
+    grid-template-columns:repeat(2,1fr) !important;
+
+    gap:24px !important;
+
+}
+
+}
+
+}

@@ -66,10 +66,15 @@ export default function AgreementTermsEditor({
             <p>
               <strong>Agreement Date:</strong>{" "}
               {pact.createdAt?.seconds
-                ? new Date(
-                    pact.createdAt.seconds * 1000
-                  ).toLocaleDateString()
-                : "Not Available"}
+  ? new Intl.DateTimeFormat("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    }).format(
+      new Date(pact.createdAt.seconds * 1000)
+    )
+  : "Not Available"}
+                
             </p>
             {/* Agreement Details */}
 

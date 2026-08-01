@@ -753,7 +753,7 @@ hash = await generateHash(agreementData);
       </option>
 
       <option>
-        Need additional clauses
+        Need additional terms
       </option>
 
       <option>

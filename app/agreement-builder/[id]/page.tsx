@@ -15,14 +15,8 @@ import {
 import { db } from "@/lib/firebase";
 import { logAction } from "@/lib/audit";
 import { auth } from "@/lib/firebase";
-import { pdf } from "@react-pdf/renderer";
-import AgreementPDF from "@/components/pdf/AgreementPDF";
 import AppHeader from "@/components/AppHeader";
-import AgreementParties from "@/components/agreement/AgreementParties";
-import AgreementAcceptance from "@/components/agreement/AgreementAcceptance";
-import AgreementFooter from "@/components/agreement/AgreementFooter";
-import AgreementTermsEditor
-from "@/components/agreement/AgreementTermsEditor";
+import AgreementDocument from "@/components/agreement/AgreementDocument";
 import AgreementActions from "@/components/agreement/AgreementActions";
 
 export default function AgreementBuilderPage() {
@@ -44,7 +38,8 @@ const isPartyA =
   const canEdit =
   isPartyA && pact?.status === "draft";
   
-  const [terms, setTerms] = useState<string[]>([]);
+  const [additionalTerms, setAdditionalTerms] = useState<string[]>([]);
+  const [downloading, setDownloading] = useState(false);
   const [templateFields, setTemplateFields] =
   useState<any>({});
   useEffect(() => {
@@ -75,9 +70,9 @@ if (!templateSnap.empty) {
 );
 
   const savedTerms =
-  templateData?.fields?.clauses || [];
+templateData?.fields?.additionalTerms || [];
 
-setTerms(savedTerms);
+setAdditionalTerms(savedTerms);
 }
         }
       } catch (error) {
@@ -121,7 +116,7 @@ setTerms(savedTerms);
       templateDoc.id
     ),
     {
-      "fields.clauses": terms,
+      "fields.additionalTerms": additionalTerms,
       updatedAt: serverTimestamp(),
     }
   );
@@ -202,33 +197,17 @@ async function voidAgreement() {
 
 
  async function downloadPDF() {
+  if (downloading) return;
 
-  const blob = await pdf(
-    <AgreementPDF
-  pact={{
-    ...pact,
-    agreementId: pactId,
-  }}
-  templateFields={templateFields}
-  terms={terms}
-/>
-  ).toBlob();
+  try {
+    setDownloading(true);
 
-  const url =
-    URL.createObjectURL(blob);
-
-  const a =
-    document.createElement("a");
-
-  a.href = url;
-
-  a.download =
-  `Geplic-${pact.contractType}-${pactId}.pdf`;
-
-  a.click();
-
-  URL.revokeObjectURL(url);
-
+    window.open(`/api/pdf/${pactId}`, "_blank");
+  } finally {
+    setTimeout(() => {
+      setDownloading(false);
+    }, 1000);
+  }
 }
   if (loading) {
     return (
@@ -277,6 +256,7 @@ async function voidAgreement() {
   isPartyA={isPartyA}
   pact={pact}
   sending={sending}
+  downloading={downloading}
   onSave={saveContinue}
   onDownload={downloadPDF}
   onSend={sendAgreement}
@@ -286,95 +266,18 @@ async function voidAgreement() {
       {/* DOCUMENT */}
 
       <main className="mx-auto max-w-6xl px-2 sm:px-6 py-6 sm:py-10">
-        <div 
-          style={{ backgroundColor: "#F7FFF7", backgroundImage:
-      "repeating-linear-gradient(45deg, rgba(16,185,129,0.015) 0px, rgba(16,185,129,0.015) 2px, transparent 2px, transparent 12px)"}}
-          
-          className="relative overflow-hidden rounded-[20px] sm:rounded-[32px] border border-white/10 bg-white p-4 sm:p-12 text-black shadow-2xl"
-        >
-          {/* WATERMARK */}
 
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-           <h1 className="
-  rotate-[-30deg]
-  text-[180px]
-  font-black
-  tracking-[1rem]
-  text-emerald-600
-  opacity-[0.05]
-  select-none
-  ">
-              {
-  pact.status === "draft"
-    ? "DRAFT"
-
-    : pact.status === "pending"
-    ? "PENDING"
-
-    : pact.status === "completed"
-    ? "GEPLIC VERIFIED"
-
-    : pact.status === "voided"
-? "VOID"
-
-    : "GEPLIC"
-}
-            </h1>
-          </div>
-
-          {/* DOCUMENT HEADER */}
-
-          <div className="relative z-10 border-b border-gray-200 pb-8">
-            <h1 className="text-3xl sm:text-5xl font-black tracking-tight break-words">
-              DIGITAL AGREEMENT
-            </h1>
-
-            <p className="mt-4 text-lg text-black/60">
-              Agreement ID: {pactId}
-            </p>
-
-            <p className="mt-2 text-black/60">
-              Status:{" "}
-              <span
-  className={`font-semibold uppercase ${
-    pact.status === "voided"
-      ? "text-red-600"
-      : ""
-  }`}
->
-  {pact.status || "draft"}
-</span>
-            </p>
-          </div>
-
-          {/* PARTIES */}
-
-          <AgreementParties pact={pact} />
-
-
-
-{/* AGREEMENT DETAILS */}
-
-
-  <AgreementTermsEditor
-    pact={pact}
-    isPartyA={isPartyA}
-    templateFields={templateFields}
-    terms={terms}
-    setTerms={setTerms}
+  <AgreementDocument
+  pact={pact}
+  pactId={pactId}
+  templateFields={templateFields}
+  additionalTerms={additionalTerms}
+  mode="edit"
+  isPartyA={isPartyA}
+  setAdditionalTerms={setAdditionalTerms}
 />
 
-
-         
-
-          {/* DIGITAL ACCEPTANCE */}
-<AgreementAcceptance pact={pact} />
-
-          {/* FOOTER */}
-
-<AgreementFooter pact={pact} />
-        </div>
-      </main>
+</main>
     </div>
   );
 }

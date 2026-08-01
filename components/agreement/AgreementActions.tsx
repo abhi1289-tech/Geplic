@@ -3,6 +3,7 @@ type Props = {
   isPartyA: boolean;
   pact: any;
   sending: boolean;
+  downloading: boolean;
 
   onSave: () => void;
   onDownload: () => void;
@@ -15,6 +16,7 @@ export default function AgreementActions({
   isPartyA,
   pact,
   sending,
+  downloading,
   onSave,
   onDownload,
   onSend,
@@ -44,6 +46,7 @@ export default function AgreementActions({
 
           <button
             onClick={onDownload}
+            disabled={downloading}
             className="
               rounded-2xl
               border

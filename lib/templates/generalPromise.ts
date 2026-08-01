@@ -95,7 +95,7 @@ ${data.agreementDate || "Not Available"}
 ">
 
           ${
-  (data.clauses || [])
+  (data.additionalTerms || [])
     .map(
       (term:string,index:number)=>
       `

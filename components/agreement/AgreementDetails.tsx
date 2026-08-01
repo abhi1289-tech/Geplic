@@ -1,45 +1,95 @@
 type AgreementDetailsProps = {
   category: string;
-  fields: any;
+  fields: Record<string, any>;
+};
+
+const FIELD_LABELS: Record<string, Record<string, string>> = {
+  Loan: {
+    loanAmount: "Loan Amount",
+    interestRate: "Interest Rate",
+    repaymentDate: "Repayment Date",
+  },
+
+  "Freelance / Service": {
+    serviceDescription: "Service Description",
+    paymentAmount: "Payment Amount",
+    deliveryDate: "Delivery Date",
+  },
+
+  "Rent Agreement": {
+    propertyAddress: "Property Address",
+    monthlyRent: "Monthly Rent",
+    securityDeposit: "Security Deposit",
+    startDate: "Start Date",
+    durationMonths: "Duration",
+  },
+
+  "General Promise": {
+  },
 };
 
 export default function AgreementDetails({
   category,
   fields,
 }: AgreementDetailsProps) {
+
+  const labels = FIELD_LABELS[category] ?? {};
+
+  const entries = Object.entries(labels);
+
+  if (entries.length === 0) return null;
+
   return (
-    <>
-      {category === "Loan" && (
-        <div className="space-y-2">
-          <p><strong>Loan Amount:</strong> ₹{fields.loanAmount}</p>
-          <p><strong>Interest Rate:</strong> {fields.interestRate}%</p>
-          <p><strong>Repayment Date:</strong> {fields.repaymentDate}</p>
-        </div>
-      )}
+    <div className="agreement-details">
 
-      {category === "Freelance / Service" && (
-        <div className="space-y-2">
-          <p><strong>Service Description:</strong> {fields.serviceDescription}</p>
-          <p><strong>Payment Amount:</strong> ₹{fields.paymentAmount}</p>
-          <p><strong>Delivery Date:</strong> {fields.deliveryDate}</p>
-        </div>
-      )}
+      {entries.map(([key, label]) => {
 
-      {category === "Rent Agreement" && (
-        <div className="space-y-2">
-          <p><strong>Property Address:</strong> {fields.propertyAddress}</p>
-          <p><strong>Monthly Rent:</strong> ₹{fields.monthlyRent}</p>
-          <p><strong>Security Deposit:</strong> ₹{fields.securityDeposit}</p>
-          <p><strong>Start Date:</strong> {fields.startDate}</p>
-          <p><strong>Duration:</strong> {fields.durationMonths} Months</p>
-        </div>
-      )}
+        const value = fields?.[key];
 
-      {category === "General Promise" && (
-        <div className="space-y-2">
-          <p>{fields.promiseText}</p>
-        </div>
-      )}
-    </>
+        if (
+          value === undefined ||
+          value === null ||
+          value === ""
+        ) {
+          return null;
+        }
+
+        let displayValue = value;
+
+        if (
+          key === "loanAmount" ||
+          key === "paymentAmount" ||
+          key === "monthlyRent" ||
+          key === "securityDeposit"
+        ) {
+          displayValue = `₹${value}`;
+        }
+
+        if (key === "interestRate") {
+          displayValue = `${value}%`;
+        }
+
+        if (key === "durationMonths") {
+          displayValue = `${value} Months`;
+        }
+
+        return (
+          <div
+            key={key}
+            className="detail-row"
+          >
+            <span className="detail-label">
+              {label}
+            </span>
+
+            <span className="detail-value">
+              {displayValue}
+            </span>
+          </div>
+        );
+
+      })}
+
+    </div>
   );
 }

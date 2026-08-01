@@ -125,7 +125,7 @@ export function RentTemplate(data: any) {
 ">
 
           ${
-  (data.clauses || [])
+  (data.additionalTerms || [])
     .map(
       (term:string,index:number)=>
       `
