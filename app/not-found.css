@@ -1,0 +1,701 @@
+/* =========================================================
+   GEPLIC — 404 PAGE
+   DARK APPLICATION THEME
+========================================================= */
+
+.geplic-404 {
+    min-height: 100vh;
+    width: 100%;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    padding: 48px 32px;
+
+    box-sizing: border-box;
+
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(25, 207, 227, .045),
+            transparent 38%
+        ),
+        var(--color-bg);
+
+    color: var(--color-text);
+}
+
+
+/* =========================================================
+   BACKGROUND GLOWS
+========================================================= */
+
+.geplic-404-glow {
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    filter: blur(110px);
+
+    opacity: .45;
+}
+
+.geplic-404-glow-one {
+    top: -190px;
+    left: 12%;
+
+    background:
+        rgba(25, 207, 227, .16);
+}
+
+.geplic-404-glow-two {
+    right: 8%;
+    bottom: -220px;
+
+    background:
+        rgba(124, 92, 255, .15);
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.geplic-404-card {
+    width: 100%;
+    max-width: 960px;
+
+    position: relative;
+    z-index: 1;
+
+    box-sizing: border-box;
+
+    padding: 58px 64px 38px;
+
+    border:
+        1px solid rgba(255, 255, 255, .18);
+
+    border-radius:
+        30px;
+
+    background:
+        transparent;
+
+    box-shadow:
+        0 40px 100px rgba(0, 0, 0, .48),
+        0 0 80px rgba(25, 207, 227, .025);
+
+    backdrop-filter:
+        blur(18px);
+
+    text-align:
+        center;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.geplic-404-brand {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    margin-bottom:
+        38px;
+}
+
+
+/*
+   BrandLogo remains the shared Geplic logo.
+
+   The size is intentionally overridden HERE only.
+   BrandLogo.tsx and global typography remain untouched.
+*/
+
+.geplic-404-brand .brand-logo {
+    margin: 0;
+
+    font-size: 42px;
+}
+
+
+/* =========================================================
+   DOCUMENT VISUAL
+========================================================= */
+
+.geplic-404-document {
+    width: 300px;
+    height: 220px;
+
+    position: relative;
+
+    margin:
+        0 auto 28px;
+}
+
+
+/* =========================================================
+   DOCUMENT PAPER
+========================================================= */
+
+.geplic-404-document-paper {
+    position: absolute;
+
+    width: 150px;
+    height: 190px;
+
+    left: 50%;
+    top: 8px;
+
+    transform:
+        translateX(-50%)
+        rotate(-6deg);
+
+    box-sizing: border-box;
+
+    border:
+        1px solid rgba(128, 171, 196, .58);
+
+    border-radius:
+        18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(22, 38, 50, .96),
+            rgba(5, 15, 24, .96)
+        );
+
+    box-shadow:
+        0 28px 45px rgba(0, 0, 0, .42),
+        0 0 35px rgba(25, 207, 227, .07);
+
+    overflow:
+        hidden;
+}
+
+
+/* =========================================================
+   DOCUMENT FOLD
+========================================================= */
+
+.geplic-404-document-fold {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    width: 48px;
+    height: 48px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(25, 207, 227, .62),
+            rgba(124, 92, 255, .38)
+        );
+
+    clip-path:
+        polygon(
+            0 0,
+            100% 100%,
+            0 100%
+        );
+}
+
+
+/* =========================================================
+   DOCUMENT LINES
+========================================================= */
+
+.geplic-404-document-line {
+    height: 6px;
+
+    width: 82px;
+
+    margin-left: 26px;
+    margin-top: 18px;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(63, 152, 190, .72);
+}
+
+.geplic-404-document-line.large {
+    width: 102px;
+
+    margin-top: 58px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--color-primary),
+            #428DFF
+        );
+
+    box-shadow:
+        0 0 10px rgba(25, 207, 227, .18);
+}
+
+.geplic-404-document-line.short {
+    width: 58px;
+
+    background:
+        rgba(33, 126, 169, .68);
+}
+
+
+/* =========================================================
+   FAKE SIGNATURE
+========================================================= */
+
+.geplic-404-document-sign {
+    position: absolute;
+
+    left: 26px;
+    bottom: 25px;
+
+    width: 78px;
+}
+
+.geplic-404-document-sign span:first-child {
+    display: block;
+
+    width: 52px;
+    height: 15px;
+
+    border-bottom:
+        2px solid var(--color-primary);
+
+    border-radius:
+        50%;
+
+    transform:
+        rotate(-9deg);
+
+    opacity: .9;
+}
+
+.geplic-404-document-sign span:last-child {
+    display: block;
+
+    width: 70px;
+    height: 2px;
+
+    margin-top: 4px;
+
+    border-radius:
+        999px;
+
+    background:
+        #168DCA;
+
+    opacity: .85;
+}
+
+
+/* =========================================================
+   404 NUMBER
+========================================================= */
+
+.geplic-404-number {
+    position: absolute;
+
+    right: 8px;
+    bottom: -2px;
+
+    z-index: 2;
+
+    font-size: 104px;
+    font-weight: 850;
+
+    line-height: .9;
+
+    letter-spacing: -.09em;
+
+    background:
+        var(--gradient-brand);
+
+    -webkit-background-clip:
+        text;
+
+    background-clip:
+        text;
+
+    color:
+        transparent;
+
+    -webkit-text-fill-color:
+        transparent;
+
+    filter:
+        drop-shadow(
+            0 10px 24px
+            rgba(25, 207, 227, .14)
+        );
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.geplic-404-content {
+    max-width:
+        720px;
+
+    margin:
+        0 auto;
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.geplic-404-eyebrow {
+    margin:
+        0 0 14px;
+
+    color:
+        var(--color-primary);
+
+    font-size:
+        13px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        .28em;
+
+    text-shadow:
+        0 0 18px
+        rgba(25, 207, 227, .18);
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.geplic-404-content h1 {
+    margin:
+        0;
+
+    color:
+        var(--color-heading);
+
+    font-size:
+        clamp(38px, 5vw, 58px);
+
+    font-weight:
+        780;
+
+    line-height:
+        1.05;
+
+    letter-spacing:
+        -.055em;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.geplic-404-description {
+    max-width:
+        650px;
+
+    margin:
+        22px auto 0;
+
+    color:
+        var(--color-text-secondary);
+
+    font-size:
+        17px;
+
+    line-height:
+        1.75;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.geplic-404-actions {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        14px;
+
+    margin-top:
+        36px;
+}
+
+
+/*
+   IMPORTANT:
+
+   Button geometry comes from Geplic's shared system:
+
+   .btn
+   .btn-primary
+   .btn-secondary
+   .btn-lg
+
+   Do NOT recreate button height, radius, border,
+   gradient, shadow, etc. here.
+*/
+
+.geplic-404-actions .btn {
+    min-width:
+        196px;
+}
+
+
+/* =========================================================
+   404 ARROWS
+========================================================= */
+
+.geplic-404-arrow {
+    font-size:
+        20px;
+
+    line-height:
+        1;
+
+    transition:
+        transform var(--transition-fast);
+}
+
+.geplic-404-actions
+.btn-primary:hover
+.geplic-404-arrow {
+    transform:
+        translateX(4px);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.geplic-404-footer {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        10px;
+
+    margin-top:
+        58px;
+
+    padding-top:
+        26px;
+
+    border-top:
+        1px solid
+        rgba(255, 255, 255, .09);
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        13px;
+
+    letter-spacing:
+        .01em;
+}
+
+.geplic-404-footer-dot {
+    color:
+        var(--color-primary);
+
+    font-size:
+        15px;
+
+    text-shadow:
+        0 0 12px
+        rgba(25, 207, 227, .5);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .geplic-404 {
+        padding:
+            24px 16px;
+    }
+
+    .geplic-404-card {
+        padding:
+            42px 22px 28px;
+
+        border-radius:
+            24px;
+    }
+
+    .geplic-404-brand {
+        margin-bottom:
+            28px;
+    }
+
+    .geplic-404-brand .brand-logo {
+        font-size:
+            36px;
+    }
+
+    .geplic-404-document {
+        width:
+            280px;
+
+        height:
+            205px;
+
+        transform:
+            scale(.9);
+    }
+
+    .geplic-404-number {
+        font-size:
+            92px;
+    }
+
+    .geplic-404-content h1 {
+        font-size:
+            36px;
+    }
+
+    .geplic-404-description {
+        font-size:
+            15px;
+
+        line-height:
+            1.65;
+    }
+
+    .geplic-404-actions {
+        flex-direction:
+            column;
+
+        width:
+            100%;
+    }
+
+    .geplic-404-actions .btn {
+        width:
+            100%;
+
+        min-width:
+            0;
+    }
+
+    .geplic-404-footer {
+        margin-top:
+            40px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+    .geplic-404-card {
+        padding-left:
+            18px;
+
+        padding-right:
+            18px;
+    }
+
+    .geplic-404-brand .brand-logo {
+        font-size:
+            32px;
+    }
+
+    .geplic-404-document {
+        transform:
+            scale(.78);
+
+        margin-top:
+            -8px;
+
+        margin-bottom:
+            4px;
+    }
+
+    .geplic-404-content h1 {
+        font-size:
+            32px;
+    }
+
+    .geplic-404-eyebrow {
+        font-size:
+            11px;
+
+        letter-spacing:
+            .22em;
+    }
+
+    .geplic-404-footer {
+        font-size:
+            11px;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .geplic-404-actions .btn,
+    .geplic-404-arrow {
+        transition:
+            none;
+    }
+}
