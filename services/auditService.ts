@@ -37,10 +37,13 @@ export async function getAuditLogs(
     )
   );
 
-  return snap.docs.map(doc => ({
-    id: doc.id,
-    ...(doc.data() as Omit<AuditLog, "id">),
-  }));
+  return snap.docs.map(
+    doc =>
+      ({
+        id: doc.id,
+        ...(doc.data() as Omit<AuditLog, "id">),
+      }) as AuditLog
+  );
 
 }
 
