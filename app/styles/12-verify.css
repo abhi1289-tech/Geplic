@@ -1,0 +1,627 @@
+/* =========================================================
+   GEPLIC — VERIFICATION
+========================================================= */
+
+.verify-page {
+    min-height: calc(100vh - var(--header-height));
+    background: transparent;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.verify-main {
+    width: min(calc(100% - 48px), 820px);
+
+    margin: 0 auto;
+
+    padding: 64px 0 90px;
+}
+
+
+/* =========================================================
+   VERIFY FORM
+========================================================= */
+
+.verify-form {
+    padding: 34px;
+
+    background: transparent;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius: var(--radius-20);
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.verify-title {
+    margin: 0;
+
+    color: var(--color-heading);
+
+    font-size: 34px;
+
+    line-height: 1.15;
+
+    letter-spacing: -.025em;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.verify-description {
+    margin: 10px 0 0;
+
+    color: var(--color-text-secondary);
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.verify-textarea {
+    display: block;
+
+    width: 100%;
+
+    min-height: 150px;
+
+    margin-top: 24px;
+
+    padding: 15px;
+
+    box-sizing: border-box;
+
+    color: var(--color-heading);
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    background: transparent;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius: var(--radius-12);
+
+    resize: vertical;
+}
+
+.verify-textarea::placeholder {
+    color: var(--color-text-secondary);
+
+    opacity: .75;
+}
+
+.verify-textarea:focus {
+    outline: none;
+
+    border-color:
+        rgba(25, 207, 227, .55);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(25, 207, 227, .08);
+}
+
+
+/* =========================================================
+   VERIFY BUTTON
+========================================================= */
+
+.verify-form .btn {
+    display: flex;
+
+    margin:
+        24px auto 0;
+}
+
+
+/* =========================================================
+   VERIFICATION RESULT
+========================================================= */
+
+.verification-result {
+    margin-top: 40px;
+
+    padding: 28px;
+
+    background: transparent;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius: var(--radius-20);
+
+    transition:
+        border-color var(--transition),
+        background var(--transition);
+}
+
+
+/* =========================================================
+   STATUS — GREEN
+   COMPLETED
+========================================================= */
+
+.verification-result.verification-green {
+    border-color:
+        var(--color-success-border);
+}
+
+.verification-result.verification-green
+.verification-title {
+    color:
+        var(--color-success);
+}
+
+
+/* =========================================================
+   STATUS — YELLOW
+   PENDING / DRAFT
+========================================================= */
+
+.verification-result.verification-yellow {
+    border-color:
+        var(--color-warning-border);
+}
+
+.verification-result.verification-yellow
+.verification-title {
+    color:
+        var(--color-warning);
+}
+
+
+/* =========================================================
+   STATUS — RED
+   VOIDED / REJECTED
+========================================================= */
+
+.verification-result.verification-red {
+    border-color:
+        var(--color-danger-border);
+}
+
+.verification-result.verification-red
+.verification-title {
+    color:
+        var(--color-danger);
+}
+
+
+/* =========================================================
+   STATUS — CYAN
+   DEFAULT
+========================================================= */
+
+.verification-result.verification-cyan {
+    border-color:
+        var(--color-info-border);
+}
+
+.verification-result.verification-cyan
+.verification-title {
+    color:
+        var(--color-info);
+}
+
+
+/* =========================================================
+   RESULT TITLE
+========================================================= */
+
+.verification-title {
+    margin: 0;
+
+    color: var(--color-heading);
+
+    font-size: 24px;
+
+    line-height: 1.25;
+
+    letter-spacing: -.015em;
+}
+
+
+/* =========================================================
+   RESULT MESSAGE
+========================================================= */
+
+.verification-message {
+    margin: 7px 0 0;
+
+    color: var(--color-text-secondary);
+
+    font-size: 14px;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   HASH VERIFICATION BANNER
+========================================================= */
+
+.verification-banner {
+    display: flex;
+
+    align-items: center;
+
+    margin-top: 22px;
+
+    padding: 14px 16px;
+
+    background:
+        var(--color-info-bg);
+
+    border:
+        1px solid
+        var(--color-info-border);
+
+    border-radius: var(--radius-12);
+}
+
+
+/* =========================================================
+   HASH BANNER — GREEN
+========================================================= */
+
+.verification-green
+.verification-banner {
+    background:
+        var(--color-success-bg);
+
+    border-color:
+        var(--color-success-border);
+}
+
+
+/* =========================================================
+   HASH BANNER — YELLOW
+========================================================= */
+
+.verification-yellow
+.verification-banner {
+    background:
+        var(--color-warning-bg);
+
+    border-color:
+        var(--color-warning-border);
+}
+
+
+/* =========================================================
+   HASH BANNER — RED
+========================================================= */
+
+.verification-red
+.verification-banner {
+    background:
+        var(--color-danger-bg);
+
+    border-color:
+        var(--color-danger-border);
+}
+
+
+/* =========================================================
+   HASH BANNER — CYAN
+========================================================= */
+
+.verification-cyan
+.verification-banner {
+    background:
+        var(--color-info-bg);
+
+    border-color:
+        var(--color-info-border);
+}
+
+
+/* =========================================================
+   HASH BANNER CONTENT
+========================================================= */
+
+.verification-banner-content {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   HASH BANNER ICON
+========================================================= */
+
+.verification-banner-icon {
+    position: relative;
+
+    flex: none;
+
+    width: 18px;
+    height: 18px;
+
+    border:
+        1px solid
+        var(--color-info);
+
+    border-radius: 50%;
+}
+
+
+/* =========================================================
+   ICON — GREEN
+========================================================= */
+
+.verification-green
+.verification-banner-icon {
+    border-color:
+        var(--color-success);
+}
+
+.verification-green
+.verification-banner-icon::after {
+    border-color:
+        var(--color-success);
+}
+
+
+/* =========================================================
+   ICON — YELLOW
+========================================================= */
+
+.verification-yellow
+.verification-banner-icon {
+    border-color:
+        var(--color-warning);
+}
+
+.verification-yellow
+.verification-banner-icon::after {
+    border-color:
+        var(--color-warning);
+}
+
+
+/* =========================================================
+   ICON — RED
+========================================================= */
+
+.verification-red
+.verification-banner-icon {
+    border-color:
+        var(--color-danger);
+}
+
+.verification-red
+.verification-banner-icon::after {
+    border-color:
+        var(--color-danger);
+}
+
+
+/* =========================================================
+   ICON — CYAN
+========================================================= */
+
+.verification-cyan
+.verification-banner-icon {
+    border-color:
+        var(--color-info);
+}
+
+.verification-cyan
+.verification-banner-icon::after {
+    border-color:
+        var(--color-info);
+}
+
+
+.verification-banner-icon::after {
+    content: "";
+
+    position: absolute;
+
+    left: 5px;
+    top: 3px;
+
+    width: 5px;
+    height: 8px;
+
+    border-right:
+        2px solid
+        var(--color-info);
+
+    border-bottom:
+        2px solid
+        var(--color-info);
+
+    transform:
+        rotate(45deg);
+}
+
+
+/* =========================================================
+   HASH BANNER TEXT
+========================================================= */
+
+.verification-banner-text {
+    color: var(--color-heading);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   VERIFICATION INFORMATION
+========================================================= */
+
+.verification-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+
+    margin-top: 22px;
+}
+
+
+/* =========================================================
+   DOCUMENT FINGERPRINT
+========================================================= */
+
+.verification-fingerprint {
+    grid-column: 1 / -1;
+
+    margin-top: 2px;
+
+    padding: 16px;
+
+    background: transparent;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius: var(--radius-12);
+}
+
+
+.verification-fingerprint-value {
+    margin-top: 8px;
+
+    color: var(--color-primary);
+
+    font-family:
+        var(--font-family-mono);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   NOT FOUND
+========================================================= */
+
+.verification-not-found {
+    margin-top: 40px;
+
+    padding: 32px;
+
+    text-align: center;
+
+    background:
+        var(--color-danger-bg);
+
+    border:
+        1px solid
+        var(--color-danger-border);
+
+    border-radius: var(--radius-20);
+}
+
+
+.verification-not-found-title {
+    margin: 0;
+
+    color: var(--color-danger);
+
+    font-size: 22px;
+
+    line-height: 1.25;
+}
+
+
+.verification-not-found-message {
+    margin: 8px 0 0;
+
+    color: var(--color-text-secondary);
+
+    font-size: 14px;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   VERIFICATION FIELD VALUES
+========================================================= */
+
+.verify-page .document-field-value {
+    color: #E8F0F2;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 640px) {
+
+    .verify-main {
+        width:
+            min(
+                calc(100% - 32px),
+                820px
+            );
+
+        padding:
+            40px 0 64px;
+    }
+
+
+    .verify-form,
+    .verification-result {
+        padding:
+            24px 18px;
+    }
+
+
+    .verify-title {
+        font-size: 30px;
+    }
+
+
+    .verification-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .verification-fingerprint {
+        grid-column: auto;
+    }
+
+}

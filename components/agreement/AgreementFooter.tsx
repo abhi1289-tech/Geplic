@@ -1,60 +1,94 @@
+import DocumentField from "../document/DocumentField";
+import DocumentSection from "../document/DocumentSection";
+
+import {
+  APP_NAME,
+  DOCUMENT_TITLE,
+  DOCUMENT_VERSION,
+  VERIFICATION_BASE_URL,
+  DEFAULT_TEXT,
+} from "@/lib/agreement/constants";
+
+import {
+  formatAgreementDate,
+} from "@/lib/agreement/date";
+
 type Props = {
   pact: any;
 };
 
-export default function AgreementFooter({ pact }: Props) {
-  const verificationUrl = pact.documentHash
-    ? `https://geplic.com/verify/${pact.documentHash}`
-    : null;
+export default function AgreementFooter({
+  pact,
+}: Props) {
+  const fingerprint =
+    pact.documentHash ||
+    pact.hash ||
+    DEFAULT_TEXT.unavailable;
 
-  const generatedDate = pact.createdAt?.seconds
-    ? new Intl.DateTimeFormat("en-GB", {
-  day: "2-digit",
-  month: "short",
-  year: "numeric",
-}).format(
-  new Date(pact.createdAt.seconds * 1000)
-)
-    : "Not Available";
+  const verificationUrl =
+    fingerprint === DEFAULT_TEXT.unavailable
+      ? DEFAULT_TEXT.unavailable
+      : `${VERIFICATION_BASE_URL}/${fingerprint}`;
 
   return (
-    <footer className="agreement-footer">
-      <div className="footer-grid">
-        {/* Verification */}
-        <section className="footer-section">
-          <h3 className="footer-title">
-            Verification
-          </h3>
+    <DocumentSection title="Verification">
 
-          <p className="footer-text">
-            This agreement was generated and digitally recorded by
-            Geplic.
-          </p>
+      <div className="verification-grid">
 
-          <p className="footer-meta">
-            Generated on {generatedDate}
-          </p>
+        {/* Generated date */}
+
+        <div className="verification-card verification-generated">
+  <DocumentField
+    label="Generated On"
+    value={formatAgreementDate(
+      pact.createdAt?.seconds
+    )}
+  />
+</div>
+
+        {/* Document fingerprint */}
+
+        <section className="verification-card verification-fingerprint">
+          <div className="verification-title">
+            Document Fingerprint
+          </div>
+
+          <div className="verification-fingerprint-value">
+            {fingerprint}
+          </div>
         </section>
 
-        {/* Document Verification */}
-        <section className="footer-section">
-          <h3 className="footer-title">
-            Document Hash (SHA-256)
-          </h3>
+        {/* Verification URL */}
 
-          <code className="document-hash">
-            {pact.documentHash || "Not Available"}
-          </code>
+        <section className="verification-card">
+          <div className="verification-title">
+            Verification URL
+          </div>
 
-          <h3 className="footer-title verification-link-title">
-            Verification Link
-          </h3>
-
-          <p className="verification-link">
-            {verificationUrl || "Not Available"}
-          </p>
+          <div className="verification-link">
+            {verificationUrl}
+          </div>
         </section>
+
       </div>
-    </footer>
+
+      <section className="certificate-strip">
+
+        <div>
+          Generated securely by
+
+          <span className="document-brand">
+            {" "}
+            {APP_NAME}
+          </span>
+        </div>
+
+        <div>
+          {DOCUMENT_TITLE} • {DOCUMENT_VERSION}
+        </div>
+
+      </section>
+
+    </DocumentSection>
   );
 }

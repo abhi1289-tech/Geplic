@@ -1,0 +1,352 @@
+/* =========================================================
+   GEPLIC — AGREEMENT BUILDER
+   DOCUMENT HEADER
+========================================================= */
+
+.agreement-builder-page .agreement-header {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        auto;
+
+    gap: 28px;
+
+    align-items: start;
+
+    margin-bottom: 24px;
+    padding-bottom: 22px;
+
+    border-bottom:
+        1px solid var(--agreement-border);
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.agreement-builder-page .document-title {
+    margin: 0;
+
+    color: var(--agreement-ink);
+
+    font-size: var(--font-size-document-title);
+
+    line-height: 1.08;
+
+    letter-spacing: -.035em;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   META
+========================================================= */
+
+.agreement-builder-page .agreement-meta {
+    display: grid;
+
+    /*
+     * Fixed metadata columns.
+     * Agreement ID gets the flexible space.
+     * Status and Created stay fixed and aligned.
+     */
+    grid-template-columns:
+        minmax(150px, 1fr)
+        90px
+        90px;
+
+    column-gap: 22px;
+    row-gap: 0;
+
+    align-items: start;
+
+    text-align: left;
+
+    min-width: 0;
+}
+
+.agreement-builder-page .agreement-meta > * {
+    min-width: 0;
+}
+
+
+
+/* System/generated metadata stays visually subordinate */
+
+.agreement-builder-page
+.agreement-meta
+.document-field-value {
+    margin: 0;
+
+    color: #26352C;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    line-height: 1.45;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   AGREEMENT TYPE
+========================================================= */
+
+.agreement-builder-page .agreement-type {
+    margin: 0 0 18px;
+
+    color: var(--agreement-green);
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    letter-spacing: .09em;
+
+    line-height: 1.3;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   LOCK NOTICE
+========================================================= */
+
+.agreement-builder-page .agreement-lock {
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin: 0 0 18px;
+
+    padding: 12px 16px;
+
+    color: #3E5E4A;
+
+    background: #EAF5ED;
+
+    border:
+        1px solid #BCD1C2;
+
+    border-radius: 10px;
+
+    box-sizing: border-box;
+}
+
+.agreement-builder-page .agreement-lock .document-badge {
+    flex: none;
+}
+
+.agreement-builder-page .lock-text {
+    flex: 1;
+
+    min-width: 180px;
+
+    margin: 0;
+
+    color: #3E5E4A;
+
+    font-size: 14px;
+
+    font-weight: 400;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   BUILDER BADGES
+========================================================= */
+
+.agreement-builder-page .document-badge {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 0;
+
+    margin: 2px 0 0;
+
+    padding: 4px 10px;
+
+    border: 1px solid transparent;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    line-height: 1;
+
+    letter-spacing: .04em;
+
+    white-space: nowrap;
+}
+
+.agreement-builder-page
+.document-badge.badge-success {
+    color: #21633D;
+
+    background: #E5F2E8;
+
+    border-color: #AFCDB7;
+}
+
+.agreement-builder-page
+.document-badge.badge-warning {
+    color: #725B18;
+
+    background: #F7F0D8;
+
+    border-color: #D9C98E;
+}
+
+.agreement-builder-page
+.document-badge.badge-danger {
+    color: #8C3A3A;
+
+    background: #F8E8E8;
+
+    border-color: #D9B2B2;
+}
+
+.agreement-builder-page
+.document-badge.badge-default {
+    color: #4D5D53;
+
+    background: #EEF2EF;
+
+    border-color: #CBD6CE;
+}
+
+
+/* =========================================================
+   STATUS FIELD
+========================================================= */
+
+
+.agreement-builder-page .agreement-status-field {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    justify-content: flex-start;
+
+    width: 90px;
+
+    min-width: 90px;
+}
+
+.agreement-builder-page
+.agreement-status-field
+.document-field-value {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: flex-start;
+
+    width: 100%;
+
+    min-height: 26px;
+
+    margin: 0;
+}
+
+.agreement-builder-page
+.agreement-status-field
+.document-badge {
+    margin: 0;
+}
+
+/* Keep the Agreement ID from pushing the Status column */
+.agreement-builder-page .agreement-id-field {
+    min-width: 0;
+    width: 100%;
+}
+
+.agreement-builder-page
+.agreement-id-field
+.document-field-value {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+/* =========================================================
+   CREATED
+========================================================= */
+
+.agreement-builder-page .agreement-meta > :last-child {
+    width: 90px;
+
+    min-width: 90px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .agreement-builder-page .agreement-header {
+        grid-template-columns: 1fr;
+
+        gap: 22px;
+    }
+
+    .agreement-builder-page .agreement-meta {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 16px;
+    }
+}
+
+
+@media (max-width: 768px) {
+
+    .agreement-builder-page .agreement-header {
+        margin-bottom: 22px;
+
+        padding-bottom: 20px;
+    }
+
+    .agreement-builder-page .agreement-meta {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+@media (max-width: 640px) {
+
+    .agreement-builder-page .agreement-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .agreement-builder-page .agreement-lock {
+        align-items: flex-start;
+    }
+}

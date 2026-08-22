@@ -3,29 +3,38 @@
 import { useRouter } from "next/navigation";
 import BrandLogo from "./BrandLogo";
 
-type AppHeaderProps = {
+type Props = {
   rightContent?: React.ReactNode;
 };
 
 export default function AppHeader({
   rightContent,
-}: AppHeaderProps) {
+}: Props) {
   const router = useRouter();
 
+  function navigateHome() {
+    router.push("/");
+  }
+
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <header className="app-header">
+      <div className="app-header-container">
 
-        <div
-          className="cursor-pointer"
-          onClick={() => router.push("/")}
+        <button
+          type="button"
+          className="app-logo-button"
+          onClick={navigateHome}
+          aria-label="Go to home page"
         >
-          <BrandLogo />
-        </div>
+          <BrandLogo size="lg" />
+        </button>
 
-        <div className="flex items-center gap-3">
+        <nav
+          className="app-header-actions"
+          aria-label="Primary Navigation"
+        >
           {rightContent}
-        </div>
+        </nav>
 
       </div>
     </header>

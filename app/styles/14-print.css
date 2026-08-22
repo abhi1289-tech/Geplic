@@ -1,0 +1,6 @@
+/* Geplic — Application print boundary */
+@media print{
+  .app-header{display:none!important}
+  .btn,.form-actions,.dashboard-actions,.pact-actions,.agreement-actions{display:none!important}
+  body{background:#fff!important;color:#111!important}
+}

@@ -1,43 +1,74 @@
+import DocumentParty from "../document/DocumentParty";
+
+import {
+  DEFAULT_TEXT,
+} from "@/lib/agreement/constants";
+
 type Props = {
   pact: any;
 };
 
-export default function AgreementParties({ pact }: Props) {
+function getDisplayName(
+  name?: string,
+  email?: string
+) {
   return (
-    <section className="agreement-parties">
+    name ||
+    email ||
+    DEFAULT_TEXT.unavailable
+  );
+}
 
-      <article className="party-card">
+function getDesignation(
+  designation?: string,
+  fallback?: string
+) {
+  return (
+    designation ||
+    fallback ||
+    DEFAULT_TEXT.noDesignation
+  );
+}
 
-        <span className="party-label">
-          Party A
-        </span>
+export default function AgreementParties({
+  pact,
+}: Props) {
 
-        <h2 className="party-name">
-          {pact.creatorName || pact.creatorEmail}
-        </h2>
+  return (
+    <div className="agreement-parties">
 
-        <p className="party-role">
-          {pact.creatorDesignation || "Agreement Creator"}
-        </p>
+      <DocumentParty
+        title="Party A"
+        name={getDisplayName(
+          pact.creatorName,
+          pact.creatorEmail
+        )}
+        designation={getDesignation(
+          pact.creatorDesignation,
+          DEFAULT_TEXT.creatorRole
+        )}
+        email={
+          pact.creatorEmail ||
+          DEFAULT_TEXT.unavailable
+        }
+      />
 
-      </article>
+      <DocumentParty
+        title="Party B"
+        name={getDisplayName(
+          pact.counterpartyName,
+          pact.counterpartyEmail
+        )}
+        designation={getDesignation(
+          pact.counterpartyDesignation,
+          DEFAULT_TEXT.counterpartyRole
+        )}
+        email={
+          pact.counterpartyEmail ||
+          DEFAULT_TEXT.unavailable
+        }
+      />
 
-      <article className="party-card">
-
-        <span className="party-label">
-          Party B
-        </span>
-
-        <h2 className="party-name">
-          {pact.counterpartyName || pact.counterpartyEmail}
-        </h2>
-
-        <p className="party-role">
-          {pact.counterpartyDesignation || "Counterparty"}
-        </p>
-
-      </article>
-
-    </section>
+    </div>
   );
 }

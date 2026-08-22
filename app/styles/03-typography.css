@@ -1,0 +1,126 @@
+/* =========================================================
+   GEPLIC — TYPOGRAPHY
+========================================================= */
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-normal);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    background-image: var(--gradient-application);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: 100% 1500px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--color-heading);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: -.02em;
+}
+
+p {
+    color: var(--color-text-secondary);
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+small {
+    font-size: var(--font-size-sm);
+}
+
+code,
+pre {
+    font-family: var(--font-family-mono);
+}
+
+
+/* =========================================================
+   GEPLIC WORDMARK
+
+   Single source of truth for the Geplic logo.
+
+   Cyan → Purple
+========================================================= */
+
+.brand-logo {
+    display: inline-block;
+
+    margin: 0;
+
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -.055em;
+
+    background:
+        linear-gradient(
+            135deg,
+            #19CFE3 0%,
+            #8B5CF6 100%
+        );
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand-logo-sm {
+    font-size: 20px;
+}
+
+.brand-logo-md {
+    font-size: 24px;
+}
+
+.brand-logo-lg {
+    font-size: 28px;
+}
+
+
+/* =========================================================
+   DOCUMENT TYPOGRAPHY
+========================================================= */
+
+.document-title {
+    font-size: var(--font-size-document-title);
+    line-height: 1.08;
+    letter-spacing: -.035em;
+}
+
+
+/* =========================================================
+   SECTION TYPOGRAPHY
+========================================================= */
+
+.section-title {
+    font-size: clamp(26px, 2.6vw, 30px);
+    line-height: 1.2;
+}
+
+.section-description {
+    max-width: 700px;
+    color: var(--color-text-secondary);
+    font-size: 16px;
+    line-height: 1.75;
+}

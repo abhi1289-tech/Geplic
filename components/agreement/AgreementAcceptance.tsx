@@ -1,90 +1,127 @@
+import DocumentBadge from "../document/DocumentBadge";
+import DocumentField from "../document/DocumentField";
+import DocumentSection from "../document/DocumentSection";
+
+import {
+  DEFAULT_TEXT,
+} from "@/lib/agreement/constants";
+
+import {
+  formatAgreementDateTime,
+} from "@/lib/agreement/date";
+
 type Props = {
   pact: any;
 };
 
-export default function AgreementAcceptance({ pact }: Props) {
+export default function AgreementAcceptance({
+  pact,
+}: Props) {
+
   const accepted =
     pact.status === "completed";
 
   return (
-    <section className="agreement-acceptance">
 
-      <header className="section-header">
-        <h2 className="section-title">
-          Digital Acceptance
-        </h2>
-      </header>
+    <DocumentSection title="Acceptance">
 
       <div className="acceptance-grid">
 
-        {/* Party A */}
+        {/* Agreement Creator */}
 
-        <article className="acceptance-card">
+        <section className="acceptance-column">
 
-          <span className="acceptance-label">
-            Agreement Creator
-          </span>
+          <DocumentField
+            label="Agreement Creator"
+            value={
+              pact.creatorName ||
+              pact.creatorEmail ||
+              DEFAULT_TEXT.unavailable
+            }
+          />
 
-          <h3 className="acceptance-name">
-            {pact.creatorName || "Unavailable"}
-          </h3>
+          <DocumentField
+            label="Designation"
+            value={
+              pact.creatorDesignation ||
+              DEFAULT_TEXT.creatorRole
+            }
+          />
 
-          <p className="acceptance-role">
-            {pact.creatorDesignation || "No designation"}
-          </p>
+          <DocumentField
+            label="Identity"
+            value={
+              <DocumentBadge variant="success">
+                Verified
+              </DocumentBadge>
+            }
+          />
 
-          <div className="acceptance-status verified">
-            Identity verified through Geplic account
-          </div>
+        </section>
 
-        </article>
+        {/* Counterparty */}
 
-        {/* Party B */}
+        <section className="acceptance-column">
 
-        <article className="acceptance-card">
+          <DocumentField
+            label="Counterparty"
+            value={
+              accepted
+                ? (
+                    pact.acceptedByName ||
+                    pact.counterpartyName ||
+                    pact.counterpartyEmail ||
+                    DEFAULT_TEXT.unavailable
+                  )
+                : DEFAULT_TEXT.pendingAcceptance
+            }
+          />
 
-          <span className="acceptance-label">
-            Counterparty
-          </span>
+          <DocumentField
+            label="Designation"
+            value={
+              accepted
+                ? (
+                    pact.acceptedByDesignation ||
+                    pact.counterpartyDesignation ||
+                    DEFAULT_TEXT.counterpartyRole
+                  )
+                : "—"
+            }
+          />
 
-          {accepted ? (
-            <>
-              <h3 className="acceptance-name">
-                {pact.acceptedByName || "Unavailable"}
-              </h3>
+          <DocumentField
+            label="Status"
+            value={
+              accepted ? (
+                <DocumentBadge variant="success">
+                  Accepted
+                </DocumentBadge>
+              ) : (
+                <DocumentBadge variant="warning">
+                  Awaiting Acceptance
+                </DocumentBadge>
+              )
+            }
+          />
 
-              <p className="acceptance-role">
-                {pact.acceptedByDesignation || "No designation"}
-              </p>
+          {accepted && (
 
-              <div className="acceptance-status accepted">
-                Agreement accepted digitally
-              </div>
+            <DocumentField
+              label="Accepted On"
+              value={formatAgreementDateTime(
+                pact.acceptedAt?.seconds
+              )}
+            />
 
-              <p className="acceptance-time">
-                {pact.acceptedAt?.seconds
-                  ? new Intl.DateTimeFormat("en-GB", {
-  day: "2-digit",
-  month: "short",
-  year: "numeric",
-  hour: "2-digit",
-  minute: "2-digit",
-}).format(
-  new Date(pact.acceptedAt.seconds * 1000)
-)
-                  : "Timestamp unavailable"}
-              </p>
-            </>
-          ) : (
-            <div className="acceptance-pending">
-              Waiting for counterparty acceptance
-            </div>
           )}
 
-        </article>
+        </section>
 
       </div>
 
-    </section>
+    </DocumentSection>
+
   );
+
 }

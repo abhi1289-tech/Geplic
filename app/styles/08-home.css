@@ -1,0 +1,751 @@
+/* =========================================================
+   GEPLIC — HOME
+   Premium landing-page composition
+
+   Uses existing TSX classes only.
+   Shared buttons/cards remain owned by their global files.
+========================================================= */
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    padding: 88px 0 76px;
+    text-align: center;
+}
+
+.hero-container {
+    width: min(calc(100% - 48px), 900px);
+    margin: 0 auto;
+}
+
+.hero-title {
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    font-size: clamp(
+        3rem,
+        6vw,
+        4.5rem
+    );
+
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            100deg,
+            #F7FBFF 0%,
+            #C9F7FF 30%,
+            #65E8FF 58%,
+            #8B7CFF 82%,
+            #A98BFF 100%
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    background-size: 100% 100%;
+}
+
+.hero-description {
+    max-width: 680px;
+
+    margin: 22px auto 0;
+
+    color: var(--color-text-secondary);
+
+    font-size: 17px;
+
+    line-height: 1.65;
+}
+
+.hero-actions {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 26px;
+
+    flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   HOME SECTIONS
+========================================================= */
+
+.features,
+.agreement-types,
+.lifecycle,
+.problem,
+.comparison,
+.coming-soon {
+    padding: 64px 0;
+
+    text-align: center;
+}
+
+.section-title {
+    margin: 0 0 28px;
+}
+
+.features .section-title,
+.agreement-types .section-title,
+.lifecycle .section-title,
+.comparison .section-title,
+.coming-soon .section-title {
+    text-align: center;
+}
+
+
+/* =========================================================
+   PROBLEM
+========================================================= */
+
+.problem-container {
+    width: min(calc(100% - 48px), 760px);
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.problem .section-title {
+    margin-bottom: 22px;
+}
+
+.problem .section-description {
+    max-width: none;
+
+    margin: 0 auto 16px;
+
+    line-height: 1.7;
+}
+
+.section-highlight {
+    margin-top: 24px;
+
+    padding: 16px 20px;
+
+    color: var(--color-primary);
+
+    background:
+        rgba(25, 207, 227, .055);
+
+    border:
+        1px solid rgba(25, 207, 227, .16);
+
+    border-radius:
+        var(--radius-16);
+
+    line-height: 1.65;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   LIFECYCLE
+========================================================= */
+
+.lifecycle .section-title {
+    margin-bottom: 30px;
+}
+
+.lifecycle .card-grid-4 {
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+.status-card {
+    min-height: 164px;
+
+    padding: 24px 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition),
+        background var(--transition);
+}
+
+.status-card:hover {
+    transform: translateY(-3px);
+}
+
+.status-card .card-title,
+.status-card .card-description {
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: center;
+}
+
+.status-card .card-description {
+    margin-top: 0;
+}
+
+
+/* =========================================================
+   PUNCHY SEMANTIC LIFECYCLE STATES
+========================================================= */
+
+/* =========================================================
+   GEPLIC LIFECYCLE STATUS COLORS
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   DRAFT
+--------------------------------------------------------- */
+
+.lifecycle .status-draft {
+    background:
+        linear-gradient(
+            145deg,
+            #0B1015 0%,
+            #080D12 100%
+        );
+
+    border-color:
+        #303A44;
+}
+
+.lifecycle .status-draft .card-title {
+    color: #E8EEF2;
+}
+
+.lifecycle .status-draft .card-description {
+    color: #9DAAB4;
+}
+
+
+/* ---------------------------------------------------------
+   PENDING ACCEPTANCE
+--------------------------------------------------------- */
+
+.lifecycle .status-pending {
+    background:
+        linear-gradient(
+            145deg,
+            #211900 0%,
+            #130E00 100%
+        );
+
+    border-color:
+        #A87900;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,214,10,.08),
+        0 12px 35px rgba(255,193,7,.06);
+}
+
+.lifecycle .status-pending .card-title {
+    color: #FFD60A;
+}
+
+.lifecycle .status-pending .card-description {
+    color: #E0BD27;
+}
+
+
+/* ---------------------------------------------------------
+   COMPLETED
+--------------------------------------------------------- */
+
+.lifecycle .status-completed {
+    background:
+        linear-gradient(
+            145deg,
+            #002518 0%,
+            #00150D 100%
+        );
+
+    border-color:
+        #00A95C;
+
+    box-shadow:
+        inset 0 1px 0 rgba(57,230,122,.08),
+        0 12px 35px rgba(0,201,108,.07);
+}
+
+.lifecycle .status-completed .card-title {
+    color: #39F28A;
+}
+
+.lifecycle .status-completed .card-description {
+    color: #63D99A;
+}
+
+
+/* ---------------------------------------------------------
+   VOIDED
+--------------------------------------------------------- */
+
+.lifecycle .status-voided {
+    background:
+        linear-gradient(
+            145deg,
+            #26070D 0%,
+            #160307 100%
+        );
+
+    border-color:
+        #A91E35;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,98,107,.08),
+        0 12px 35px rgba(239,68,68,.07);
+}
+
+.lifecycle .status-voided .card-title {
+    color: #FF6574;
+}
+
+.lifecycle .status-voided .card-description {
+    color: #DE8791;
+}
+
+
+/* =========================================================
+   AGREEMENT TYPES / FEATURE CARDS
+========================================================= */
+
+.agreement-types .section-title,
+.features .section-title,
+.coming-soon .section-title {
+    margin-bottom: 32px;
+}
+
+.agreement-types .card-grid-2,
+.coming-soon .card-grid-2 {
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+.agreement-types .feature-card,
+.features .feature-card,
+.coming-soon .feature-card {
+    min-height: 132px;
+
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 20px;
+
+    /* Blend completely into the page background */
+    background: transparent;
+
+    border:
+        1px solid rgba(255, 255, 255, .11);
+
+    text-align: center;
+
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        background var(--transition),
+        box-shadow var(--transition);
+}
+
+.agreement-types .feature-card:hover,
+.features .feature-card:hover,
+.coming-soon .feature-card:hover {
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(25, 207, 227, .32);
+
+    background:
+        transparent;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, .10);
+}
+
+.agreement-types .card-title,
+.features .card-title,
+.coming-soon .card-title {
+    margin: 0;
+
+    color:
+        var(--color-primary);
+
+    font-size:
+        var(--font-size-lg);
+
+    font-weight:
+        var(--font-weight-semibold);
+
+    line-height: 1.35;
+
+    text-align: center;
+}
+
+.agreement-types .card-description {
+    margin-top: 10px;
+
+    color:
+        var(--color-text-secondary);
+
+    line-height: 1.55;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   COMPARISON TABLE
+========================================================= */
+
+.comparison .section-title {
+    margin-bottom: 28px;
+}
+
+.comparison-table {
+    width: 100%;
+
+    overflow: hidden;
+
+    border:
+        1px solid rgba(255, 255, 255, .10);
+
+    border-radius:
+        20px;
+
+    border-collapse:
+        separate;
+
+    border-spacing:
+        0;
+
+    background:
+        transparent;
+
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, .28);
+
+    text-align: center;
+}
+
+.comparison-table th,
+.comparison-table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.comparison-table th {
+    height: 60px;
+
+    padding: 16px 20px;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, .10);
+
+    color:
+        var(--color-white);
+
+    background:
+        transparent;
+
+    font-size:
+        var(--font-size-sm);
+
+    font-weight:
+        var(--font-weight-semibold);
+}
+
+.comparison-table th:last-child {
+    color:
+        var(--color-primary);
+
+    background:
+        transparent;
+}
+
+.comparison-table tbody tr {
+    transition:
+        background var(--transition);
+}
+
+.comparison-table tbody tr:hover {
+    background:
+        rgba(25, 207, 227, .045);
+}
+
+.comparison-table td {
+    height: 64px;
+
+    padding: 16px 20px;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, .07);
+
+    color:
+        var(--color-text-secondary);
+
+    font-size:
+        var(--font-size-md);
+
+    line-height: 1.5;
+}
+
+.comparison-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.comparison-table td:last-child {
+    color:
+        var(--color-primary);
+
+    font-weight:
+        var(--font-weight-medium);
+
+    background:
+        transparent;
+
+    border-left:
+        1px solid rgba(25, 207, 227, .06);
+}
+
+.comparison-table tbody tr:hover td {
+    color:
+        var(--color-heading);
+}
+
+.comparison-table tbody tr:hover td:last-child {
+    color:
+        var(--color-primary);
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.cta-section {
+    padding: 76px 0 84px;
+}
+
+.cta-container {
+    width:
+        min(calc(100% - 48px), 820px);
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.cta-section .section-title {
+    margin-bottom: 16px;
+}
+
+.cta-container .section-description {
+    margin: 0 auto 24px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.site-footer {
+    padding: 40px 0 24px;
+
+    border-top:
+        1px solid rgba(255, 255, 255, .07);
+
+    background:
+        rgba(0, 0, 0, .38);
+    
+    width: 100%;
+
+}
+
+.footer-container {
+    width:
+        min(calc(100% - 48px), var(--page-width));
+
+    margin: 0 auto;
+
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 32px;
+}
+
+.footer-brand {
+    max-width: 420px;
+}
+
+.footer-description {
+    margin-top: 10px;
+
+    color:
+        var(--color-text-muted);
+}
+
+.footer-nav {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 18px;
+}
+
+.footer-link {
+    padding: 0;
+
+    color:
+        var(--color-text-secondary);
+
+    background:
+        transparent;
+
+    font-size:
+        var(--font-size-sm);
+}
+
+.footer-link:hover {
+    color:
+        var(--color-primary);
+}
+
+.footer-copyright {
+    width:
+        min(calc(100% - 48px), var(--page-width));
+
+    margin: 28px auto 0;
+
+    padding-top: 16px;
+
+    border-top:
+        1px solid rgba(255, 255, 255, .06);
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        var(--font-size-xs);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .lifecycle .card-grid-4 {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 800px) {
+
+    .footer-container {
+        flex-direction: column;
+    }
+
+    .footer-nav {
+        flex-wrap: wrap;
+    }
+
+}
+
+@media (max-width: 560px) {
+
+    .section-container,
+    .problem-container,
+    .cta-container,
+    .footer-container,
+    .footer-copyright,
+    .hero-container {
+        width:
+            min(calc(100% - 32px), var(--page-width));
+    }
+
+    .hero {
+        padding: 68px 0 60px;
+    }
+
+    .hero-title {
+        font-size:
+            clamp(40px, 12vw, 56px);
+    }
+
+    .hero-description {
+        font-size: 16px;
+    }
+
+    .features,
+    .agreement-types,
+    .lifecycle,
+    .problem,
+    .comparison,
+    .coming-soon {
+        padding: 52px 0;
+    }
+
+    .cta-section {
+        padding: 64px 0 72px;
+    }
+
+    .lifecycle .card-grid-4,
+    .agreement-types .card-grid-2,
+    .coming-soon .card-grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-nav {
+        flex-direction: column;
+    }
+
+    .comparison-table {
+        border-radius: 16px;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+}

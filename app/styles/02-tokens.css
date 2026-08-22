@@ -1,0 +1,413 @@
+/* =========================================================
+   GEPLIC — DESIGN TOKENS
+   02-tokens.css
+
+   Single source of truth for the Geplic visual system.
+========================================================= */
+
+:root {
+
+    /* ======================================================
+       BRAND
+    ====================================================== */
+
+    --color-primary: #19CFE3;
+    --color-primary-dark: #0FA8B8;
+    --color-secondary: #7C5CFF;
+
+    --color-primary-bg: rgba(25, 207, 227, .085);
+
+    /* Shared button surfaces */
+    --color-button-secondary-bg: rgba(255, 255, 255, .035);
+    --color-button-secondary-bg-hover: rgba(255, 255, 255, .06);
+    --color-button-secondary-border: rgba(255, 255, 255, .12);
+    --color-button-secondary-border-hover: rgba(25, 207, 227, .25);
+
+    /*
+       One brand gradient for:
+       - logo
+       - primary buttons
+       - brand accents
+       - selected highlights
+    */
+    --gradient-brand:
+        linear-gradient(
+            135deg,
+            #19CFE3 0%,
+            #7C5CFF 100%
+        );
+
+
+    /* ======================================================
+       APPLICATION BACKGROUND
+
+       Deep blue-black rather than pure black.
+
+       The goal is:
+       premium → deep → restrained → slightly atmospheric
+    ====================================================== */
+
+    --color-bg: #000307;
+
+--gradient-application:
+    radial-gradient(
+        circle at 50% 8%,
+        rgba(25, 207, 227, .028) 0%,
+        rgba(25, 207, 227, .008) 24%,
+        transparent 56%
+    ),
+    linear-gradient(
+        180deg,
+        #00090F 0%,
+        #000508 48%,
+        #000307 100%
+    );
+
+    /* ======================================================
+       BASE
+    ====================================================== */
+
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+
+
+    /* ======================================================
+       SURFACES
+
+       Surfaces stay close to the background.
+       Avoid bright gray panels.
+    ====================================================== */
+
+    --color-surface: #091219;
+    --color-surface-alt: #0D171E;
+    --color-surface-secondary: #111C24;
+    --color-card: #0A131A;
+    --color-paper: #FFFFFF;
+
+
+    /* ======================================================
+       TEXT
+    ====================================================== */
+
+    --color-heading: #F8FBFC;
+    --color-text: #E4EAEE;
+    --color-text-secondary: #9BAFBB;
+    --color-text-muted: #71838E;
+
+
+    /* ======================================================
+       BORDERS
+
+       Borders should define surfaces without becoming
+       visually dominant.
+    ====================================================== */
+
+    --color-border: rgba(255, 255, 255, .105);
+    --color-border-light: rgba(255, 255, 255, .16);
+
+
+    /* ======================================================
+   SEMANTIC COLORS
+
+   Pending   → Yellow
+   Completed → Green
+   Voided    → Red
+====================================================== */
+
+--color-success: #39E67A;
+--color-warning: #FFD60A;
+--color-danger: #FF6B7A;
+--color-info: #19CFE3;
+
+
+/* ======================================================
+   SEMANTIC BACKGROUNDS
+====================================================== */
+
+--color-success-bg: rgba(57, 230, 122, .15);
+--color-warning-bg: rgba(255, 214, 10, .15);
+--color-danger-bg: rgba(255, 107, 122, .15);
+--color-info-bg: rgba(25, 207, 227, .10);
+
+
+/* ======================================================
+   SEMANTIC BORDERS
+====================================================== */
+
+--color-success-border: rgba(57, 230, 122, .55);
+--color-warning-border: rgba(255, 214, 10, .55);
+--color-danger-border: rgba(255, 107, 122, .55);
+--color-info-border: rgba(25, 207, 227, .32);
+
+
+/* ======================================================
+   LEGACY STATUS ALIASES
+====================================================== */
+
+--success-10: rgba(57, 230, 122, .10);
+--warning-10: rgba(255, 214, 10, .10);
+--danger-10: rgba(255, 107, 122, .10);
+
+    /* ======================================================
+       OVERLAYS
+    ====================================================== */
+
+    --overlay-light: rgba(255, 255, 255, .035);
+    --overlay-medium: rgba(255, 255, 255, .065);
+    --overlay-strong: rgba(255, 255, 255, .10);
+
+
+    /* ======================================================
+       TYPOGRAPHY FAMILY
+    ====================================================== */
+
+    --font-family:
+        Inter,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    --font-family-mono:
+        "SFMono-Regular",
+        Consolas,
+        Menlo,
+        monospace;
+
+
+    /* ======================================================
+       DOCUMENT TYPOGRAPHY
+    ====================================================== */
+
+    --font-size-document-title: 36px;
+    --font-size-agreement-title: 26px;
+    --font-size-section-title: 20px;
+    --font-size-subsection-title: 17px;
+    --font-size-body: 15px;
+    --font-size-label: 13px;
+    --font-size-small: 12px;
+
+
+    /* ======================================================
+       APPLICATION TYPOGRAPHY
+    ====================================================== */
+
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-md: 16px;
+    --font-size-lg: 18px;
+    --font-size-xl: 20px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: 32px;
+    --font-size-4xl: 40px;
+
+
+    /* ======================================================
+       FONT WEIGHTS
+    ====================================================== */
+
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+
+    /* Compatibility aliases */
+
+    --font-normal: var(--font-weight-regular);
+    --font-medium: var(--font-weight-medium);
+    --font-semibold: var(--font-weight-semibold);
+    --font-bold: var(--font-weight-bold);
+
+
+    /* ======================================================
+       LINE HEIGHT
+    ====================================================== */
+
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.55;
+    --line-height-relaxed: 1.75;
+
+
+    /* ======================================================
+       LETTER SPACING
+    ====================================================== */
+
+    --letter-spacing-label: .08em;
+    --letter-spacing-normal: 0;
+
+
+    /* ======================================================
+       SPACING SCALE
+
+       Canonical Geplic rhythm:
+       4 → 8 → 12 → 16 → 20 → 24 → 32 → 40 → 48 → 64 → 80
+    ====================================================== */
+
+    --space-4: 4px;
+    --space-8: 8px;
+    --space-12: 12px;
+    --space-16: 16px;
+    --space-20: 20px;
+    --space-24: 24px;
+    --space-32: 32px;
+    --space-40: 40px;
+    --space-48: 48px;
+    --space-64: 64px;
+    --space-80: 80px;
+
+
+    /* Compatibility aliases */
+
+    --space-2: var(--space-8);
+    --space-3: var(--space-12);
+    --space-5: var(--space-20);
+    --space-6: var(--space-24);
+    --space-10: var(--space-40);
+    --space-14: 56px;
+
+
+    /* ======================================================
+       BORDER RADIUS
+
+       Small controls → 12px
+       Standard controls → 16px
+       Major actions → 20px
+       Cards → 16px
+       Pills → 9999px
+    ====================================================== */
+
+    --radius-4: 4px;
+    --radius-8: 8px;
+    --radius-12: 12px;
+    --radius-16: 16px;
+    --radius-20: 20px;
+    --radius-pill: 9999px;
+
+
+    /* Radius aliases */
+
+    --radius-md: var(--radius-12);
+    --radius-lg: var(--radius-16);
+    --radius-xl: var(--radius-16);
+    --radius-2xl: var(--radius-20);
+
+
+    /* ======================================================
+       BORDERS
+    ====================================================== */
+
+    --border:
+        1px solid var(--color-border);
+
+    --border-light:
+        1px solid var(--color-border-light);
+
+
+    /* ======================================================
+       SHADOWS
+
+       Keep them restrained.
+    ====================================================== */
+
+    --shadow-sm:
+        0 1px 2px rgba(0, 0, 0, .18);
+
+    --shadow-md:
+        0 8px 24px rgba(0, 0, 0, .16);
+
+    --shadow-lg:
+        0 16px 40px rgba(0, 0, 0, .24);
+
+    --shadow-xl:
+        0 24px 56px rgba(0, 0, 0, .30);
+
+    --shadow-primary:
+        0 10px 32px rgba(25, 207, 227, .10);
+
+    --shadow-primary-lg:
+        0 16px 46px rgba(25, 207, 227, .14);
+
+    --shadow-glow:
+        0 0 32px rgba(25, 207, 227, .11);
+
+
+    /* ======================================================
+       TRANSITIONS
+    ====================================================== */
+
+    --transition-fast: .15s ease;
+    --transition: .22s ease;
+    --transition-normal: .25s ease;
+    --transition-slow: .38s ease;
+
+
+    /* ======================================================
+       LAYOUT WIDTHS
+    ====================================================== */
+
+    --container-sm: 640px;
+    --container-md: 768px;
+    --container-lg: 1024px;
+    --container-xl: 1200px;
+
+    --page-width: 1280px;
+    --content-width: 1080px;
+    --reading-width: 760px;
+    --document-width: 900px;
+
+
+    /* ======================================================
+       PAGE SPACING
+    ====================================================== */
+
+    --page-padding: 32px;
+    --section-spacing: 64px;
+    --content-spacing: 20px;
+    --grid-gap: 20px;
+
+
+    /* ======================================================
+       HEADER
+    ====================================================== */
+
+    --header-height: 72px;
+
+
+    /* ======================================================
+       DOCUMENT
+    ====================================================== */
+
+    --document-page-width: 794px;
+
+
+    /* ======================================================
+       TIMELINE
+    ====================================================== */
+
+    --timeline-dot: 14px;
+
+
+    /* ======================================================
+       Z-INDEX
+    ====================================================== */
+
+    --z-base: 1;
+    --z-dropdown: 100;
+    --z-sticky: 300;
+    --z-modal: 1000;
+    --z-toast: 1100;
+    --z-tooltip: 1200;
+
+
+    /* ======================================================
+       ANIMATION DURATIONS
+    ====================================================== */
+
+    --duration-fast: .2s;
+    --duration-normal: .3s;
+    --duration-slow: .5s;
+
+}

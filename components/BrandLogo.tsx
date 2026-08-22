@@ -1,6 +1,20 @@
-export default function BrandLogo() {
+type Props = {
+  className?: string;
+  size?: "sm" | "md" | "lg";
+};
+
+export default function BrandLogo({
+  className = "",
+  size = "md",
+}: Props) {
   return (
-    <h1 className="select-none text-4xl font-black tracking-tight bg-gradient-to-r from-cyan-300 via-blue-400 to-violet-500 bg-clip-text text-transparent">
+    <h1
+      className={`
+        brand-logo
+        brand-logo-${size}
+        ${className}
+      `.trim()}
+    >
       Geplic
     </h1>
   );

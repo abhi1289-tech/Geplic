@@ -1,0 +1,328 @@
+/* =========================================================
+   GEPLIC — AGREEMENT BUILDER
+   TERMS
+========================================================= */
+
+
+/* =========================================================
+   TERMS GROUP
+========================================================= */
+
+.agreement-builder-page .terms-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 22px;
+}
+
+
+/* =========================================================
+   TERMS HEADER
+========================================================= */
+
+.agreement-builder-page .terms-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-bottom: 4px;
+}
+
+
+/* =========================================================
+   SUBSECTION TITLE
+========================================================= */
+
+.agreement-builder-page .subsection-title {
+    margin: 0;
+
+    color: var(--agreement-ink);
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    line-height: 1.35;
+}
+
+
+/* =========================================================
+   TERMS LIST
+========================================================= */
+
+.agreement-builder-page .terms-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+/* =========================================================
+   TERM
+========================================================= */
+
+.agreement-builder-page .agreement-term {
+    display: grid;
+
+    grid-template-columns:
+        auto
+        minmax(0, 1fr)
+        auto;
+
+    gap: 18px;
+
+    align-items: start;
+
+    padding: 18px 20px;
+
+    background:
+        rgba(255, 255, 255, .38);
+
+    border:
+        1px solid var(--agreement-border-soft);
+
+    border-radius: 8px;
+
+    color: var(--agreement-body);
+}
+
+
+/* =========================================================
+   TERM NUMBER
+========================================================= */
+
+.agreement-builder-page .term-number {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    flex: none;
+
+    background: var(--agreement-green);
+
+    color: #FFFFFF;
+
+    border-radius: 50%;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   TERM CONTENT
+========================================================= */
+
+.agreement-builder-page .term-content {
+    min-width: 0;
+
+    color: var(--agreement-body);
+}
+
+
+/* =========================================================
+   STANDARD TERMS
+========================================================= */
+
+/*
+   These are Geplic's predefined legal terms.
+   They are not user-entered values, so they remain normal weight.
+*/
+
+.agreement-builder-page .term-text {
+    margin: 0;
+
+    color: #2F3A32;
+
+    font-size: 15px;
+
+    font-weight: 400;
+
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   USER-ENTERED ADDITIONAL TERMS
+========================================================= */
+
+.agreement-builder-page .term-textarea {
+    width: 100%;
+
+    min-height: 110px;
+
+    padding: 12px 14px;
+
+    resize: vertical;
+
+    background: #FFFFFF;
+
+    color: var(--agreement-ink);
+
+    border:
+        1px solid var(--agreement-border);
+
+    border-radius: 7px;
+
+    outline: none;
+
+    font: inherit;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    line-height: 1.65;
+
+    box-sizing: border-box;
+}
+
+.agreement-builder-page .term-textarea:focus {
+    border-color: var(--agreement-green);
+
+    box-shadow:
+        0 0 0 3px rgba(47, 107, 69, .10);
+}
+
+
+/* =========================================================
+   DELETE
+========================================================= */
+
+.agreement-builder-page .term-delete {
+    color: #A33A3A;
+
+    background: transparent;
+
+    border: 0;
+
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   ADD TERM
+========================================================= */
+
+.agreement-builder-page .add-term-button {
+    padding: 6px 0;
+
+    color: var(--agreement-green);
+
+    background: transparent;
+
+    border: 0;
+
+    cursor: pointer;
+
+    font: inherit;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.agreement-builder-page .add-term-button:hover {
+    color: var(--agreement-green-dark);
+}
+
+
+/* =========================================================
+   ACKNOWLEDGEMENT
+========================================================= */
+
+.agreement-builder-page .agreement-acknowledgement {
+    margin-top: 32px;
+
+    padding: 20px 22px;
+
+    background: var(--agreement-green-soft);
+
+    border:
+        1px solid var(--agreement-border);
+
+    border-left:
+        4px solid var(--agreement-green);
+
+    border-radius:
+        0 8px 8px 0;
+}
+
+.agreement-builder-page
+.agreement-acknowledgement
+h1,
+.agreement-builder-page
+.agreement-acknowledgement
+h2,
+.agreement-builder-page
+.agreement-acknowledgement
+h3,
+.agreement-builder-page
+.agreement-acknowledgement
+h4,
+.agreement-builder-page
+.agreement-acknowledgement
+strong {
+    color: var(--agreement-ink);
+}
+
+.agreement-builder-page .acknowledgement-text {
+    margin: 0;
+
+    color: #46554B;
+
+    font-size: 14px;
+
+    font-weight: 400;
+
+    line-height: 1.7;
+}
+/* =========================================================
+   STANDARD → ADDITIONAL TERMS SPACING
+========================================================= */
+
+.agreement-builder-page
+.terms-group
++ .terms-group {
+    margin-top: 30px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 640px) {
+
+    .agreement-builder-page .agreement-term {
+        grid-template-columns:
+            auto
+            minmax(0, 1fr);
+    }
+
+    .agreement-builder-page .term-delete {
+        grid-column: 2;
+
+        justify-self: start;
+    }
+
+    .agreement-builder-page .terms-header {
+        align-items: flex-start;
+    }
+}

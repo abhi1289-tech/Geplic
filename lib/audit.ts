@@ -1,5 +1,5 @@
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { serverTimestamp } from "firebase/firestore";
+import { createAuditLog } from "@/services/auditService";
 
 export async function logAction(
   pactId: string,
@@ -9,7 +9,7 @@ export async function logAction(
 
   try {
 
-    await addDoc(collection(db,"audit_logs"),{
+    await createAuditLog({
 
       pactId,
       action,

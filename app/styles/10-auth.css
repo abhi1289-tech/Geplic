@@ -1,0 +1,470 @@
+/* Geplic — Authentication */
+.auth-page{min-height:calc(100vh - var(--header-height));display:flex;align-items:center;justify-content:center;padding:48px 24px;background:transparent}
+.auth-card{width:min(100%,460px);padding:38px;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012));border:1px solid var(--color-border);border-radius:var(--radius-20);box-shadow:var(--shadow-lg)}
+.auth-brand{text-align:center}.auth-tagline{margin-top:8px;color:var(--color-text-muted);font-size:var(--font-size-sm)}.auth-intro{margin-bottom:28px}.auth-title{color:var(--color-heading);font-size:30px;font-weight:750}.auth-subtitle{margin-top:8px;color:var(--color-text-secondary);line-height:1.6}
+.auth-link{color:var(--color-primary);font-weight:600}.auth-link:hover{text-decoration:underline}.auth-footer{margin-top:24px;text-align:center;color:var(--color-text-muted);font-size:var(--font-size-sm)}.auth-legal{margin-top:20px;color:var(--color-text-muted);font-size:12px;line-height:1.6;text-align:center}.auth-legal-link{color:var(--color-text-secondary)}.auth-legal-link:hover{color:var(--color-primary)}
+/* =========================================================
+   GEPLIC — AUTH PAGE
+   FINAL VISUAL REFINEMENTS
+   Login + Signup only
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   AUTH PAGE
+   Give the authentication area comfortable vertical space.
+--------------------------------------------------------- */
+
+.auth-page{
+    min-height:calc(100vh - var(--header-height));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:56px 24px 72px;
+}
+
+
+/* ---------------------------------------------------------
+   AUTH CARD
+   Slightly tighter and cleaner than the current oversized
+   presentation.
+--------------------------------------------------------- */
+
+.auth-card{
+    width:min(100%,460px);
+    padding:40px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.035),
+            rgba(255,255,255,.012)
+        );
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:22px;
+    box-shadow:var(--shadow-lg);
+}
+
+
+/* ---------------------------------------------------------
+   BRAND
+--------------------------------------------------------- */
+
+.auth-brand{
+    text-align:center;
+}
+
+.auth-tagline{
+    margin-top:10px;
+    color:var(--color-text-muted);
+    font-size:var(--font-size-sm);
+    line-height:1.5;
+}
+
+
+/* ---------------------------------------------------------
+   INTRO
+--------------------------------------------------------- */
+
+.auth-intro{
+    margin-bottom:30px;
+}
+
+.auth-title{
+    margin:0;
+    color:var(--color-heading);
+    font-size:30px;
+    font-weight:700;
+    line-height:1.15;
+    letter-spacing:-.025em;
+}
+
+.auth-subtitle{
+    margin-top:8px;
+    color:var(--color-text-secondary);
+    line-height:1.6;
+}
+
+
+/* ---------------------------------------------------------
+   FORM SPACING
+   Scope these rules to Auth so shared form components
+   remain untouched elsewhere.
+--------------------------------------------------------- */
+
+.auth-page .form{
+    width:100%;
+}
+
+.auth-page .form-group{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-bottom:16px;
+}
+
+.auth-page .form-label{
+    color:var(--color-text-secondary);
+    font-size:var(--font-size-sm);
+    font-weight:var(--font-weight-medium);
+}
+
+.auth-page .form-input{
+    min-height:52px;
+    padding:0 16px;
+}
+
+
+/* ---------------------------------------------------------
+   FORGOT PASSWORD
+   It is a <button>, not a normal link.
+   Remove the browser-default white button appearance.
+--------------------------------------------------------- */
+
+.auth-page .form-actions{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    margin-top:4px;
+    margin-bottom:18px;
+}
+
+.auth-page .form-actions .auth-link{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:0;
+
+    border:0;
+    background:transparent;
+
+    color:var(--color-primary);
+
+    font:inherit;
+    font-size:var(--font-size-sm);
+    font-weight:600;
+
+    line-height:1.4;
+
+    cursor:pointer;
+}
+
+.auth-page .form-actions .auth-link:hover{
+    color:var(--color-heading);
+    text-decoration:underline;
+}
+
+.auth-page .form-actions .auth-link:focus-visible{
+    outline:2px solid rgba(25,207,227,.45);
+    outline-offset:4px;
+    border-radius:4px;
+}
+
+
+/* ---------------------------------------------------------
+   PRIMARY AUTH BUTTON
+--------------------------------------------------------- */
+
+.auth-page .btn-block{
+    width:100%;
+}
+
+.auth-page .btn-lg{
+    min-height:54px;
+}
+
+
+/* ---------------------------------------------------------
+   ERROR MESSAGE
+--------------------------------------------------------- */
+
+.auth-page .alert{
+    margin-top:4px;
+    margin-bottom:18px;
+}
+
+
+/* ---------------------------------------------------------
+   FOOTER
+--------------------------------------------------------- */
+
+.auth-footer{
+    margin-top:26px;
+    text-align:center;
+    color:var(--color-text-muted);
+    font-size:var(--font-size-sm);
+}
+
+.auth-footer p{
+    margin:0;
+}
+
+.auth-link{
+    color:var(--color-primary);
+    font-weight:600;
+}
+
+.auth-link:hover{
+    text-decoration:underline;
+}
+
+.auth-legal{
+    margin-top:18px;
+    color:var(--color-text-muted);
+    font-size:12px;
+    line-height:1.6;
+    text-align:center;
+}
+
+.auth-legal-link{
+    color:var(--color-text-secondary);
+}
+
+.auth-legal-link:hover{
+    color:var(--color-primary);
+}
+
+
+/* ---------------------------------------------------------
+   SIGNUP
+   Four fields need slightly tighter spacing so the card
+   remains comfortably inside the viewport.
+--------------------------------------------------------- */
+
+.auth-page .form-group:last-of-type{
+    margin-bottom:0;
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+--------------------------------------------------------- */
+
+@media(max-width:520px){
+
+    .auth-page{
+        align-items:flex-start;
+        padding:32px 16px 48px;
+    }
+
+    .auth-card{
+        padding:30px 22px;
+        border-radius:18px;
+    }
+
+    .auth-title{
+        font-size:28px;
+    }
+
+    .auth-page .form-input{
+        min-height:50px;
+    }
+
+}
+
+/* =========================================================
+   GEPLIC — AUTH PAGES
+   FINAL VISUAL REFINEMENTS
+   Login + Signup
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   AUTH PAGE
+   Let the global application background show through.
+--------------------------------------------------------- */
+
+.auth-page{
+
+    background:transparent;
+
+}
+
+
+/* Remove the decorative auth-only glow */
+
+.auth-page::before{
+
+    display:none;
+
+}
+
+
+/* ---------------------------------------------------------
+   AUTH CARD
+   Transparent surface with only a subtle boundary.
+--------------------------------------------------------- */
+
+.auth-card{
+
+    background:transparent;
+
+    box-shadow:none;
+
+    padding:36px 40px;
+
+}
+
+
+/* ---------------------------------------------------------
+   BRAND / INTRO SPACING
+   Keep Login and Signup visually consistent.
+--------------------------------------------------------- */
+
+.auth-brand{
+
+    margin-bottom:24px;
+
+}
+
+
+.auth-intro{
+
+    margin-bottom:26px;
+
+}
+
+
+.auth-tagline{
+
+    margin-top:6px;
+
+}
+
+
+.auth-subtitle{
+
+    margin-top:8px;
+
+}
+
+
+/* ---------------------------------------------------------
+   FORM SPACING
+   Consistent vertical rhythm between fields.
+--------------------------------------------------------- */
+
+.auth-card .form{
+
+    gap:18px;
+
+}
+
+
+.auth-card .form-group{
+
+    gap:8px;
+
+}
+
+
+/* ---------------------------------------------------------
+   INPUTS
+--------------------------------------------------------- */
+
+.auth-card .form-input{
+
+    min-height:52px;
+
+}
+
+
+/* ---------------------------------------------------------
+   FORGOT PASSWORD
+   Give it deliberate breathing room without pushing
+   the Login button too far down.
+--------------------------------------------------------- */
+
+.auth-card .form-actions{
+
+    margin-top:-2px;
+
+}
+
+
+/* ---------------------------------------------------------
+   PRIMARY AUTH BUTTON
+--------------------------------------------------------- */
+
+.auth-card .btn-primary{
+
+    margin-top:2px;
+
+}
+
+
+/* ---------------------------------------------------------
+   AUTH FOOTER
+--------------------------------------------------------- */
+
+.auth-footer{
+
+    margin-top:24px;
+
+}
+
+
+.auth-legal{
+
+    margin-top:14px;
+
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+--------------------------------------------------------- */
+
+@media(max-width:640px){
+
+    .auth-page{
+
+        background:transparent;
+
+    }
+
+
+    .auth-card{
+
+        padding:28px 22px;
+
+        background:transparent;
+
+        box-shadow:none;
+
+    }
+
+
+    .auth-brand{
+
+        margin-bottom:22px;
+
+    }
+
+
+    .auth-intro{
+
+        margin-bottom:24px;
+
+    }
+
+
+    .auth-card .form{
+
+        gap:18px;
+
+    }
+
+
+    .auth-footer{
+
+        margin-top:22px;
+
+    }
+
+}
+
+.auth-card .form > .btn-primary{
+    margin-top:16px;
+}
+@media (max-width:520px){.auth-page{padding:28px 16px}.auth-card{padding:28px 20px;border-radius:16px}}

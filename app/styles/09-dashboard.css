@@ -1,0 +1,930 @@
+/* =========================================================
+   GEPLIC — DASHBOARD
+   Dashboard-only visual composition.
+
+   IMPORTANT:
+   - No global styles here.
+   - Shared buttons remain owned by 05-components.css.
+   - Background is intentionally scoped to Dashboard.
+   - Existing TSX classes are preserved.
+========================================================= */
+
+
+/* =========================================================
+   DASHBOARD PAGE
+========================================================= */
+
+.dashboard-page {
+    min-height:
+        100vh;
+
+    /*
+       Dashboard owns its own application background.
+
+       This deliberately does NOT touch globals.css.
+       The gradient starts deep at the top and slowly fades
+       into the dashboard base background.
+    */
+    background:
+        radial-gradient(
+            circle at 50% 8%,
+            rgba(25, 207, 227, .028) 0%,
+            rgba(25, 207, 227, .008) 24%,
+            transparent 56%
+        ),
+        linear-gradient(
+            180deg,
+            #00090F 0%,
+            #000508 48%,
+            #000307 100%
+        );
+
+    color:
+        var(--color-text);
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.dashboard-main {
+    width:
+        min(
+            calc(100% - 48px),
+            var(--page-width)
+        );
+
+    margin:
+        0 auto;
+
+    padding:
+        48px 0 80px;
+}
+
+
+/* =========================================================
+   DASHBOARD HERO
+========================================================= */
+
+.dashboard-hero {
+    margin-bottom:
+        32px;
+}
+
+.dashboard-hero-content {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        20px;
+}
+
+.dashboard-avatar {
+    width:
+        64px;
+
+    height:
+        64px;
+
+    flex:
+        0 0 64px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border:
+        1px solid rgba(25, 207, 227, .30);
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(25, 207, 227, .055);
+
+    color:
+        var(--color-primary);
+
+    font-size:
+        var(--font-size-md);
+
+    font-weight:
+        var(--font-weight-bold);
+
+    transition:
+        border-color var(--transition),
+        background var(--transition),
+        transform var(--transition);
+}
+
+.dashboard-avatar:hover {
+    transform:
+        translateY(-1px);
+
+    border-color:
+        rgba(25, 207, 227, .50);
+
+    background:
+        rgba(25, 207, 227, .08);
+}
+
+.dashboard-user {
+    min-width:
+        0;
+}
+
+
+/* ---------------------------------------------------------
+   WELCOME BACK
+--------------------------------------------------------- */
+
+.dashboard-title {
+    margin:
+        0;
+
+    color:
+        var(--color-text-secondary);
+
+    font-size:
+        var(--font-size-md);
+
+    font-weight:
+        var(--font-weight-medium);
+
+    line-height:
+        1.25;
+}
+
+
+/* ---------------------------------------------------------
+   USER NAME
+--------------------------------------------------------- */
+
+.dashboard-name {
+    color:
+        var(--color-heading);
+
+    font-size:
+        32px;
+
+    font-weight:
+        var(--font-weight-bold);
+
+    letter-spacing:
+        -.02em;
+
+    line-height:
+        1.1;
+}
+
+
+/* ---------------------------------------------------------
+   DESIGNATION
+--------------------------------------------------------- */
+
+.dashboard-designation {
+    margin-top:
+        7px;
+
+    color:
+        var(--color-text-secondary);
+
+    font-size:
+        var(--font-size-sm);
+
+    line-height:
+        1.5;
+}
+
+
+/* =========================================================
+   DASHBOARD ACTIONS
+========================================================= */
+
+.dashboard-actions {
+    display:
+        flex;
+
+    justify-content:
+        flex-start;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    margin-bottom:
+        32px;
+}
+
+
+/* =========================================================
+   DASHBOARD STATS
+========================================================= */
+
+.dashboard-stats {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap:
+        16px;
+
+    margin-bottom:
+        48px;
+}
+
+.dashboard-stat-card {
+    min-height: 74px;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 20px 22px;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-16);
+
+    background: transparent;
+}
+
+.dashboard-stat-card:hover {
+    background:
+        rgba(255, 255, 255, .012);
+
+    border-color:
+        var(--color-border-light);
+}
+
+.dashboard-stat-label {
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        var(--font-size-xs);
+
+    font-weight:
+        var(--font-weight-semibold);
+
+    letter-spacing:
+        .07em;
+
+    line-height:
+        1.3;
+
+    text-transform:
+        uppercase;
+}
+
+.dashboard-stat-value {
+    color: var(--color-heading);
+    font-size: 30px;
+    font-weight: 750;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+
+/* ---------------------------------------------------------
+   PENDING / WARNING
+--------------------------------------------------------- */
+
+.dashboard-stat-card.dashboard-stat-warning {
+    border-color:
+        rgba(255, 214, 10, .42);
+}
+
+.dashboard-stat-card.dashboard-stat-warning
+.dashboard-stat-value {
+    color:
+        var(--color-warning);
+}
+
+
+/* ---------------------------------------------------------
+   COMPLETED / SUCCESS
+--------------------------------------------------------- */
+
+.dashboard-stat-card.dashboard-stat-success {
+    border-color:
+        rgba(57, 230, 122, .42);
+}
+
+.dashboard-stat-card.dashboard-stat-success
+.dashboard-stat-value {
+    color:
+        var(--color-success);
+}
+
+
+/* =========================================================
+   DASHBOARD SECTIONS
+========================================================= */
+
+.dashboard-section {
+    margin-top:
+        40px;
+}
+
+.dashboard-section:first-child {
+    margin-top:
+        0;
+}
+
+.dashboard-section-header {
+    display:
+        flex;
+
+    align-items:
+        flex-end;
+
+    justify-content:
+        space-between;
+
+    gap:
+        16px;
+
+    margin-bottom:
+        18px;
+}
+
+.dashboard-section-title {
+    margin:
+        0;
+
+    color:
+        var(--color-heading);
+
+    font-size:
+        22px;
+
+    font-weight:
+        var(--font-weight-bold);
+
+    line-height:
+        1.25;
+}
+
+.dashboard-section-subtitle,
+.dashboard-section-count {
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        var(--font-size-sm);
+}
+
+
+/* =========================================================
+   AGREEMENTS PANEL
+========================================================= */
+
+.dashboard-panel {
+    padding:
+        24px;
+
+    /*
+       No filled panel.
+       Only the border defines the boundary.
+    */
+    background:
+        transparent;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius:
+        var(--radius-20);
+}
+
+
+/* =========================================================
+   AGREEMENT LIST
+========================================================= */
+
+.agreement-list {
+    display:
+        grid;
+
+    gap:
+        14px;
+}
+
+
+/* =========================================================
+   AGREEMENT CARD
+========================================================= */
+
+.agreement-card {
+    display:
+        block;
+
+    min-width:
+        0;
+
+    padding:
+        20px 22px;
+
+    background:
+        transparent;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius:
+        var(--radius-16);
+
+    transition:
+        border-color var(--transition),
+        transform var(--transition),
+        background var(--transition);
+}
+
+.agreement-card:hover {
+    transform:
+        translateY(-2px);
+
+    background:
+        rgba(255, 255, 255, .012);
+
+    border-color:
+        rgba(25, 207, 227, .24);
+}
+
+.agreement-card-top,
+.agreement-card-footer {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        16px;
+}
+
+.agreement-category {
+    color:
+        var(--color-primary);
+
+    font-size:
+        var(--font-size-xs);
+
+    font-weight:
+        var(--font-weight-semibold);
+
+    letter-spacing:
+        .04em;
+}
+
+.agreement-title {
+    margin-top:
+        10px;
+
+    color:
+        var(--color-heading);
+
+    font-size:
+        18px;
+
+    font-weight:
+        var(--font-weight-semibold);
+
+    line-height:
+        1.35;
+}
+
+.agreement-description {
+    margin-top:
+        7px;
+
+    color:
+        var(--color-text-secondary);
+
+    line-height:
+        1.6;
+}
+
+.agreement-meta {
+    margin-top:
+        7px;
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        var(--font-size-xs);
+
+    line-height:
+        1.5;
+}
+
+.agreement-card-footer {
+    margin-top:
+        18px;
+
+    padding-top:
+        14px;
+
+    border-top:
+        1px solid rgba(255, 255, 255, .06);
+
+    color:
+        var(--color-text-secondary);
+
+    font-size:
+        var(--font-size-sm);
+}
+
+.agreement-card-footer span:last-child {
+    color:
+        var(--color-heading);
+
+    font-weight:
+        var(--font-weight-semibold);
+}
+
+
+/* =========================================================
+   AGREEMENT STATUS
+========================================================= */
+
+.agreement-status {
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    min-height:
+        26px;
+
+    padding:
+        5px 9px;
+
+    border:
+        1px solid rgba(255, 255, 255, .10);
+
+    border-radius:
+        var(--radius-pill);
+
+    font-size:
+        11px;
+
+    font-weight:
+        var(--font-weight-bold);
+
+    letter-spacing:
+        .04em;
+
+    text-transform:
+        uppercase;
+}
+
+.agreement-status.status-success {
+    color:
+        var(--color-success);
+
+    background:
+        var(--color-success-bg);
+
+    border-color:
+        var(--color-success-border);
+}
+
+.agreement-status.status-warning {
+    color:
+        var(--color-warning);
+
+    background:
+        var(--color-warning-bg);
+
+    border-color:
+        var(--color-warning-border);
+}
+
+.agreement-status.status-info {
+    color:
+        var(--color-info);
+
+    background:
+        var(--color-info-bg);
+
+    border-color:
+        var(--color-info-border);
+}
+
+.agreement-status.status-danger {
+    color:
+        var(--color-danger);
+
+    background:
+        var(--color-danger-bg);
+
+    border-color:
+        var(--color-danger-border);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.dashboard-empty {
+    padding:
+        48px 24px;
+
+    text-align:
+        center;
+
+    border:
+        1px dashed rgba(255, 255, 255, .14);
+
+    border-radius:
+        var(--radius-16);
+}
+
+.dashboard-empty-icon {
+    font-size:
+        32px;
+}
+
+.dashboard-empty-title {
+    margin-top:
+        14px;
+
+    color:
+        var(--color-heading);
+
+    font-size:
+        20px;
+
+    font-weight:
+        var(--font-weight-bold);
+}
+
+.dashboard-empty-text {
+    max-width:
+        500px;
+
+    margin:
+        8px auto 20px;
+
+    color:
+        var(--color-text-secondary);
+}
+
+
+/* =========================================================
+   RECENT ACTIVITY
+========================================================= */
+
+.dashboard-recent-activity {
+    margin-top:
+        40px;
+}
+
+.dashboard-activity-list {
+    display:
+        grid;
+
+    gap:
+        10px;
+}
+
+.dashboard-activity-card {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        14px;
+
+    padding:
+        16px;
+
+    background:
+        transparent;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius:
+        var(--radius-12);
+}
+
+.dashboard-activity-icon {
+    width:
+        34px;
+
+    height:
+        34px;
+
+    flex:
+        0 0 34px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--color-primary-bg);
+
+    color:
+        var(--color-primary);
+}
+
+.dashboard-activity-content {
+    min-width:
+        0;
+
+    flex:
+        1;
+}
+
+.dashboard-activity-title {
+    color:
+        var(--color-heading);
+
+    font-weight:
+        var(--font-weight-semibold);
+}
+
+.dashboard-activity-description {
+    margin-top:
+        3px;
+
+    color:
+        var(--color-text-muted);
+
+    font-size:
+        var(--font-size-xs);
+}
+
+.dashboard-activity-badge {
+    padding:
+        5px 8px;
+
+    border:
+        1px solid var(--color-border);
+
+    border-radius:
+        var(--radius-pill);
+
+    color:
+        var(--color-text-secondary);
+
+    font-size:
+        11px;
+
+    font-weight:
+        var(--font-weight-semibold);
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.dashboard-loading {
+    min-height:
+        50vh;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    color:
+        var(--color-text-secondary);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 720px) {
+
+    .dashboard-main {
+        width:
+            min(
+                calc(100% - 24px),
+                var(--page-width)
+            );
+
+        padding:
+            32px 0 64px;
+    }
+
+    .dashboard-hero-content {
+        align-items:
+            flex-start;
+    }
+
+    .dashboard-name {
+        font-size:
+            28px;
+    }
+
+    .dashboard-section-header {
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+    }
+
+    .dashboard-stats {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+    .dashboard-panel {
+        padding:
+            18px;
+    }
+
+    .agreement-card-top,
+    .agreement-card-footer {
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .dashboard-hero-content {
+        gap:
+            14px;
+    }
+
+    .dashboard-avatar {
+        width:
+            52px;
+
+        height:
+            52px;
+
+        flex-basis:
+            52px;
+    }
+
+    .dashboard-name {
+        display:
+            block;
+
+        margin-top:
+            4px;
+
+        font-size:
+            24px;
+    }
+
+    .dashboard-stats {
+        grid-template-columns:
+            1fr;
+    }
+
+    .dashboard-actions {
+        width:
+            100%;
+
+        justify-content:
+            stretch;
+    }
+
+    .dashboard-actions .btn {
+        flex:
+            1;
+    }
+
+}

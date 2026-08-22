@@ -1,0 +1,4 @@
+/* Geplic — Legal */
+.legal-page{min-height:calc(100vh - var(--header-height));background:transparent}
+.legal-container{width:min(calc(100% - 48px),800px);margin:0 auto;padding:64px 0 90px}.legal-title{margin-bottom:42px;font-size:40px}.legal-heading{margin:36px 0 12px;color:var(--color-heading);font-size:22px}.legal-paragraph{margin:0 0 16px;color:var(--color-text-secondary);line-height:1.8}.legal-list{margin:0 0 20px 22px;color:var(--color-text-secondary);line-height:1.8}
+@media (max-width:640px){.legal-container{width:min(calc(100% - 32px),800px);padding:42px 0 64px}.legal-title{font-size:32px}}

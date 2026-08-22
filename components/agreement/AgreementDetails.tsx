@@ -1,95 +1,85 @@
-type AgreementDetailsProps = {
-  category: string;
-  fields: Record<string, any>;
-};
+import DocumentField from "../document/DocumentField";
+import DocumentSection from "../document/DocumentSection";
 
-const FIELD_LABELS: Record<string, Record<string, string>> = {
-  Loan: {
-    loanAmount: "Loan Amount",
-    interestRate: "Interest Rate",
-    repaymentDate: "Repayment Date",
-  },
+import {
+  AGREEMENT_FIELD_LABELS,
+} from "@/lib/agreement/FieldLabels";
 
-  "Freelance / Service": {
-    serviceDescription: "Service Description",
-    paymentAmount: "Payment Amount",
-    deliveryDate: "Delivery Date",
-  },
+import {
+  formatAgreementValue,
+} from "@/lib/agreement/Formatters";
 
-  "Rent Agreement": {
-    propertyAddress: "Property Address",
-    monthlyRent: "Monthly Rent",
-    securityDeposit: "Security Deposit",
-    startDate: "Start Date",
-    durationMonths: "Duration",
-  },
+import {
+  DEFAULT_TEXT,
+} from "@/lib/agreement/constants";
 
-  "General Promise": {
-  },
+type Props = {
+  pact: any;
+  templateFields: Record<string, any>;
 };
 
 export default function AgreementDetails({
-  category,
-  fields,
-}: AgreementDetailsProps) {
+  pact,
+  templateFields,
+}: Props) {
 
-  const labels = FIELD_LABELS[category] ?? {};
+  const labels =
+    AGREEMENT_FIELD_LABELS[
+      pact.contractType
+    ] ?? {};
 
-  const entries = Object.entries(labels);
+  const entries =
+    Object.entries(labels).filter(
+      ([key]) => {
 
-  if (entries.length === 0) return null;
-
-  return (
-    <div className="agreement-details">
-
-      {entries.map(([key, label]) => {
-
-        const value = fields?.[key];
-
-        if (
-          value === undefined ||
-          value === null ||
-          value === ""
-        ) {
-          return null;
-        }
-
-        let displayValue = value;
-
-        if (
-          key === "loanAmount" ||
-          key === "paymentAmount" ||
-          key === "monthlyRent" ||
-          key === "securityDeposit"
-        ) {
-          displayValue = `₹${value}`;
-        }
-
-        if (key === "interestRate") {
-          displayValue = `${value}%`;
-        }
-
-        if (key === "durationMonths") {
-          displayValue = `${value} Months`;
-        }
+        const value =
+          templateFields[key];
 
         return (
-          <div
-            key={key}
-            className="detail-row"
-          >
-            <span className="detail-label">
-              {label}
-            </span>
-
-            <span className="detail-value">
-              {displayValue}
-            </span>
-          </div>
+          value !== undefined &&
+          value !== null &&
+          value !== ""
         );
 
-      })}
+      }
+    );
 
-    </div>
+  if (entries.length === 0) {
+    return (
+      <DocumentSection
+  title="Agreement Details"
+  className="agreement-details-section"
+>
+
+        <p className="empty-state">
+          {DEFAULT_TEXT.noAgreementDetails}
+        </p>
+
+      </DocumentSection>
+    );
+  }
+
+  return (
+
+    <DocumentSection
+  title="Agreement Details"
+  className="agreement-details-section"
+>
+
+      {entries.map(([key, label]) => (
+
+        <DocumentField
+          key={key}
+          label={label}
+          value={formatAgreementValue(
+            key,
+            templateFields[key]
+          )}
+        />
+
+      ))}
+
+    </DocumentSection>
+
   );
 }

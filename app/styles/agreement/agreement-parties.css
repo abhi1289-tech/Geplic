@@ -1,0 +1,136 @@
+/* =========================================================
+   GEPLIC — AGREEMENT BUILDER
+   PARTIES
+========================================================= */
+
+.agreement-builder-page .agreement-parties {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   PARTY CARD
+========================================================= */
+
+.agreement-builder-page .document-party {
+    min-width: 0;
+
+    padding: 20px;
+
+    background:
+        rgba(255, 255, 255, .28);
+
+    border:
+        1px solid #CBD8D0;
+
+    border-radius: 12px;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   PARTY TITLE
+========================================================= */
+
+.agreement-builder-page .document-party-title {
+    margin: 0 0 16px;
+
+    color: #66736B;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: .09em;
+
+    line-height: 1.3;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   PARTY CONTENT
+========================================================= */
+
+.agreement-builder-page .document-party-content {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+
+    min-width: 0;
+
+    color: var(--agreement-body);
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   PARTY FIELD RHYTHM
+========================================================= */
+
+.agreement-builder-page
+.document-party-content
+.document-field {
+    min-width: 0;
+}
+
+.agreement-builder-page
+.document-party-content
+.document-field-label {
+    margin-bottom: 6px;
+
+    color: #69766E;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    letter-spacing: .07em;
+
+    line-height: 1.3;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   USER / PARTY VALUES
+========================================================= */
+
+.agreement-builder-page
+.document-party-content
+.document-field-value {
+    min-width: 0;
+
+    color: #17231B;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .agreement-builder-page .agreement-parties {
+        grid-template-columns: 1fr;
+    }
+}

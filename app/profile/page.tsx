@@ -11,6 +11,9 @@ import { db } from "@/lib/firebase";
 import { useAuth } from "@/context/AuthContext";
 import AppHeader from "@/components/AppHeader";
 import { useRouter } from "next/navigation";
+import StatusPage from "@/components/StatusPage";
+import ProfileForm from "@/components/profile/ProfileForm";
+import ProfileLayout from "@/components/profile/ProfileLayout";
 
 export default function ProfilePage(){
 
@@ -84,9 +87,9 @@ export default function ProfilePage(){
 
     return(
 
-      <div className="flex min-h-screen items-center justify-center bg-black text-white">
-        Loading profile...
-      </div>
+      <StatusPage 
+        message = "Loading profile..."
+      />
 
     );
 
@@ -94,14 +97,14 @@ export default function ProfilePage(){
 
   return(
 
-    <div className="min-h-screen bg-black text-white">
+    <div className="profile-page">
       {/* HEADER */}
       
           <AppHeader
         rightContent={
           <button
             onClick={() => router.push("/dashboard")}
-      className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-5 py-2 text-sm text-white/70 transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/[0.06] hover:text-white"    >
+      className="btn btn-secondary btn-sm">
             Dashboard
           </button>
         }
@@ -109,88 +112,18 @@ export default function ProfilePage(){
       
           {/* CONTENT */}
 
-      <main className="mx-auto max-w-3xl px-6 py-14">
+<ProfileLayout>
 
-        <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-10 backdrop-blur-xl">
+  <ProfileForm
+    fullName={fullName}
+    setFullName={setFullName}
+    designation={designation}
+    setDesignation={setDesignation}
+    saving={saving}
+    onSave={saveProfile}
+  />
 
-          <div className="mb-10 flex items-center gap-5">
-
-            <div className="flex h-20 w-20 items-center justify-center rounded-3xl border border-cyan-400/20 bg-cyan-400/10 text-3xl font-bold text-cyan-300">
-
-              {fullName
-                ? fullName
-                    .split(" ")
-                    .map((word)=>word[0])
-                    .join("")
-                    .slice(0,2)
-                    .toUpperCase()
-                : "U"}
-
-            </div>
-
-            <div>
-
-              <h1 className="text-4xl font-bold">
-                Your Profile
-              </h1>
-
-              <p className="mt-2 text-white/50">
-                Manage your Geplic identity
-              </p>
-
-            </div>
-
-          </div>
-
-          <div className="space-y-6">
-
-            <div className="space-y-2">
-
-              <label className="text-sm text-white/60">
-                Full Name
-              </label>
-
-              <input
-                value={fullName}
-                onChange={(e)=>setFullName(e.target.value)}
-                placeholder="Your full name"
-                className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white outline-none transition-all duration-300 hover:border-cyan-400/30 focus:border-cyan-400/60"
-              />
-
-            </div>
-
-            <div className="space-y-2">
-
-              <label className="text-sm text-white/60">
-                Designation
-              </label>
-
-              <input
-                value={designation}
-                onChange={(e)=>setDesignation(e.target.value)}
-                placeholder="Your role or profession"
-                className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white outline-none transition-all duration-300 hover:border-cyan-400/30 focus:border-cyan-400/60"
-              />
-
-            </div>
-
-            <button
-              onClick={saveProfile}
-              disabled={saving}
-              className="w-full rounded-2xl bg-gradient-to-r from-cyan-400 to-violet-500 py-4 font-semibold text-black transition-all duration-300 hover:scale-[1.01]"
-            >
-
-              {saving
-                ? "Saving..."
-                : "Save Profile"}
-
-            </button>
-
-          </div>
-
-        </div>
-
-      </main>
+</ProfileLayout>
 
     </div>
 

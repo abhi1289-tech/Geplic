@@ -1,0 +1,165 @@
+/* =========================================================
+   GEPLIC — AGREEMENT BUILDER
+   BASE DOCUMENT SURFACE
+
+   Formal legal-document presentation.
+   Scoped through .agreement-builder-page.
+========================================================= */
+
+
+/* =========================================================
+   BUILDER PAGE
+========================================================= */
+
+.agreement-builder-page{
+    --agreement-paper:#F4F8F3;
+    --agreement-paper-soft:#EDF5ED;
+
+    --agreement-ink:#18231B;
+    --agreement-body:#2F3A32;
+    --agreement-muted:#66736A;
+
+    --agreement-green:#2F6B45;
+    --agreement-green-dark:#245437;
+    --agreement-green-soft:#E4F0E6;
+
+    --agreement-border:#C8D7CB;
+    --agreement-border-soft:#D9E4DB;
+
+    --agreement-white:#FFFFFF;
+
+    color:var(--agreement-ink);
+}
+
+
+/* =========================================================
+   DOCUMENT
+========================================================= */
+
+.agreement-builder-page .agreement-document{
+    position:relative;
+
+    width:100%;
+    max-width:var(--document-width);
+
+    margin:0 auto;
+
+    color:var(--agreement-ink);
+}
+
+
+/* =========================================================
+   DOCUMENT BACKGROUND
+========================================================= */
+
+.agreement-builder-page .agreement-background{
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.20),
+            rgba(219,235,221,.08)
+        );
+
+    z-index:0;
+}
+
+
+/* =========================================================
+   WATERMARK
+========================================================= */
+
+.agreement-builder-page .agreement-watermark{
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:
+        translate(-50%,-50%)
+        rotate(-30deg);
+
+    color:rgba(47,107,69,.035);
+
+    font-size:clamp(4rem,8vw,6rem);
+
+    font-weight:800;
+
+    letter-spacing:.22em;
+
+    white-space:nowrap;
+
+    pointer-events:none;
+    user-select:none;
+
+    z-index:0;
+}
+
+
+/* =========================================================
+   DOCUMENT PAGE
+========================================================= */
+
+.agreement-builder-page .agreement-page{
+    position:relative;
+
+    z-index:1;
+
+    width:100%;
+
+    min-height:900px;
+
+    padding:56px 60px;
+
+    background:var(--agreement-paper);
+
+    color:var(--agreement-ink);
+
+    border:
+        1px solid var(--agreement-border);
+
+    border-radius:10px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.14);
+
+    overflow:hidden;
+}
+
+
+/* Multiple document pages */
+
+.agreement-builder-page .agreement-page + .agreement-page{
+    margin-top:28px;
+}
+
+
+/* =========================================================
+   DOCUMENT TEXT
+========================================================= */
+
+.agreement-builder-page .agreement-page p{
+    color:var(--agreement-body);
+}
+
+.agreement-builder-page .agreement-page strong{
+    color:var(--agreement-ink);
+}
+
+
+/* =========================================================
+   GENERIC DOCUMENT DIVIDER
+========================================================= */
+
+.agreement-builder-page .document-divider{
+    height:1px;
+
+    background:var(--agreement-border);
+
+    border:0;
+}

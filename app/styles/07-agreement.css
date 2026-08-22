@@ -1,0 +1,24 @@
+/* =========================================================
+   GEPLIC UI SYSTEM
+   AGREEMENT / PACT STYLE ENTRY POINT
+
+   Feature styles are intentionally split into modules.
+========================================================= */
+
+@import "./agreement/agreement-base.css";
+@import "./agreement/agreement-layout.css";
+@import "./agreement/agreement-header.css";
+@import "./agreement/agreement-parties.css";
+@import "./agreement/agreement-terms.css";
+@import "./agreement/agreement-actions.css";
+@import "./agreement/agreement-acceptance.css";
+@import "./agreement/agreement-verification.css";
+
+@import "./pact/pact-page.css";
+@import "./pact/pact-actions.css";
+@import "./pact/pact-create.css";
+
+@import "./agreement/agreement-responsive.css";
+@import "./pact/pact-responsive.css";
+
+@import "./agreement/agreement-print.css";

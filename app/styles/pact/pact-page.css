@@ -1,0 +1,1033 @@
+/* Pact — detail */
+.pact-page{min-height:calc(100vh - var(--header-height));background:transparent}
+.pact-main{width:min(calc(100% - 48px),var(--content-width));margin:0 auto;padding:48px 0 90px}
+.pact-header{margin-bottom:28px}.pact-title{margin:0;color:var(--color-heading);font-size:clamp(34px,5vw,54px);font-weight:800;line-height:1.04;letter-spacing:-.045em}
+.pact-notice{display:flex;align-items:center;gap:10px;width:fit-content;max-width:100%;margin-top:16px;padding:10px 14px;border:1px solid rgba(255,255,255,.08);border-radius:12px;font-size:var(--font-size-sm);line-height:1.5}.pact-notice-warning{color:var(--color-warning);background:var(--color-warning-bg);border-color:rgba(255,176,0,.25)}.pact-notice-danger{color:var(--color-danger);background:var(--color-danger-bg);border-color:rgba(255,77,77,.25)}
+.status-badge{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:6px 11px;border:1px solid rgba(255,255,255,.1);border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}.status-draft,.status-default{color:var(--color-text-secondary);background:rgba(255,255,255,.04)}.status-pending{color:var(--color-warning);background:var(--color-warning-bg);border-color:rgba(255,176,0,.3)}.status-completed{color:var(--color-success);background:var(--color-success-bg);border-color:rgba(34,224,111,.3)}.status-rejected,.status-voided{color:var(--color-danger);background:var(--color-danger-bg);border-color:rgba(255,77,77,.3)}
+.agreement-summary{margin-top:24px;padding:28px;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012));border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-20);box-shadow:var(--shadow-lg)}.summary-title{margin-bottom:20px;color:var(--color-heading);font-size:22px;font-weight:700}.summary-content{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.summary-content>*{min-width:0;padding:16px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:rgba(255,255,255,.018);color:var(--color-text-secondary);line-height:1.6;overflow-wrap:anywhere}.summary-content>*:first-child{grid-column:1/-1}.summary-content strong{color:var(--color-heading)}
+.agreement-acceptance-form{margin-top:24px;padding:28px;background:linear-gradient(145deg,rgba(255,176,0,.045),rgba(255,255,255,.012));border:1px solid rgba(255,176,0,.2);border-radius:var(--radius-20)}.acceptance-title{color:var(--color-heading);font-size:22px}.acceptance-description{margin-top:8px;color:var(--color-text-secondary);line-height:1.65}.acceptance-consent{display:flex;align-items:flex-start;gap:10px;margin-top:20px}.consent-checkbox{margin-top:4px;accent-color:var(--color-primary)}.consent-text{color:var(--color-text-secondary);font-size:var(--font-size-sm);line-height:1.6}.acceptance-submit{margin-top:20px}.acceptance-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.agreement-completed,.agreement-rejected,.agreement-voided{margin-top:24px;padding:28px;border:1px solid var(--color-border);border-radius:var(--radius-20);background:rgba(255,255,255,.02)}.completed-header,.rejected-header,.voided-header{display:flex;align-items:center;gap:14px}.completed-indicator,.rejected-indicator,.voided-indicator{width:42px;height:42px;display:grid;place-items:center;border-radius:50%}.completed-indicator{color:var(--color-success);background:var(--color-success-bg)}.rejected-indicator,.voided-indicator{color:var(--color-danger);background:var(--color-danger-bg)}.completed-title,.rejected-title,.voided-title{font-size:22px}.completed-description,.rejected-description,.voided-description{margin-top:8px;color:var(--color-text-secondary);line-height:1.6}.completed-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}.completed-card,.rejected-card{padding:16px;border:1px solid var(--color-border);border-radius:12px;background:rgba(255,255,255,.018)}.rejection-reason{margin-top:16px;color:var(--color-text-secondary);line-height:1.7}
+.reject-modal{position:fixed;inset:0;z-index:var(--z-modal);display:grid;place-items:center;padding:24px;background:rgba(0,0,0,.7);backdrop-filter:blur(8px)}.reject-modal-title{margin-bottom:20px;color:var(--color-heading);font-size:22px}.reject-form{width:min(100%,520px);padding:28px;background:#0a1117;border:1px solid var(--color-border);border-radius:var(--radius-20);box-shadow:var(--shadow-xl)}.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+.agreement-timeline{margin-top:32px}.timeline-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.timeline-indicator{width:9px;height:9px;border-radius:50%;background:var(--color-primary);box-shadow:0 0 0 5px rgba(25,207,227,.08)}.timeline-title{color:var(--color-heading);font-size:20px}.timeline-list{position:relative;display:grid;gap:10px}.timeline-list::before{content:"";position:absolute;top:12px;bottom:12px;left:7px;width:1px;background:var(--color-border)}.timeline-card{position:relative;display:flex;gap:14px;padding:14px 16px 14px 0}.timeline-dot{position:relative;z-index:1;width:15px;height:15px;flex:0 0 15px;margin-top:4px;border:3px solid var(--color-bg);border-radius:50%;background:var(--color-text-muted)}.timeline-card-content{min-width:0;flex:1;padding:14px 16px;border:1px solid var(--color-border);border-radius:12px;background:rgba(255,255,255,.018)}.timeline-event{color:var(--color-heading);font-weight:600}.timeline-user,.timeline-date{margin-top:4px;color:var(--color-text-muted);font-size:12px}.timeline-created .timeline-dot{background:var(--color-info)}.timeline-edited .timeline-dot,.timeline-sent .timeline-dot{background:var(--color-warning)}.timeline-success .timeline-dot{background:var(--color-success)}.timeline-danger .timeline-dot{background:var(--color-danger)}.timeline-loading,.timeline-empty{padding:24px;color:var(--color-text-muted);text-align:center}
+/* =========================================================
+   GEPLIC — PACT DETAIL PAGE
+   FINAL VISUAL ADJUSTMENTS
+========================================================= */
+
+
+/* =========================================================
+   AGREEMENT SUMMARY
+   Transparent outer container
+========================================================= */
+
+.pact-page .agreement-summary{
+
+    background:transparent;
+
+    box-shadow:none;
+
+}
+
+
+/* =========================================================
+   SUMMARY CONTENT
+   Keep the individual information fields subtle
+========================================================= */
+
+.pact-page .summary-content > *{
+
+    background:
+        rgba(255,255,255,.012);
+
+}
+
+
+/* =========================================================
+   ACTIONS
+   Separate actions from agreement summary
+========================================================= */
+
+.pact-page .action-group{
+
+    justify-content:center;
+
+    margin-top:32px;
+
+    margin-bottom:56px;
+
+}
+
+
+/* =========================================================
+   ACTION GROUPS
+========================================================= */
+
+.pact-page .action-group-primary,
+.pact-page .action-group-secondary{
+
+    justify-content:center;
+
+}
+
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.pact-page .agreement-timeline{
+
+    margin-top:0;
+
+}
+
+
+/* =========================================================
+   TIMELINE CARDS
+========================================================= */
+
+.pact-page .timeline-card{
+
+    background:
+        rgba(255,255,255,.012);
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:640px){
+
+    .pact-page .action-group{
+
+        margin-top:26px;
+
+        margin-bottom:44px;
+
+    }
+
+}
+
+/* =========================================================
+   PACT DETAIL PAGE — VISUAL REFINEMENTS
+========================================================= */
+
+/* ---------------------------------------------------------
+   PACT HEADER
+   Prevent the Agreement title and status badge from touching.
+--------------------------------------------------------- */
+
+.pact-header{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:14px;
+}
+
+.pact-title{
+    margin:0;
+    line-height:1.05;
+}
+
+
+/* ---------------------------------------------------------
+   AGREEMENT SUMMARY
+   Keep the summary transparent.
+--------------------------------------------------------- */
+
+.agreement-summary{
+    background:transparent;
+    box-shadow:none;
+}
+
+
+/* ---------------------------------------------------------
+   SUMMARY VALUES
+   User-entered agreement values must remain readable.
+--------------------------------------------------------- */
+
+.summary-content .document-field-value,
+.summary-content .document-field-value p,
+.summary-content .summary-value{
+    color:var(--color-heading);
+    font-weight:500;
+}
+
+.summary-content .document-field-label,
+.summary-content .summary-label{
+    color:var(--color-text-secondary);
+}
+
+
+/* ---------------------------------------------------------
+   ACTIONS
+   Add deliberate breathing room before the buttons.
+--------------------------------------------------------- */
+
+.agreement-summary + .agreement-actions,
+.agreement-summary + .action-group{
+    margin-top:28px;
+}
+
+
+/* ---------------------------------------------------------
+   AGREEMENT TIMELINE
+--------------------------------------------------------- */
+
+.agreement-timeline{
+    margin-top:52px;
+}
+
+.timeline-header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:28px;
+}
+
+.timeline-indicator{
+    width:10px;
+    height:10px;
+    flex:0 0 10px;
+    margin:0;
+    border-radius:50%;
+    background:var(--color-primary);
+    box-shadow:0 0 14px rgba(0,229,255,.30);
+}
+
+.timeline-title{
+    margin:0;
+}
+
+
+/* ---------------------------------------------------------
+   TIMELINE LIST
+   Keep the vertical line aligned with the event dots.
+--------------------------------------------------------- */
+
+.timeline-list{
+    position:relative;
+    padding-left:30px;
+}
+
+.timeline-list::before{
+    left:8px;
+    top:12px;
+    bottom:12px;
+}
+
+
+/* ---------------------------------------------------------
+   TIMELINE EVENT DOT
+--------------------------------------------------------- */
+
+.timeline-dot{
+    width:12px;
+    height:12px;
+    top:29px;
+    left:-28px;
+    border:3px solid var(--color-background);
+    border-radius:50%;
+}
+
+
+/* ---------------------------------------------------------
+   TIMELINE STATUS COLORS
+--------------------------------------------------------- */
+
+/* Pact Created — CYAN */
+
+.timeline-dot.timeline-created{
+    background:var(--color-primary);
+    box-shadow:
+        0 0 0 1px rgba(0,229,255,.30),
+        0 0 14px rgba(0,229,255,.18);
+}
+
+
+/* Agreement Edited — PURPLE */
+
+.timeline-dot.timeline-edited{
+    background:#8b5cf6;
+    box-shadow:
+        0 0 0 1px rgba(139,92,246,.30),
+        0 0 14px rgba(139,92,246,.18);
+}
+
+
+/* Offer Sent / Pending — YELLOW */
+
+.timeline-dot.timeline-sent{
+    background:var(--color-warning);
+    box-shadow:
+        0 0 0 1px rgba(245,158,11,.30),
+        0 0 14px rgba(245,158,11,.18);
+}
+
+
+/* Accepted / Completed — GREEN */
+
+.timeline-dot.timeline-success{
+    background:var(--color-success);
+    box-shadow:
+        0 0 0 1px rgba(34,197,94,.30),
+        0 0 14px rgba(34,197,94,.18);
+}
+
+
+/* Rejected / Voided — RED */
+
+.timeline-dot.timeline-danger{
+    background:var(--color-danger);
+    box-shadow:
+        0 0 0 1px rgba(239,68,68,.30),
+        0 0 14px rgba(239,68,68,.18);
+}
+
+/* =========================================================
+   PACT DETAIL — FINAL VISUAL REFINEMENTS
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   AGREEMENT COMPLETED
+   Make the completed panel and its values clearly readable.
+--------------------------------------------------------- */
+
+.agreement-completed{
+
+    margin-top:30px;
+
+    padding:30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(34,197,94,.08),
+            rgba(255,255,255,.012)
+        );
+
+    border:
+        1px solid rgba(34,197,94,.28);
+
+    border-radius:22px;
+
+}
+
+
+/* Completed heading */
+
+.completed-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+
+.completed-indicator{
+
+    width:14px;
+    height:14px;
+
+    min-width:14px;
+    min-height:14px;
+
+    flex:0 0 14px;
+
+    border-radius:50%;
+
+    background:
+        var(--color-success);
+
+    box-shadow:
+        0 0 16px
+        rgba(34,197,94,.45);
+
+}
+
+
+.completed-title{
+
+    margin:0;
+
+    color:
+        var(--color-heading);
+
+    font-size:1.45rem;
+
+    font-weight:700;
+
+}
+
+
+.completed-description{
+
+    margin:10px 0 0;
+
+    color:
+        var(--color-text-secondary);
+
+    line-height:1.65;
+
+}
+
+
+/* Completed information cards */
+
+.completed-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:14px;
+
+    margin-top:24px;
+
+}
+
+
+.completed-card{
+
+    padding:18px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid rgba(34,197,94,.16);
+
+    border-radius:15px;
+
+    color:
+        var(--color-heading);
+
+}
+
+
+/* Make all normal text inside the completed cards readable */
+
+.completed-card p,
+.completed-card span,
+.completed-card strong,
+.completed-card div{
+
+    color:
+        var(--color-heading);
+
+}
+
+
+/* Keep the actual status/verification text green */
+
+.completed-status{
+
+    color:
+        var(--color-success);
+
+    font-weight:650;
+
+}
+
+
+/* ---------------------------------------------------------
+   SPACE BETWEEN COMPLETED SECTION AND TIMELINE
+--------------------------------------------------------- */
+
+.agreement-timeline{
+
+    margin-top:72px;
+
+}
+
+
+/* ---------------------------------------------------------
+   REMOVE THE DECORATIVE BLUE DOT BESIDE
+   "AGREEMENT TIMELINE"
+--------------------------------------------------------- */
+
+.timeline-indicator{
+
+    display:none;
+
+}
+
+
+/* Since the indicator is gone, the title no longer
+   needs the old header gap. */
+
+.timeline-header{
+
+    display:flex;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+
+.timeline-title{
+
+    margin:0;
+
+    color:
+        var(--color-heading);
+
+}
+
+
+/* ---------------------------------------------------------
+   TIMELINE EVENT DOTS
+   Force every status dot to be a TRUE CIRCLE.
+--------------------------------------------------------- */
+
+.timeline-dot{
+
+    position:absolute;
+
+    top:29px;
+
+    left:-28px;
+
+    width:12px;
+    height:12px;
+
+    min-width:12px;
+    min-height:12px;
+
+    max-width:12px;
+    max-height:12px;
+
+    aspect-ratio:1 / 1;
+
+    padding:0;
+
+    margin:0;
+
+    flex:0 0 12px;
+
+    border:
+        3px solid var(--color-background);
+
+    border-radius:50%;
+
+    box-sizing:border-box;
+
+}
+
+
+/* ---------------------------------------------------------
+   TIMELINE STATUS COLORS
+--------------------------------------------------------- */
+
+.timeline-dot.timeline-created{
+
+    background:
+        var(--color-primary);
+
+    box-shadow:
+        0 0 0 1px rgba(0,229,255,.30),
+        0 0 14px rgba(0,229,255,.18);
+
+}
+
+
+.timeline-dot.timeline-edited{
+
+    background:
+        #8b5cf6;
+
+    box-shadow:
+        0 0 0 1px rgba(139,92,246,.30),
+        0 0 14px rgba(139,92,246,.18);
+
+}
+
+
+.timeline-dot.timeline-sent{
+
+    background:
+        var(--color-warning);
+
+    box-shadow:
+        0 0 0 1px rgba(245,158,11,.30),
+        0 0 14px rgba(245,158,11,.18);
+
+}
+
+
+.timeline-dot.timeline-success{
+
+    background:
+        var(--color-success);
+
+    box-shadow:
+        0 0 0 1px rgba(34,197,94,.30),
+        0 0 14px rgba(34,197,94,.18);
+
+}
+
+
+.timeline-dot.timeline-danger{
+
+    background:
+        var(--color-danger);
+
+    box-shadow:
+        0 0 0 1px rgba(239,68,68,.30),
+        0 0 14px rgba(239,68,68,.18);
+
+}
+
+
+/* ---------------------------------------------------------
+   TIMELINE SPACING / ALIGNMENT
+--------------------------------------------------------- */
+
+.timeline-list{
+
+    position:relative;
+
+    padding-left:30px;
+
+}
+
+
+.timeline-list::before{
+
+    left:8px;
+
+    top:12px;
+
+    bottom:12px;
+
+}
+
+/* =========================================================
+   PACT DETAIL — FINAL MICRO ADJUSTMENTS
+   Append only — do not modify existing rules
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   TOP AGREEMENT HEADING
+   Reduce visual heaviness without changing structure.
+--------------------------------------------------------- */
+
+.pact-page .pact-title{
+    font-size:clamp(32px,4.5vw,50px);
+    font-weight:700;
+    line-height:1.08;
+    letter-spacing:-.035em;
+}
+
+
+/* ---------------------------------------------------------
+   COMPLETED SECTION → TIMELINE
+   Give the timeline proper breathing room.
+--------------------------------------------------------- */
+
+.pact-page .agreement-timeline{
+    margin-top:84px;
+}
+
+
+/* ---------------------------------------------------------
+   REMOVE TIMELINE HEADER DECORATIVE DOT
+   Keep the timeline heading clean.
+--------------------------------------------------------- */
+
+.pact-page .timeline-indicator{
+    display:none;
+}
+
+
+/* ---------------------------------------------------------
+   TIMELINE HEADER
+--------------------------------------------------------- */
+
+.pact-page .timeline-header{
+    margin-bottom:32px;
+    padding:0;
+}
+
+
+/* ---------------------------------------------------------
+   TIMELINE STATUS DOTS
+   Vertically center each dot against its timeline card.
+--------------------------------------------------------- */
+
+.pact-page .timeline-card{
+    position:relative;
+}
+
+
+.pact-page .timeline-dot{
+    position:absolute;
+
+    top:50%;
+    left:-28px;
+
+    width:12px;
+    height:12px;
+    min-width:12px;
+    min-height:12px;
+    max-width:12px;
+    max-height:12px;
+
+    padding:0;
+    margin:0;
+
+    transform:translateY(-50%);
+
+    aspect-ratio:1 / 1;
+
+    flex:0 0 12px;
+
+    box-sizing:border-box;
+
+    border:3px solid var(--color-background);
+    border-radius:50%;
+}
+
+
+/* ---------------------------------------------------------
+   TIMELINE VERTICAL LINE
+   Keep the line centered with the status dots.
+--------------------------------------------------------- */
+
+.pact-page .timeline-list::before{
+    left:8px;
+    top:6px;
+    bottom:6px;
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+--------------------------------------------------------- */
+
+@media(max-width:640px){
+
+    .pact-page .agreement-timeline{
+        margin-top:64px;
+    }
+
+    .pact-page .timeline-dot{
+        left:-28px;
+    }
+
+}
+
+/* =========================================================
+   PACT DETAIL — COMPLETION / TIMELINE SPACING FIX
+   Append only
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   COMPLETION MESSAGE ALIGNMENT
+   Align the description with the completion title.
+--------------------------------------------------------- */
+
+.pact-page .completed-description{
+    margin-left:56px;
+}
+
+
+/* ---------------------------------------------------------
+   COMPLETION → TIMELINE
+   Reduce the excessive vertical gap.
+--------------------------------------------------------- */
+
+.pact-page .agreement-timeline{
+    margin-top:38px;
+}
+
+
+/* ---------------------------------------------------------
+   KEEP TIMELINE HEADER COMPACT
+--------------------------------------------------------- */
+
+.pact-page .timeline-header{
+    margin-bottom:30px;
+}
+
+/* =========================================================
+   PACT DETAIL — COMPLETION FIELD SPACING
+   Uses the actual DocumentField class structure.
+========================================================= */
+
+/* Each completion field is its own block */
+.pact-page .completed-card .document-field{
+    margin:0;
+}
+
+/* Label */
+.pact-page .completed-card .document-field-label{
+    margin:0 0 6px;
+    color:var(--color-heading);
+    font-weight:700;
+    line-height:1.4;
+}
+
+/* Value directly below its label */
+.pact-page .completed-card .document-field-value{
+    margin:0;
+    color:var(--color-heading);
+    font-weight:500;
+    line-height:1.5;
+}
+
+/* Space between the first field and the second field */
+.pact-page .completed-card .document-field + .document-field{
+    margin-top:16px;
+}
+
+/* =========================================================
+   PACT DETAIL — VOIDED AGREEMENT
+   Match the completed block structure
+   using the danger/voided visual language.
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   VOIDED SECTION
+--------------------------------------------------------- */
+
+.pact-page .agreement-voided{
+
+    margin-top:30px;
+
+    padding:30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(239,68,68,.08),
+            rgba(255,255,255,.012)
+        );
+
+    border:
+        1px solid rgba(239,68,68,.28);
+
+    border-radius:22px;
+
+}
+
+
+/* ---------------------------------------------------------
+   VOIDED HEADER
+--------------------------------------------------------- */
+
+.pact-page .voided-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+
+/* ---------------------------------------------------------
+   VOIDED INDICATOR
+--------------------------------------------------------- */
+
+.pact-page .voided-indicator{
+
+    width:14px;
+    height:14px;
+
+    min-width:14px;
+    min-height:14px;
+
+    flex:0 0 14px;
+
+    border-radius:50%;
+
+    background:
+        var(--color-danger);
+
+    box-shadow:
+        0 0 16px
+        rgba(239,68,68,.45);
+
+}
+
+
+/* ---------------------------------------------------------
+   VOIDED TITLE
+--------------------------------------------------------- */
+
+.pact-page .voided-title{
+
+    margin:0;
+
+    color:
+        var(--color-heading);
+
+    font-size:1.45rem;
+
+    font-weight:700;
+
+}
+
+
+/* ---------------------------------------------------------
+   VOIDED DESCRIPTION
+--------------------------------------------------------- */
+
+.pact-page .voided-description{
+
+    margin:10px 0 0;
+
+    color:
+        var(--color-text-secondary);
+
+    line-height:1.65;
+
+}
+
+
+/* ---------------------------------------------------------
+   VOIDED CARDS
+   In case the voided section contains information fields.
+--------------------------------------------------------- */
+
+.pact-page .agreement-voided .completed-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,minmax(0,1fr));
+
+    gap:14px;
+
+    margin-top:24px;
+
+}
+
+
+.pact-page .agreement-voided .completed-card{
+
+    padding:18px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid rgba(239,68,68,.16);
+
+    border-radius:15px;
+
+    color:
+        var(--color-heading);
+
+}
+
+
+/* ---------------------------------------------------------
+   VOIDED CARD TEXT
+--------------------------------------------------------- */
+
+.pact-page .agreement-voided .completed-card p,
+.pact-page .agreement-voided .completed-card span,
+.pact-page .agreement-voided .completed-card strong,
+.pact-page .agreement-voided .completed-card div{
+
+    color:
+        var(--color-heading);
+
+}
+
+
+/* ---------------------------------------------------------
+   VOIDED DOCUMENT FIELDS
+--------------------------------------------------------- */
+
+.pact-page .agreement-voided .document-field{
+
+    margin:0;
+
+}
+
+
+.pact-page .agreement-voided .document-field-label{
+
+    margin:0 0 6px;
+
+    color:
+        var(--color-heading);
+
+    font-weight:700;
+
+    line-height:1.4;
+
+}
+
+
+.pact-page .agreement-voided .document-field-value{
+
+    margin:0;
+
+    color:
+        var(--color-heading);
+
+    font-weight:500;
+
+    line-height:1.5;
+
+}
+
+
+.pact-page .agreement-voided .document-field + .document-field{
+
+    margin-top:16px;
+
+}
+
+
+/* ---------------------------------------------------------
+   VOIDED → TIMELINE
+   Keep the same spacing logic as completion.
+--------------------------------------------------------- */
+
+.pact-page .agreement-voided + .agreement-timeline{
+
+    margin-top:38px;
+
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE
+--------------------------------------------------------- */
+
+@media(max-width:640px){
+
+    .pact-page .agreement-voided{
+
+        margin-top:26px;
+
+        padding:24px;
+
+        border-radius:20px;
+
+    }
+
+    .pact-page .agreement-voided .completed-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

@@ -1,0 +1,2 @@
+/* Pact — actions */
+.pact-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:24px}.pact-action-group{display:flex;align-items:center;gap:10px}.pact-actions .btn-danger{border-radius:20px}.pact-actions .btn-success{color:var(--color-success);background:var(--color-success-bg);border:1px solid rgba(34,224,111,.28);border-radius:20px}

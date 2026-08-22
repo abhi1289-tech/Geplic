@@ -1,14 +1,17 @@
-export default function AuthCard({
-  title,
-  children,
-}: {
-  title: string;
+type Props = {
   children: React.ReactNode;
-}) {
+  className?: string;
+};
+
+export default function AuthCard({
+  children,
+  className = "",
+}: Props) {
   return (
-    <div className="w-full max-w-md rounded-xl border border-white/10 bg-black p-10 shadow-lg">
-      <h1 className="mb-6 text-xl font-semibold text-white">{title}</h1>
+    <section
+      className={`auth-card ${className}`.trim()}
+    >
       {children}
-    </div>
+    </section>
   );
 }

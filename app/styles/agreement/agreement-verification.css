@@ -1,0 +1,287 @@
+/* =========================================================
+   GEPLIC — AGREEMENT BUILDER
+   VERIFICATION
+========================================================= */
+
+
+/* =========================================================
+   VERIFICATION GRID
+========================================================= */
+
+.agreement-builder-page .verification-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-top: 0;
+
+    align-items: stretch;
+}
+
+
+/* =========================================================
+   VERIFICATION CARD
+========================================================= */
+
+.agreement-builder-page .verification-card {
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    padding: 18px 20px;
+
+    background:
+        rgba(255, 255, 255, .20);
+
+    border:
+        1px solid #CBD8D0;
+
+    border-radius: 12px;
+
+    box-shadow: none;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+}
+
+
+/*
+   IMPORTANT:
+   12-verify.css also defines .verification-fingerprint and
+   makes it span the entire grid. Reset that collision here
+   for the Agreement Builder.
+*/
+
+.agreement-builder-page
+.verification-grid
+.verification-fingerprint {
+    grid-column: auto;
+
+    min-width: 0;
+}
+
+
+/*
+   Verification URL intentionally gets the full width.
+*/
+
+.agreement-builder-page
+.verification-grid
+.verification-card:last-child {
+    grid-column: 1 / -1;
+}
+
+/* =========================================================
+   GENERATED DATE
+========================================================= */
+
+.agreement-builder-page .verification-generated {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.agreement-builder-page
+.verification-generated
+.document-field {
+    width: 100%;
+}
+
+.agreement-builder-page
+.verification-generated
+.document-field-label,
+.agreement-builder-page
+.verification-generated
+.document-field-value {
+    text-align: center;
+}
+
+/* =========================================================
+   VERIFICATION TITLE
+========================================================= */
+
+.agreement-builder-page .verification-title {
+    margin: 0;
+
+    color: #68756D;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: .09em;
+
+    line-height: 1.3;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   STANDARD VERIFICATION VALUE
+========================================================= */
+
+.agreement-builder-page
+.verification-card
+.document-field-value {
+    color: #26352C;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    line-height: 1.55;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   FINGERPRINT CONTAINER
+========================================================= */
+
+.agreement-builder-page .verification-fingerprint-value {
+    display: block;
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding: 12px 14px;
+
+    background: #EEF4F0;
+
+    border:
+        1px solid #D0DAD3;
+
+    border-radius: 9px;
+
+    color: #315D4A;
+
+    font-family:
+        ui-monospace,
+        SFMono-Regular,
+        Menlo,
+        Monaco,
+        Consolas,
+        monospace;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    line-height: 1.65;
+
+    word-break: break-all;
+
+    overflow-wrap: anywhere;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   VERIFICATION URL CONTAINER
+========================================================= */
+
+.agreement-builder-page .verification-link {
+    display: block;
+
+    width: 100%;
+
+    min-width: 0;
+
+    padding: 12px 14px;
+
+    background: #EEF4F0;
+
+    border:
+        1px solid #D0DAD3;
+
+    border-radius: 9px;
+
+    color: #286B55;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    line-height: 1.6;
+
+    word-break: break-all;
+
+    overflow-wrap: anywhere;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   CERTIFICATE
+========================================================= */
+
+.agreement-builder-page .certificate-strip {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-top: 22px;
+
+    padding: 18px 20px;
+
+    background: #EAF3EC;
+
+    border:
+        1px solid var(--agreement-border);
+
+    border-radius: 10px;
+
+    color: #405148;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.agreement-builder-page .document-brand {
+    color: var(--agreement-muted);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 680px) {
+
+    .agreement-builder-page .verification-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .agreement-builder-page
+    .verification-grid
+    .verification-card:last-child {
+        grid-column: auto;
+    }
+
+    .agreement-builder-page .certificate-strip {
+        flex-direction: column;
+    }
+}

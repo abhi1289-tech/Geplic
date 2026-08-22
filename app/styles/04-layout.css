@@ -1,0 +1,147 @@
+/* =========================================================
+   GEPLIC
+   04-layout.css
+========================================================= */
+
+
+/* =========================================================
+   APPLICATION
+========================================================= */
+
+.app {
+    min-height: 100vh;
+    background: transparent;
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   SHARED CONTAINER
+
+   One consistent horizontal content boundary across
+   the application.
+========================================================= */
+
+.section-container {
+    width: min(
+    calc(100% - 48px),
+    var(--page-width)
+);
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   APPLICATION HEADER
+========================================================= */
+
+.app-header {
+    position: relative;
+    z-index: var(--z-sticky);
+
+    height: var(--header-height);
+
+    background: rgba(0, 0, 0, .72);
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, .07);
+
+    backdrop-filter: blur(18px);
+}
+
+.app-header-container {
+    width: min(
+    calc(100% - 48px),
+    var(--page-width)
+);
+
+    height: 68px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: var(--space-24);
+}
+
+.app-logo-button {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 0;
+
+    background: transparent;
+    color: inherit;
+}
+
+.app-header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: var(--space-12);
+}
+
+
+/* =========================================================
+   STATUS PAGE
+========================================================= */
+
+.status-page {
+    min-height: 100vh;
+
+    display: grid;
+    place-items: center;
+
+    padding: var(--space-32);
+
+    background: transparent;
+}
+
+.status-page-message {
+    width: min(100%, 560px);
+
+    padding: var(--space-24);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-20);
+
+    background: var(--color-surface);
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .section-container,
+    .app-header-container {
+        width: min(
+            calc(100% - 40px),
+            var(--page-width)
+        );
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .section-container,
+    .app-header-container {
+        width: min(
+            calc(100% - 32px),
+            var(--page-width)
+        );
+    }
+
+    .status-page {
+        padding: var(--space-20);
+    }
+
+}

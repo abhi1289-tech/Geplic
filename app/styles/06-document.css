@@ -1,0 +1,252 @@
+/* =========================================================
+   Geplic — Shared Document Primitives
+   Agreement Document / Legal Green Theme
+========================================================= */
+
+.document-section{
+  margin-top:40px;
+}
+
+.document-section:first-child{
+  margin-top:0;
+}
+
+.document-field{
+  min-width:0;
+}
+
+.document-field-label{
+  margin-bottom:6px;
+  color:#5f7565;
+}
+
+.document-party{
+  min-width:0;
+  padding:18px;
+
+  border:1px solid #bfd2c2;
+  border-radius:12px;
+
+  background:#f7fbf7;
+}
+
+.document-divider{
+  height:1px;
+  background:#c5d6c8;
+}
+
+
+/* =========================================================
+   DOCUMENT
+========================================================= */
+
+.agreement-document{
+  width:100%;
+  color:#183321;
+}
+
+
+/* =========================================================
+   AGREEMENT PAPER
+========================================================= */
+
+.agreement-page{
+  position:relative;
+
+  width:100%;
+  min-height:1123px;
+
+  padding:54px 58px;
+
+  background:#e8f3e9 !important;
+
+  color:#183321;
+
+  border:1px solid #9fbea5;
+  border-radius:16px;
+
+  box-shadow:
+    0 18px 45px rgba(30,70,40,.12);
+
+  overflow:hidden;
+}
+
+.agreement-page+.agreement-page{
+  margin-top:28px;
+}
+
+
+/* =========================================================
+   DOCUMENT BACKGROUND
+========================================================= */
+
+.agreement-background{
+  position:absolute;
+  inset:0;
+
+  pointer-events:none;
+}
+
+
+/* =========================================================
+   WATERMARK
+========================================================= */
+
+.agreement-watermark{
+  position:absolute;
+
+  top:50%;
+  left:50%;
+
+  transform:
+    translate(-50%,-50%)
+    rotate(-30deg);
+
+  color:rgba(31,82,45,.035);
+
+  font-size:6rem;
+  font-weight:800;
+
+  letter-spacing:.25em;
+
+  white-space:nowrap;
+
+  pointer-events:none;
+  user-select:none;
+}
+
+
+/* =========================================================
+   DOCUMENT CONTENT LAYERS
+========================================================= */
+
+.agreement-page-main,
+.agreement-page-terms,
+.agreement-page-signatures{
+  position:relative;
+  z-index:1;
+}
+
+
+/* =========================================================
+   DOCUMENT TEXT
+========================================================= */
+
+.agreement-page p{
+  color:#293b30;
+}
+
+.agreement-page strong{
+  color:#183321;
+}
+
+
+/* =========================================================
+   DOCUMENT HEADINGS
+========================================================= */
+
+.agreement-page h1,
+.agreement-page h2,
+.agreement-page h3,
+.agreement-page h4,
+.agreement-page h5,
+.agreement-page h6{
+  color:#183321;
+}
+
+
+/* =========================================================
+   DOCUMENT LABELS
+========================================================= */
+
+.agreement-page .document-field-label{
+  color:#5d7564;
+}
+
+
+/* =========================================================
+   DOCUMENT VALUES
+========================================================= */
+
+.agreement-page .document-field-value{
+  color:#183321;
+}
+
+
+/* =========================================================
+   PARTY CARDS
+========================================================= */
+
+.agreement-page .document-party{
+  background:#f7fbf7;
+
+  border-color:#bfd2c2;
+}
+
+
+/* =========================================================
+   TERMS / INFORMATION BLOCKS
+========================================================= */
+
+.agreement-page .agreement-term{
+  background:#f7fbf7;
+
+  border:1px solid #bfd2c2;
+}
+
+
+/* =========================================================
+   ACKNOWLEDGEMENT
+========================================================= */
+
+.agreement-page .agreement-acknowledgement{
+  background:#deeddf;
+
+  border:1px solid #b5ceb9;
+}
+
+
+/* =========================================================
+   VERIFICATION
+========================================================= */
+
+.agreement-page .verification-card{
+  background:#e1efe2;
+
+  border:1px solid #b5ceb9;
+}
+
+
+/* =========================================================
+   CERTIFICATE / FOOTER
+========================================================= */
+
+.agreement-page .certificate-strip{
+  background:#deeddf;
+
+  border:1px solid #b5ceb9;
+}
+
+
+/* =========================================================
+   GREEN DOCUMENT ACCENTS
+========================================================= */
+
+.agreement-page .section-title{
+  color:#2f6b3f;
+}
+
+.agreement-page .term-number{
+  background:#2f6b3f;
+  color:#ffffff;
+}
+
+
+/* =========================================================
+   SAFE WORD BREAKING
+========================================================= */
+
+.break-word{
+  overflow-wrap:anywhere;
+  word-break:break-word;
+}

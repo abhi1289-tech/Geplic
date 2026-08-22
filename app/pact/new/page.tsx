@@ -3,18 +3,26 @@
 import { logAction } from "@/lib/audit";
 import { useState } from "react";
 import AppHeader from "@/components/AppHeader";
+import { serverTimestamp } from "firebase/firestore";
 import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  serverTimestamp
-} from "firebase/firestore";
+  createPact,
+  createParty,
+} from "@/services/pactService";
 
-import { db } from "@/lib/firebase";
+import { createTemplate } from "@/services/templateService";
+
+import { getUserProfile } from "@/services/userService";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import { Listbox } from "@headlessui/react";
+import AgreementCategorySelector from "@/components/create-pact/AgreementCategorySelector";
+import AgreementInfoForm from "@/components/create-pact/AgreementInfoForm";
+import LoanAgreementForm from "@/components/create-pact/LoanAgreementForm";
+import FreelanceAgreementForm from "@/components/create-pact/FreelanceAgreementForm";
+import GeneralPromiseForm from "@/components/create-pact/GeneralPromiseForm";
+import RentAgreementForm from "@/components/create-pact/RentAgreementForm";
+import CreateAgreementButton from "@/components/create-pact/CreateAgreementButton";
+import CreatePactLayout from "@/components/create-pact/CreatePactLayout";
+
 
 export default function CreatePactPage(){
 
@@ -232,18 +240,13 @@ if (email === counterparty) {
 }
 
 
-      const profileSnap = await getDoc(
-  doc(db,"users",user.uid)
-);
+    const profile = await getUserProfile(user.uid);
 
-const profile = profileSnap.exists()
-  ? profileSnap.data()
-  : {};
       /* CREATE PACT */
 
-      const pactRef = await addDoc(collection(db,"pacts"),{
-        creatorName: profile.fullName || "",
-creatorDesignation: profile.designation || "",
+      const pactRef = await createPact({
+        creatorName: profile?.fullName || "",
+creatorDesignation: profile?.designation || "",
 
   category,
   contractType: category,
@@ -266,7 +269,7 @@ creatorDesignation: profile.designation || "",
 
       /* CREATE PARTIES */
 
-      await addDoc(collection(db,"parties"),{
+      await createParty({
 
         pactId,
         role:"partyA",
@@ -277,7 +280,7 @@ creatorDesignation: profile.designation || "",
 
       });
 
-      await addDoc(collection(db,"parties"),{
+      await createParty({
 
         pactId,
         role:"partyB",
@@ -339,7 +342,7 @@ if(category==="Rent Agreement"){
 
       /* CREATE TEMPLATE */
 
-      await addDoc(collection(db,"templates"),{
+      await createTemplate({
 
         pactId,
         category,
@@ -371,7 +374,7 @@ router.push(`/agreement-builder/${pactId}`);
 
   return(
 
-    <div className="min-h-screen pb-10 bg-black text-white bg-[radial-gradient(circle_at_top,#0ea5e920,transparent_35%)]">
+    <div className="create-pact-page">
       <AppHeader
   rightContent={
     <button
@@ -386,484 +389,79 @@ router.push(`/agreement-builder/${pactId}`);
         }
 
       }}
-      className="rounded-xl border border-white/10 px-4 py-2 text-sm text-white/70 hover:text-white"
+      className="btn btn-secondary btn-sm"
     >
       Dashboard
     </button>
   }
 />
-      <main className="mx-auto max-w-4xl px-4 py-8 sm:px-6 sm:py-12 transition-all duration-500 hover:-translate-y-[2px]">
-
-<form
+  <CreatePactLayout
   onSubmit={handleCreate}
-  className="space-y-6 rounded-3xl border border-white/10 bg-black/40 p-5 sm:p-8 ..."
 >
 
-        <div>
+  <AgreementCategorySelector
+    category={category}
+    setCategory={setCategory}
+  />
 
-  <h1 className="text-4xl sm:text-5xl font-bold tracking-tight bg-gradient-to-r from-white via-cyan-100 to-cyan-300 bg-clip-text text-transparent">
-    Create Agreement
-  </h1>
+  <AgreementInfoForm
+    title={title}
+    setTitle={setTitle}
+    counterpartyEmail={counterpartyEmail}
+    setCounterpartyEmail={setCounterpartyEmail}
+    selfInvite={selfInvite}
+  />
 
-  <p className="mt-3 text-base sm:text-lg text-white/50">
-    Create secure digital agreements in minutes.
-  </p>
-
-</div>
-
-        <div className="space-y-3">
-
-  <label className="text-sm font-medium text-white/60">
-    Agreement Type
-  </label>
-
-  <Listbox value={category} onChange={setCategory}>
-
-    <div className="relative">
-
-      <Listbox.Button
-        className="
-          relative
-          w-full
-          cursor-pointer
-          rounded-2xl
-          border border-white/10
-          bg-[#0A0A0A]
-          px-5
-          py-4 min-h-[60px]
-          text-left
-          text-white
-          transition-all
-          duration-300
-          hover:border-cyan-400/30
-          focus:outline-none
-          focus:border-cyan-400/60
-        "
-      >
-
-        <span className="block truncate font-medium">
-          {category}
-        </span>
-
-        <span className="pointer-events-none absolute inset-y-0 right-5 flex items-center text-white/40">
-          ▼
-        </span>
-
-      </Listbox.Button>
-
-      <Listbox.Options
-        className="
-          absolute
-          z-50
-          mt-3
-          max-h-60
-          w-full
-          overflow-auto
-          rounded-2xl
-          border border-white/10
-          bg-[#0F0F0F]
-          p-2
-          shadow-2xl
-          backdrop-blur-xl
-          focus:outline-none
-        "
-      >
-
-        {[
-          "Loan",
-          "Freelance / Service",
-          "General Promise",
-          "Rent Agreement",
-        ].map((type) => (
-
-          <Listbox.Option
-            key={type}
-            value={type}
-            className={({ active }) =>
-              `
-                cursor-pointer
-                rounded-xl
-                px-4
-                py-3
-                text-sm
-                font-medium
-                transition-all
-                duration-200
-
-                ${
-                  active
-                    ? "bg-cyan-500/10 text-cyan-300"
-                    : "text-white/80"
-                }
-              `
-            }
-          >
-
-            {type}
-
-          </Listbox.Option>
-
-        ))}
-
-      </Listbox.Options>
-
-    </div>
-
-  </Listbox>
-
-</div>
-
-  <div className="pt-4 sm:pt-6">
-  <h2 className="flex items-center gap-3 text-xs font-semibold tracking-[0.3em] text-cyan-400">
-    <span className="h-px w-8 bg-cyan-400/60"></span>
-    Agreement Info
-  </h2>
-</div>
-
-<div className="grid gap-6 md:grid-cols-2">
-
-  {/* AGREEMENT TITLE */}
-
-  <div className="space-y-2 flex flex-col">
-
-    <label className="text-sm font-medium text-white/70">
-      Agreement Title
-    </label>
-
-    <input
-      placeholder="Agreement title"
-      className="h-[64px] w-full rounded-2xl border border-white/10 bg-black/40 px-5 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)]"
-      value={title}
-      onChange={(e)=>setTitle(e.target.value)}
-      required
+  {category === "Loan" && (
+    <LoanAgreementForm
+      loanAmount={loanAmount}
+      setLoanAmount={setLoanAmount}
+      interestRate={interestRate}
+      setInterestRate={setInterestRate}
+      repaymentDate={repaymentDate}
+      setRepaymentDate={setRepaymentDate}
     />
+  )}
 
-  </div>
-
-  {/* OTHER PARTY EMAIL */}
-
-  <div className="space-y-2 flex flex-col">
-
-    <label className="text-sm font-medium text-white/70">
-      Other party email
-    </label>
-
-    <input
-      type="email"
-      placeholder="Other party email"
-      className="h-[64px] w-full rounded-2xl border border-white/10 bg-black/40 px-5 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)]"
-      value={counterpartyEmail}
-      onChange={(e)=>setCounterpartyEmail(e.target.value)}
-      required
+  {category === "Freelance / Service" && (
+    <FreelanceAgreementForm
+      serviceDescription={serviceDescription}
+      setServiceDescription={setServiceDescription}
+      paymentAmount={paymentAmount}
+      setPaymentAmount={setPaymentAmount}
+      deliveryDate={deliveryDate}
+      setDeliveryDate={setDeliveryDate}
     />
-    {selfInvite && (
+  )}
 
-  <p className="text-sm text-red-400">
-    You cannot invite yourself as the counterparty.
-  </p>
-
-)}
-  </div>
-</div>
-
-        {/*LOAN */}
-
-{category==="Loan" &&(
-
-  <div className="space-y-6">
-
-    <div className="pt-2">
-      <h2 className="flex items-center gap-3 text-xs font-semibold tracking-[0.3em] text-cyan-400">
-        <span className="h-px w-8 bg-cyan-400/60"></span>
-        Agreement Details
-      </h2>
-    </div>
-
-    <div className="grid gap-6 md:grid-cols-2">
-
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-white/70">
-          Loan Amount
-        </label>
-
-        <input
-        required
-          type="number"
-          placeholder="Loan Amount"
-          className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
-          value={loanAmount}
-          onChange={(e)=>setLoanAmount(e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-white/70">
-          Interest Rate (%)
-        </label>
-
-        <input
-          required
-          type="number"
-          placeholder="Interest Rate (%)"
-          className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
-          value={interestRate}
-          onChange={(e)=>setInterestRate(e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-2 md:col-span-2">
-        <label className="text-sm font-medium text-white/70">
-          Repayment Date
-        </label>
-
-        <input
-        required
-  type="date"
-    onFocus={(e) =>
-    e.target.showPicker?.()
-  }
-  min={new Date().toISOString().split("T")[0]}
-  max="2099-12-31"
-  className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
-  value={repaymentDate}
-  onChange={(e)=>setRepaymentDate(e.target.value)}
-/>
-      </div>
-
-    </div>
-
-  </div>
-
-)}
-
-        {/* FREELANCE */}
-
-{category==="Freelance / Service" &&(
-
-  <div className="space-y-6">
-
-    <div className="pt-2">
-      <h2 className="flex items-center gap-3 text-xs font-semibold tracking-[0.3em] text-cyan-400">
-        <span className="h-px w-8 bg-cyan-400/60"></span>
-        Agreement Details
-      </h2>
-    </div>
-
-    <div className="grid gap-6 md:grid-cols-2">
-
-      <div className="space-y-2 md:col-span-2">
-        <label className="text-sm font-medium text-white/70">
-          Service Description
-        </label>
-
-        <textarea
-        required
-          placeholder="Describe the service agreement"
-          className="min-h-[180px] sm:min-h-[140px] w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
-          value={serviceDescription}
-          onChange={(e)=>setServiceDescription(e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-white/70">
-          Payment Amount
-        </label>
-
-        <input
-        required
-          type="number"
-          placeholder="Payment Amount"
-          className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
-          value={paymentAmount}
-          onChange={(e)=>setPaymentAmount(e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-white/70">
-          Delivery Date
-        </label>
-
-        <input
-          required
-          type="date"
-    onFocus={(e) =>
-    e.target.showPicker?.()
-  }
-          className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
-          min={new Date().toISOString().split("T")[0]}
-  max="2099-12-31"
-          value={deliveryDate}
-          onChange={(e)=>setDeliveryDate(e.target.value)}
-        />
-      </div>
-
-    </div>
-
-  </div>
-
-)}
-
-        {/* GENERAL PROMISE */}
-
-{category==="General Promise" &&(
-
-  <div className="space-y-6">
-
-    <div className="pt-2">
-      <h2 className="flex items-center gap-3 text-xs font-semibold tracking-[0.3em] text-cyan-400">
-        <span className="h-px w-8 bg-cyan-400/60"></span>
-        Agreement Details
-      </h2>
-    </div>
-
-    <textarea
-    required
-      placeholder="Write the promise details"
-      className="min-h-[220px] sm:min-h-[180px] w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
-      value={promiseText}
-      onChange={(e)=>setPromiseText(e.target.value)}
+  {category === "General Promise" && (
+    <GeneralPromiseForm
+      promiseText={promiseText}
+      setPromiseText={setPromiseText}
     />
+  )}
 
-  </div>
+  {category === "Rent Agreement" && (
+    <RentAgreementForm
+      propertyAddress={propertyAddress}
+      setPropertyAddress={setPropertyAddress}
+      monthlyRent={monthlyRent}
+      setMonthlyRent={setMonthlyRent}
+      securityDeposit={securityDeposit}
+      setSecurityDeposit={setSecurityDeposit}
+      startDate={startDate}
+      setStartDate={setStartDate}
+      durationMonths={durationMonths}
+      setDurationMonths={setDurationMonths}
+    />
+  )}
 
-)}
+  <CreateAgreementButton
+    loading={loading}
+    disabled={loading || selfInvite}
+  />
 
-
-        {/* RENT AGREEMENT */}
-
-{category==="Rent Agreement" &&(
-
-  <div className="space-y-6">
-
-    <div className="pt-2">
-      <h2 className="flex items-center gap-3 text-xs font-semibold tracking-[0.3em] text-cyan-400">
-        <span className="h-px w-8 bg-cyan-400/60"></span>
-        Agreement Details
-      </h2>
-    </div>
-
-    <div className="grid gap-6 md:grid-cols-2">
-
-      <div className="space-y-2 md:col-span-2">
-        <label className="text-sm font-medium text-white/70">
-          Property Address
-        </label>
-
-        <textarea
-        required
-          placeholder="Property Address"
-          className="[min-h-[160px] sm:min-h-[120px] w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
-          value={propertyAddress}
-          onChange={(e)=>setPropertyAddress(e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-white/70">
-          Monthly Rent
-        </label>
-
-        <input
-          required
-          type="number"
-          placeholder="Monthly Rent"
-          className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
-          value={monthlyRent}
-          onChange={(e)=>setMonthlyRent(e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-white/70">
-          Security Deposit
-        </label>
-
-        <input
-          required
-          type="number"
-          placeholder="Security Deposit"
-          className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
-          value={securityDeposit}
-          onChange={(e)=>setSecurityDeposit(e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-white/70">
-          Start Date
-        </label>
-
-        <input
-          required
-          type="date"
-    onFocus={(e) =>
-    e.target.showPicker?.()
-  }
-          className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
-          min={new Date().toISOString().split("T")[0]}
-  max="2099-12-31"
-          value={startDate}
-          onChange={(e)=>setStartDate(e.target.value)}
-        />
-      </div>
-
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-white/70">
-          Duration (Months)
-        </label>
-
-        <input
-          required
-          type="number"
-          placeholder="Duration (Months)"
-          className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/60 focus:bg-black/60 focus:shadow-[0_0_25px_rgba(0,200,255,0.12)] focus:outline-none"
-          value={durationMonths}
-          onChange={(e)=>setDurationMonths(e.target.value)}
-        />
-      </div>
-
-    </div>
-
-  </div>
-
-)}
-      
-        <button
-          type="submit"
-          disabled={loading || selfInvite}
-          className={`relative overflow-hidden w-full rounded-2xl py-5 font-semibold transition-all duration-300
-${
-  loading || selfInvite
-    ? "cursor-not-allowed bg-white/10 text-white/40"
-    : "bg-gradient-to-r from-cyan-400 to-purple-500 text-black hover:scale-[1.01] hover:shadow-[0_0_35px_rgba(120,119,255,0.35)]"
-}`}
-        >
-          <>
-          <span className="relative z-10">
-            <>
-        {loading ? (
-        <span className="relative z-10 flex items-center justify-center gap-3">
-        <span className="h-4 w-4 animate-spin rounded-full border-2 border-black/30 border-t-black" />
-          Creating Agreement...
-        </span>
-        ) : (
-        <span className="relative z-10">
-          Create Agreement
-        </span>
-        )}
-
-        <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 hover:translate-x-full" />
-        </>
-          </span>
-
-          <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 hover:translate-x-full" />
-          </>
-        </button>
-
-      </form>
-        </main>
+</CreatePactLayout>
     </div>
 
   );

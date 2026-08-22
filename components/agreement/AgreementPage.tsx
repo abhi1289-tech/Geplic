@@ -7,9 +7,15 @@ export default function AgreementPage({
   children,
   className = "",
 }: Props) {
+
   return (
-    <section className={`agreement-page ${className}`}>
+
+    <section
+      className={`agreement-page ${className}`.trim()}
+    >
       {children}
     </section>
+
   );
+
 }

@@ -1,8 +1,13 @@
 import AgreementAcceptance from "./AgreementAcceptance";
+import AgreementDetails from "./AgreementDetails";
 import AgreementFooter from "./AgreementFooter";
-import AgreementParties from "./AgreementParties";
-import AgreementTermsSection from "./AgreementTermsSection";
+import AgreementHeader from "./AgreementHeader";
+import AgreementOverview from "./AgreementOverview";
 import AgreementPage from "./AgreementPage";
+import AgreementParties from "./AgreementParties";
+import AgreementTerms from "./AgreementTerms";
+
+import { getAgreementWatermark } from "@/lib/agreement/Watermark";
 
 type Props = {
   pact: any;
@@ -22,100 +27,89 @@ export default function AgreementDocument({
   templateFields,
   additionalTerms,
   mode,
-  isPartyA,
+  isPartyA = false,
   setAdditionalTerms,
 }: Props) {
-  const watermark =
-    pact.status === "draft"
-      ? "DRAFT"
-      : pact.status === "pending"
-      ? "PENDING"
-      : pact.status === "completed"
-      ? "GEPLIC VERIFIED"
-      : pact.status === "voided"
-      ? "VOID"
-      : "GEPLIC";
 
   return (
-    <article
-      id="agreement-document"
-      className="agreement-document"
-    >
+
+    <article className="agreement-document">
+
+      {/* Background */}
+
       <div className="agreement-background" />
 
+      {/* Watermark */}
+
       <div className="agreement-watermark">
-        {watermark}
+        {getAgreementWatermark(
+          pact.status
+        )}
       </div>
-      <AgreementPage>
-      <header className="agreement-header">
 
-        <h1 className="agreement-title">
-          DIGITAL AGREEMENT
-        </h1>
+      {/* ==========================
+          PAGE 1
+      ========================== */}
 
-        <div className="agreement-meta">
+      <AgreementPage className="agreement-page-main">
 
-          <p>
-            <span className="label">
-              Agreement ID
-            </span>
+        <AgreementHeader
+          pact={pact}
+          pactId={pactId}
+        />
 
-            <span className="value">
-              {pactId}
-            </span>
-          </p>
+        <AgreementParties
+          pact={pact}
+        />
 
-          <p>
-            <span className="label">
-              Status
-            </span>
+        <AgreementOverview
+          pact={pact}
+          templateFields={templateFields}
+          mode={mode}
+          isPartyA={isPartyA}
+        />
 
-            <span
-              className={`agreement-status status-${pact.status}`}
-            >
-              {pact.status}
-            </span>
-          </p>
+        <AgreementDetails
+          pact={pact}
+          templateFields={templateFields}
+        />
 
-        </div>
+      </AgreementPage>
 
-      </header>
+      {/* ==========================
+          PAGE 2
+      ========================== */}
 
-      <AgreementParties pact={pact} />
-      <AgreementTermsSection
-    page="summary"
-    pact={pact}
-    templateFields={templateFields}
-    additionalTerms={additionalTerms}
-    mode={mode}
-    isPartyA={isPartyA}
-    setAdditionalTerms={setAdditionalTerms}
-  />
+      <AgreementPage className="agreement-page-terms">
 
-</AgreementPage>
+        <AgreementTerms
+          pact={pact}
+          additionalTerms={additionalTerms}
+          mode={mode}
+          isPartyA={isPartyA}
+          setAdditionalTerms={setAdditionalTerms}
+        />
 
-<AgreementPage className="page-two">
+      </AgreementPage>
 
-  <AgreementTermsSection
-    page="terms"
-    pact={pact}
-    templateFields={templateFields}
-    additionalTerms={additionalTerms}
-    mode={mode}
-    isPartyA={isPartyA}
-    setAdditionalTerms={setAdditionalTerms}
-  />
+      {/* ==========================
+          PAGE 3
+      ========================== */}
 
-</AgreementPage>
+      <AgreementPage className="agreement-page-signatures">
 
-<AgreementPage className="signature-page">
+        <AgreementAcceptance
+          pact={pact}
+        />
 
-  <AgreementAcceptance pact={pact} />
+        <AgreementFooter
+          pact={pact}
+        />
 
-  <AgreementFooter pact={pact} />
-
-</AgreementPage>
+      </AgreementPage>
 
     </article>
+
   );
+
 }

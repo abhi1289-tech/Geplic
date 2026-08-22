@@ -1,0 +1,232 @@
+/* =========================================================
+   GEPLIC — AGREEMENT BUILDER
+   ACTION BAR
+========================================================= */
+
+.agreement-builder-page .agreement-actions {
+    width: min(
+        calc(100% - 48px),
+        var(--document-width)
+    );
+
+    margin: 28px auto 36px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+}
+
+
+/*
+   Keep the first action on the left and push the remaining
+   builder actions to the right.
+
+   This gives:
+   Download PDF                    Save / Send / Void
+*/
+
+.agreement-builder-page
+.agreement-actions
+.action-button:first-child {
+    margin-right: auto;
+}
+
+
+/* =========================================================
+   EXISTING ACTION GROUP SUPPORT
+========================================================= */
+
+.agreement-builder-page .action-group,
+.agreement-builder-page .action-group-primary,
+.agreement-builder-page .action-group-secondary {
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+
+/* =========================================================
+   BASE ACTION
+========================================================= */
+
+.agreement-builder-page
+.agreement-actions
+.action-button {
+    min-height: 44px;
+
+    min-width: 130px;
+
+    padding: 0 20px;
+
+    border-radius: 20px;
+
+    font: inherit;
+
+    font-size: 14px;
+
+    font-weight: 650;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        transform .18s ease,
+        background .18s ease,
+        border-color .18s ease,
+        color .18s ease,
+        box-shadow .18s ease;
+}
+
+
+/* =========================================================
+   SECONDARY
+========================================================= */
+
+.agreement-builder-page
+.agreement-actions
+.action-secondary {
+    color: #34483A;
+
+    background: #F1F5F1;
+
+    border:
+        1px solid #BFCFC2;
+}
+
+.agreement-builder-page
+.agreement-actions
+.action-secondary:hover:not(:disabled) {
+    color: #203128;
+
+    background: #FFFFFF;
+
+    border-color: #91A994;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   PRIMARY
+========================================================= */
+
+.agreement-builder-page
+.agreement-actions
+.action-primary {
+    color: #FFFFFF;
+
+    background: var(--agreement-green);
+
+    border:
+        1px solid var(--agreement-green);
+
+    box-shadow:
+        0 6px 18px rgba(47, 107, 69, .14);
+}
+
+.agreement-builder-page
+.agreement-actions
+.action-primary:hover:not(:disabled) {
+    background: var(--agreement-green-dark);
+
+    border-color: var(--agreement-green-dark);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 8px 22px rgba(47, 107, 69, .18);
+}
+
+
+/* =========================================================
+   DANGER
+========================================================= */
+
+.agreement-builder-page
+.agreement-actions
+.action-danger {
+    color: #963B3B;
+
+    background: #FFF7F7;
+
+    border:
+        1px solid #D9B5B5;
+}
+
+.agreement-builder-page
+.agreement-actions
+.action-danger:hover:not(:disabled) {
+    color: #823131;
+
+    background: #FDEFEF;
+
+    border-color: #C98D8D;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   KEYBOARD FOCUS
+========================================================= */
+
+.agreement-builder-page
+.agreement-actions
+.action-button:focus-visible {
+    outline: none;
+
+    box-shadow:
+        0 0 0 3px rgba(47, 107, 69, .16);
+}
+
+
+/* =========================================================
+   DISABLED
+========================================================= */
+
+.agreement-builder-page
+.agreement-actions
+.action-button:disabled {
+    opacity: .55;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 640px) {
+
+    .agreement-builder-page .agreement-actions {
+        width: calc(100% - 24px);
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .agreement-builder-page
+    .agreement-actions
+    .action-button {
+        width: 100%;
+
+        margin-right: 0;
+    }
+}

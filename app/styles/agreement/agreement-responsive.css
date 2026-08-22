@@ -1,0 +1,111 @@
+/* =========================================================
+   GEPLIC — AGREEMENT BUILDER
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+
+    .agreement-builder-page .agreement-header{
+        grid-template-columns:1fr;
+    }
+
+    .agreement-builder-page .agreement-meta{
+        grid-template-columns:
+            repeat(3,minmax(0,1fr));
+    }
+
+    .agreement-builder-page .agreement-page{
+        padding:46px 42px;
+    }
+}
+
+
+@media(max-width:768px){
+
+    .agreement-builder-page .agreement-builder-main{
+        width:calc(100% - 32px);
+    }
+
+    .agreement-builder-page .agreement-actions{
+        width:calc(100% - 32px);
+
+        margin-bottom:24px;
+    }
+
+    .agreement-builder-page .agreement-page{
+        padding:38px 30px;
+
+        border-radius:9px;
+    }
+
+    .agreement-builder-page .summary-grid,
+    .agreement-builder-page .acceptance-grid,
+    .agreement-builder-page .verification-grid,
+    .agreement-builder-page .agreement-parties{
+        grid-template-columns:1fr;
+    }
+
+    .agreement-builder-page .agreement-meta{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+    }
+}
+
+
+@media(max-width:640px){
+
+    .agreement-builder-page .agreement-builder-main{
+        width:calc(100% - 24px);
+
+        padding-bottom:48px;
+    }
+
+    .agreement-builder-page .agreement-actions{
+        width:calc(100% - 24px);
+
+        flex-direction:column;
+
+        align-items:stretch;
+    }
+
+    .agreement-builder-page .action-group,
+    .agreement-builder-page .action-group-primary,
+    .agreement-builder-page .action-group-secondary{
+        width:100%;
+
+        flex-direction:column;
+
+        align-items:stretch;
+    }
+
+    .agreement-builder-page
+    .agreement-actions
+    .action-button{
+        width:100%;
+    }
+
+    .agreement-builder-page .agreement-page{
+        padding:30px 22px;
+    }
+
+    .agreement-builder-page .agreement-title h1{
+        font-size:2rem;
+    }
+
+    .agreement-builder-page .agreement-meta{
+        grid-template-columns:1fr;
+    }
+
+    .agreement-builder-page .agreement-term{
+        grid-template-columns:
+            auto
+            minmax(0,1fr);
+    }
+
+    .agreement-builder-page .term-delete{
+        grid-column:2;
+
+        justify-self:start;
+    }
+}
+

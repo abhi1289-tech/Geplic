@@ -1,17 +1,23 @@
 "use client";
 
-import AuthCard from "@/components/AuthCard";
-import BrandLogo from "@/components/BrandLogo";
-import Link from "next/link";
 import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
+import {
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 import {
   doc,
   setDoc,
-  serverTimestamp
+  serverTimestamp,
 } from "firebase/firestore";
+
+import { auth, db } from "@/lib/firebase";
+
+import AppHeader from "@/components/AppHeader";
+import AuthCard from "@/components/AuthCard";
+import AuthBrand from "@/components/auth/AuthBrand";
+import AuthIntro from "@/components/auth/AuthIntro";
+import AuthFooter from "@/components/auth/AuthFooter";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -23,7 +29,9 @@ export default function SignupPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSignup = async (e: React.FormEvent) => {
+  async function handleSignup(
+    e: React.FormEvent
+  ) {
     e.preventDefault();
 
     if (loading) return;
@@ -32,25 +40,32 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
-      // ⚔️ Clean inputs before sending
-      const normalizedEmail = email.trim().toLowerCase();
-      const trimmedFullName = fullName.trim();
-      const trimmedDesignation = designation.trim();
+      const normalizedEmail = email
+        .trim()
+        .toLowerCase();
 
-      // ⚔️ Basic validation
+      const trimmedFullName =
+        fullName.trim();
+
+      const trimmedDesignation =
+        designation.trim();
+
       if (trimmedFullName.length < 2) {
-        setError("Please enter your full name.");
+        setError(
+          "Please enter your full name."
+        );
         setLoading(false);
         return;
       }
 
       if (password.length < 6) {
-        setError("Password must be at least 6 characters long.");
+        setError(
+          "Password must be at least 6 characters long."
+        );
         setLoading(false);
         return;
       }
 
-      // ⚔️ Firebase signup
       const userCredential =
         await createUserWithEmailAndPassword(
           auth,
@@ -58,9 +73,12 @@ export default function SignupPage() {
           password
         );
 
-      // ⚔️ Firestore user profile
       await setDoc(
-        doc(db, "users", userCredential.user.uid),
+        doc(
+          db,
+          "users",
+          userCredential.user.uid
+        ),
         {
           uid: userCredential.user.uid,
           email: normalizedEmail,
@@ -71,134 +89,168 @@ export default function SignupPage() {
       );
 
       router.push("/dashboard");
-
     } catch (err: any) {
+      console.error(
+        "Signup Error:",
+        err
+      );
 
-      console.error("Signup Error:", err);
-
-      // ⚔️ Human-friendly error handling
-      if (err.code === "auth/email-already-in-use") {
-        setError("An account with this email already exists. Please sign in.");
-      } else if (err.code === "auth/weak-password") {
-        setError("Password should be at least 6 characters long.");
-      } else if (err.code === "auth/invalid-email") {
-        setError("Please enter a valid email address.");
+      if (
+        err.code ===
+        "auth/email-already-in-use"
+      ) {
+        setError(
+          "An account with this email already exists. Please sign in."
+        );
+      } else if (
+        err.code === "auth/weak-password"
+      ) {
+        setError(
+          "Password should be at least 6 characters long."
+        );
+      } else if (
+        err.code === "auth/invalid-email"
+      ) {
+        setError(
+          "Please enter a valid email address."
+        );
       } else {
-        setError("Something went wrong. Please try again.");
+        setError(
+          "Something went wrong. Please try again."
+        );
       }
-
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-black px-6">
+    <>
+      <AppHeader />
 
-      <AuthCard title="">
+      <main className="auth-page">
 
-        <div className="mb-8 text-center">
-          <div className="flex justify-center">
-            <BrandLogo />
-          </div>
 
-          <p className="mt-4 text-sm text-white/50">
-            Digital agreements built on trust
-          </p>
-        </div>
+            <AuthCard>
 
-        <div className="mb-6">
-          <h2 className="text-4xl font-bold tracking-tight text-white leading-tight">
-            Create account
-          </h2>
+              <AuthBrand />
 
-          <p className="mt-2 text-white/40">
-            Continue with secure digital agreements
-          </p>
-        </div>
+              <AuthIntro
+                title="Create account"
+                subtitle="Start creating secure digital agreements"
+              />
 
-        <form onSubmit={handleSignup} className="space-y-5">
+              <form
+                onSubmit={handleSignup}
+                className="form"
+              >
 
-          <input
-            type="text"
-            placeholder="Full Name"
-            autoComplete="name"
-            className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/50"
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            required
-          />
+                <div className="form-group">
+                  <label className="form-label">
+                    Full Name
+                  </label>
 
-          <input
-            type="text"
-            placeholder="Designation / Title (Optional)"
-            autoComplete="organization-title"
-            className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/50"
-            value={designation}
-            onChange={(e) => setDesignation(e.target.value)}
-          />
+                  <input
+                    type="text"
+                    autoComplete="name"
+                    className="form-input"
+                    placeholder="Enter your full name"
+                    value={fullName}
+                    onChange={(e) =>
+                      setFullName(
+                        e.target.value
+                      )
+                    }
+                    required
+                  />
+                </div>
 
-          <input
-            type="email"
-            placeholder="Email"
-            autoComplete="email"
-            className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/50"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+                <div className="form-group">
+                  <label className="form-label">
+                    Designation (Optional)
+                  </label>
 
-          <input
-            type="password"
-            placeholder="Password"
-            autoComplete="new-password"
-            className="w-full rounded-2xl border border-white/10 bg-black/40 px-5 py-4 text-white placeholder:text-white/25 transition-all duration-300 outline-none hover:border-cyan-400/30 focus:border-cyan-400/50"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+                  <input
+                    type="text"
+                    autoComplete="organization-title"
+                    className="form-input"
+                    placeholder="Manager, Developer, Student..."
+                    value={designation}
+                    onChange={(e) =>
+                      setDesignation(
+                        e.target.value
+                      )
+                    }
+                  />
+                </div>
 
-          {error && (
-            <p className="text-sm text-red-400">
-              {error}
-            </p>
-          )}
+                <div className="form-group">
+                  <label className="form-label">
+                    Email
+                  </label>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-2xl bg-gradient-to-r from-cyan-400 to-violet-500 py-4 font-semibold text-black transition-all duration-300 hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {loading ? "Creating..." : "Create Account"}
-          </button>
+                  <input
+                    type="email"
+                    autoComplete="email"
+                    className="form-input"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) =>
+                      setEmail(
+                        e.target.value
+                      )
+                    }
+                    required
+                  />
+                </div>
 
-          <p className="text-center text-sm text-white/50">
-            Already have an account?{" "}
-            <Link
-              href="/login"
-              className="font-medium text-cyan-400 hover:text-cyan-300"
-            >
-              Sign in
-            </Link>
-          </p>
-          <div className="mt-8 text-center text-xs text-white/40">
+                <div className="form-group">
+                  <label className="form-label">
+                    Password
+                  </label>
 
-  <Link href="/privacy">
-    Privacy Policy
-  </Link>
+                  <input
+                    type="password"
+                    autoComplete="new-password"
+                    className="form-input"
+                    placeholder="Create a password"
+                    value={password}
+                    onChange={(e) =>
+                      setPassword(
+                        e.target.value
+                      )
+                    }
+                    required
+                  />
+                </div>
 
-  {" • "}
+                {error && (
+                  <div className="alert alert-danger">
+                    {error}
+                  </div>
+                )}
 
-  <Link href="/terms">
-    Terms of Service
-  </Link>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="btn btn-primary btn-lg btn-block"
+                >
+                  {loading
+                    ? "Creating Account..."
+                    : "Create Account"}
+                </button>
 
-</div>
+              </form>
 
-        </form>
+              <AuthFooter
+                question="Already have an account?"
+                actionText="Sign in"
+                href="/login"
+              />
 
-      </AuthCard>
+            </AuthCard>
 
-    </div>
+          </main>
+    </>
   );
 }
