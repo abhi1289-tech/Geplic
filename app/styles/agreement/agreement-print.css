@@ -178,15 +178,31 @@
 
     .agreement-page-terms {
 
-        min-height: 297mm !important;
+    min-height: 0 !important;
 
-        margin: 0 !important;
+    margin: 0 !important;
 
-        background: #E8F3E9 !important;
+    padding: 18mm !important;
 
-        break-before: auto;
-        page-break-before: auto;
-    }
+    box-sizing: border-box !important;
+
+    background: #E8F3E9 !important;
+
+    break-before: page;
+    page-break-before: always;
+
+    break-after: auto;
+    page-break-after: auto;
+
+    overflow: visible !important;
+
+    /*
+     * Repeat the page decoration/padding when this
+     * element is fragmented across PDF pages.
+     */
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
 
 
     /* =====================================================
@@ -195,25 +211,41 @@
 
     .agreement-page-signatures {
 
-        min-height: 297mm !important;
+    min-height: 0 !important;
 
-        margin: 0 !important;
+    margin: 0 !important;
 
-        padding: 18mm !important;
+    padding: 18mm !important;
 
-        background: #E8F3E9 !important;
+    background: #E8F3E9 !important;
 
-        border: none !important;
-        border-radius: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
 
-        box-shadow: none !important;
+    box-shadow: none !important;
 
-        break-before: page;
-        page-break-before: always;
+    /*
+     * DO NOT force a new page.
+     *
+     * Chromium will place this here if the entire
+     * block fits in the remaining space.
+     *
+     * If it doesn't fit, the block moves to the
+     * next page.
+     */
+    break-before: auto !important;
+    page-break-before: auto !important;
 
-        break-after: auto;
-        page-break-after: auto;
-    }
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+
+    break-after: auto !important;
+    page-break-after: auto !important;
+
+    box-sizing: border-box !important;
+
+    overflow: visible !important;
+}
 
 
     /* =====================================================
@@ -605,4 +637,42 @@
 
         column-gap: 16px !important;
     }
+}
+@media print {
+
+    .pact-page .agreement-page-terms,
+    .agreement-page-terms {
+
+        break-after: auto !important;
+        page-break-after: auto !important;
+
+        min-height: 0 !important;
+    }
+
+}
+
+@media print {
+
+    .agreement-page-terms {
+        break-before: page !important;
+        page-break-before: always !important;
+
+        break-after: auto !important;
+        page-break-after: auto !important;
+
+        min-height: 0 !important;
+    }
+
+}
+/* =====================================================
+   TERMS PAGE CONTINUATION SPACING
+
+   The terms are one flowing element. When Chromium
+   breaks them across multiple PDF pages, repeat the
+   top/bottom page padding on every fragment.
+===================================================== */
+
+.agreement-page-terms {
+    -webkit-box-decoration-break: clone !important;
+    box-decoration-break: clone !important;
 }
