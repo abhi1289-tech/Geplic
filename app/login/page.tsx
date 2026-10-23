@@ -22,6 +22,13 @@ export default function LoginPage() {
   const router = useRouter();
   const { user, loading: authLoading } = useAuth();
 
+  // Hooks must run in the same order on every render. Keep all state hooks
+  // before any conditional return to avoid React error #300.
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
   // If Back restores the login page after a successful login, do not leave
   // an authenticated user sitting on the login screen.
   useEffect(() => {
@@ -37,11 +44,6 @@ export default function LoginPage() {
   if (user) {
     return <StatusPage message="You are already signed in. Redirecting..." />;
   }
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   async function handleForgotPassword() {
     if (!email.trim()) {
