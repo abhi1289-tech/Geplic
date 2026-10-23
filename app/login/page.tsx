@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -9,6 +9,8 @@ import {
 } from "firebase/auth";
 
 import { auth } from "@/lib/firebase";
+import { useAuth } from "@/context/AuthContext";
+import StatusPage from "@/components/StatusPage";
 
 import AppHeader from "@/components/AppHeader";
 import AuthCard from "@/components/AuthCard";
@@ -18,6 +20,23 @@ import AuthFooter from "@/components/auth/AuthFooter";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
+
+  // If Back restores the login page after a successful login, do not leave
+  // an authenticated user sitting on the login screen.
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.replace("/dashboard");
+    }
+  }, [authLoading, user, router]);
+
+  if (authLoading) {
+    return <StatusPage message="Checking your session..." />;
+  }
+
+  if (user) {
+    return <StatusPage message="You are already signed in. Redirecting..." />;
+  }
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

@@ -16,9 +16,10 @@ export default function useVerify() {
   const [notFound, setNotFound] =
     useState(false);
 
-  async function verifyDocument() {
+  async function verifyDocument(value?: string): Promise<boolean> {
 
-    if (!hash.trim()) return;
+    const searchValue = (value ?? hash).trim();
+    if (!searchValue) return false;
 
     try {
 
@@ -29,15 +30,17 @@ export default function useVerify() {
       setNotFound(false);
 
       const pact =
-        await verifyPact(hash);
+        await verifyPact(searchValue);
 
       if (pact) {
 
         setResult(pact);
+        return true;
 
       } else {
 
         setNotFound(true);
+        return false;
 
       }
 
@@ -47,6 +50,8 @@ export default function useVerify() {
         "Verification Error:",
         error
       );
+      setNotFound(true);
+      return false;
 
     } finally {
 

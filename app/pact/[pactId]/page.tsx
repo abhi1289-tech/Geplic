@@ -3,6 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 
 import AppHeader from "@/components/AppHeader";
+import StatusPage from "@/components/StatusPage";
 import AgreementTimeline from "@/components/AgreementTimeline";
 
 import PactHeader from "@/components/pact/PactHeader";
@@ -56,11 +57,11 @@ export default function PactPage() {
   } = usePactState(pactId);
 
   if (loading) {
-    return (
-      <div className="p-6 text-white">
-        Loading pact...
-      </div>
-    );
+    return <StatusPage message="Loading agreement..." />;
+  }
+
+  if (!pact) {
+    return <StatusPage message="Agreement not found." showNavigation />;
   }
 
   const fields = template?.fields || {};

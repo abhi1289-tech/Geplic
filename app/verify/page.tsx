@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import AppHeader from "@/components/AppHeader";
 import VerificationResult from "@/components/verify/VerificationResult";
@@ -8,7 +9,11 @@ import VerificationNotFound from "@/components/verify/VerificationNotFound";
 import VerifyForm from "@/components/verify/VerifyForm";
 import VerifyLayout from "@/components/verify/VerifyLayout";
 
-export default function VerifyPage() {
+type VerifyPageProps = {
+  initialHash?: string;
+};
+
+export default function VerifyPage({ initialHash = "" }: VerifyPageProps) {
 
   const router = useRouter();
 
@@ -20,6 +25,24 @@ export default function VerifyPage() {
     notFound,
     verifyDocument,
   } = useVerify();
+
+  useEffect(() => {
+    if (!initialHash) return;
+    setHash(initialHash);
+    void verifyDocument(initialHash);
+    // A URL hash is verified once when this route is opened.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialHash]);
+
+  async function handleVerify() {
+    const value = hash.trim();
+    if (!value) return;
+
+    const verified = await verifyDocument(value);
+    if (verified) {
+      router.replace(`/verify/${encodeURIComponent(value)}`);
+    }
+  }
 
   return (
     <div className="verify-page">
@@ -40,7 +63,7 @@ export default function VerifyPage() {
         hash={hash}
         setHash={setHash}
         loading={loading}
-        onVerify={verifyDocument}
+        onVerify={handleVerify}
     />
 
     {result && (

@@ -1,701 +1,121 @@
 /* =========================================================
-   GEPLIC — 404 PAGE
-   DARK APPLICATION THEME
+   GEPLIC — AGREEMENT-THEMED ANIMATED 404 PAGE
+   Styles are scoped to .geplic-404; global and pact styles
+   remain untouched.
 ========================================================= */
 
 .geplic-404 {
-    min-height: 100vh;
-    width: 100%;
-
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    overflow: hidden;
-
-    padding: 48px 32px;
-
-    box-sizing: border-box;
-
-    background:
-        radial-gradient(
-            circle at 50% 35%,
-            rgba(25, 207, 227, .045),
-            transparent 38%
-        ),
-        var(--color-bg);
-
-    color: var(--color-text);
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 28px 24px;
+  box-sizing: border-box;
+  isolation: isolate;
+  background: radial-gradient(ellipse at 72% 44%, rgba(21, 76, 123, .18), transparent 38%), var(--color-bg);
+  color: var(--color-text);
 }
+.geplic-404-glow { position: absolute; width: 420px; height: 420px; border-radius: 50%; pointer-events: none; filter: blur(115px); opacity: .34; z-index: -1; }
+.geplic-404-glow-one { top: -210px; left: 8%; background: rgba(25, 207, 227, .2); }
+.geplic-404-glow-two { right: 4%; bottom: -245px; background: rgba(124, 92, 255, .2); }
+.geplic-404-card { width: 100%; max-width: 1240px; position: relative; z-index: 1; box-sizing: border-box; padding: 28px 38px 22px; border: 1px solid rgba(145, 177, 205, .17); border-radius: 28px; background: linear-gradient(145deg, rgba(5, 14, 24, .66), rgba(3, 8, 15, .38)); box-shadow: 0 36px 100px rgba(0, 0, 0, .32); backdrop-filter: blur(16px); }
+.geplic-404-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.geplic-404-header .brand-logo { margin: 0; font-size: 34px; background: var(--gradient-brand); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+.geplic-404-header-label { color: var(--color-text-muted); font-size: 10px; font-weight: 800; letter-spacing: .2em; }
+.geplic-404-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, .92fr); align-items: center; gap: 24px; min-height: 405px; padding: 12px 0 0; }
+.geplic-404-copy { position: relative; z-index: 3; padding: 12px 0 18px; }
+.geplic-404-number { display: inline-block; font-size: clamp(100px, 12vw, 164px); font-weight: 950; line-height: .9; letter-spacing: -.095em; padding-right: .1em; background: linear-gradient(110deg, #11cde8 8%, #528cff 56%, #9855ff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; filter: drop-shadow(0 12px 30px rgba(36, 135, 255, .17)); animation: geplic404Number 5s ease-in-out infinite; }
+.geplic-404-eyebrow { margin: 19px 0 13px; color: var(--color-primary); font-size: 12px; font-weight: 850; letter-spacing: .31em; }
+.geplic-404-copy h1 { max-width: 590px; margin: 0; color: var(--color-heading); font-size: clamp(30px, 3.2vw, 46px); font-weight: 820; line-height: 1.08; letter-spacing: -.055em; }
+.geplic-404-description { max-width: 560px; margin: 18px 0 0; color: var(--color-text-secondary); font-size: 16px; line-height: 1.7; }
+.geplic-404-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 27px; }
+.geplic-404-actions .btn { min-height: 50px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-width: 174px; }
+.geplic-404-arrow { font-size: 20px; line-height: 1; transition: transform .2s ease; }
+.geplic-404-actions .btn-primary:hover .geplic-404-arrow { transform: translateX(4px); }
 
+/* Agreement illustration: layered contract sheets, signature and verification seal. */
+.geplic-404-scene { position: relative; height: 395px; min-width: 0; overflow: hidden; isolation: isolate; }
+.geplic-404-scene::before { content: ""; position: absolute; width: 82%; height: 20px; left: 9%; bottom: 35px; border-radius: 50%; background: rgba(26, 139, 255, .22); filter: blur(20px); }
+.geplic-404-scene::after { content: ""; position: absolute; left: 13%; right: 9%; bottom: 36px; height: 1px; background: linear-gradient(90deg, transparent, rgba(65, 199, 255, .42), rgba(145, 102, 255, .4), transparent); }
+.geplic-404-document { position: absolute; border: 1px solid rgba(131, 169, 224, .6); border-radius: 12px; background: linear-gradient(145deg, #f7fbff 0%, #e7efff 100%); box-shadow: 0 18px 40px rgba(0, 0, 0, .24), 0 0 28px rgba(67, 141, 255, .1); }
+.geplic-404-document span, .document-lines i { display: block; height: 5px; border-radius: 99px; background: #b8c9e8; }
+.document-back { width: 118px; height: 155px; padding: 27px 15px; display: flex; flex-direction: column; gap: 10px; opacity: .62; }
+.document-back-one { left: 8%; top: 72px; transform: rotate(-17deg); animation: geplic404PaperLeft 6s ease-in-out infinite; }
+.document-back-two { right: 8%; top: 47px; transform: rotate(13deg); animation: geplic404PaperRight 6.8s ease-in-out infinite; }
+.document-back span:nth-child(1) { width: 75%; height: 7px; background: #7897d4; margin-bottom: 5px; }
+.document-back span:nth-child(2) { width: 100%; }.document-back span:nth-child(3) { width: 78%; }.document-back-two span:nth-child(4) { width: 62%; }
+.document-main { z-index: 2; width: 218px; height: 286px; left: 50%; top: 43px; padding: 28px 22px; transform: translateX(-50%) rotate(-4deg); border-radius: 13px; background: linear-gradient(145deg, #fff 0%, #eaf2ff 100%); box-shadow: 0 26px 55px rgba(0, 0, 0, .32), 0 0 38px rgba(55, 146, 255, .16); animation: geplic404DocumentFloat 5.2s ease-in-out infinite; }
+.document-main::before { content: ""; position: absolute; top: -1px; right: -1px; width: 43px; height: 43px; background: linear-gradient(225deg, #a6c5ff 0 49%, #d4e3ff 50%); clip-path: polygon(0 0,100% 100%,0 100%); border-top-right-radius: 11px; }
+.document-heading { display: flex; flex-direction: column; gap: 6px; width: 78%; margin-bottom: 18px; }
+.document-heading i { height: 7px; border-radius: 99px; background: linear-gradient(90deg, #1bc8e6, #6577f7); }.document-heading i:nth-child(2) { width: 63%; height: 4px; background: #9aafd5; }
+.document-rule { height: 1px; background: #d2def1; margin-bottom: 18px; }
+.document-lines { display: flex; flex-direction: column; gap: 10px; }.document-lines i { width: 100%; height: 5px; background: #cbd7e9; }.document-lines i:nth-child(2) { width: 91%; }.document-lines i:nth-child(3) { width: 96%; }.document-lines i:nth-child(4) { width: 72%; }.document-lines i:nth-child(5) { width: 86%; }
+.document-signature { position: absolute; left: 22px; bottom: 42px; width: 112px; height: 28px; border-bottom: 1px solid #b9c9e0; color: #5a67d8; font-family: Georgia, serif; font-size: 27px; font-style: italic; transform: rotate(-4deg); }
+.document-signature span { display: inline-block; font-weight: 700; animation: geplic404Signature 3.8s ease-in-out infinite; }
+.document-signature i { position: absolute; left: 30px; bottom: 6px; width: 75px; height: 13px; border-bottom: 2px solid #6875db; border-radius: 50%; transform: rotate(-8deg); }
+.document-seal { position: absolute; right: 17px; bottom: 24px; width: 42px; height: 42px; display: grid; place-items: center; border: 2px solid #24c99a; border-radius: 50%; color: #078c70; background: rgba(37, 218, 165, .13); box-shadow: 0 0 0 5px rgba(37, 218, 165, .08); font-size: 22px; font-weight: 800; animation: geplic404Seal 3s ease-in-out infinite; }
+.geplic-404-pen { position: absolute; z-index: 4; width: 18px; height: 142px; left: 76%; top: 123px; border: 1px solid rgba(207, 218, 255, .7); border-radius: 8px 8px 5px 5px; background: linear-gradient(90deg, #15c9e7, #526fff 58%, #8b5cff); box-shadow: 0 10px 25px rgba(58, 115, 255, .28); transform: rotate(36deg); transform-origin: center; animation: geplic404Pen 4.4s ease-in-out infinite; }
+.geplic-404-pen::before { content: ""; position: absolute; top: -10px; left: 2px; width: 12px; height: 13px; background: #dce9ff; border-radius: 5px 5px 2px 2px; }
+.geplic-404-pen::after { content: ""; position: absolute; bottom: -13px; left: 3px; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 14px solid #b5c7f2; }
+.geplic-404-pen span { position: absolute; left: 5px; top: 21px; bottom: 24px; width: 3px; border-radius: 99px; background: rgba(255,255,255,.6); }
+.geplic-404-floating-check { position: absolute; z-index: 5; right: 13%; bottom: 73px; width: 48px; height: 48px; display: grid; place-items: center; border: 1px solid rgba(45, 229, 173, .65); border-radius: 50%; color: #43edb5; background: rgba(7, 47, 45, .9); box-shadow: 0 0 30px rgba(34, 223, 173, .18); font-size: 25px; animation: geplic404Check 3.6s ease-in-out infinite; }
+.geplic-404-scene-caption { position: absolute; z-index: 5; left: 4%; bottom: 47px; display: flex; align-items: center; gap: 10px; padding: 10px 13px; border: 1px solid rgba(103, 145, 197, .36); border-radius: 12px; background: rgba(5, 17, 31, .92); box-shadow: 0 10px 28px rgba(0, 0, 0, .2); animation: geplic404Caption 5s ease-in-out infinite; }
+.caption-icon { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 8px; background: rgba(35, 211, 164, .12); color: #42e5b1; font-size: 17px; }
+.geplic-404-scene-caption b, .geplic-404-scene-caption small { display: block; }.geplic-404-scene-caption b { color: #dceaff; font-size: 10px; letter-spacing: .12em; }.geplic-404-scene-caption small { margin-top: 3px; color: #91a8c4; font-size: 9px; }
+.geplic-404-spark { position: absolute; z-index: 1; color: #45dff5; text-shadow: 0 0 14px rgba(69, 223, 245, .55); animation: geplic404Twinkle 3s ease-in-out infinite; }.spark-one { left: 22%; top: 30px; font-size: 23px; }.spark-two { right: 12%; bottom: 27%; color: #a68aff; font-size: 29px; animation-delay: -1.4s; }
+.geplic-404-footer { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 12px; padding-top: 17px; border-top: 1px solid rgba(255, 255, 255, .08); color: var(--color-text-muted); font-size: 12px; }
+.geplic-404-footer-mark { width: 20px; height: 20px; display: grid; place-items: center; border: 1px solid rgba(42, 220, 171, .55); border-radius: 50%; color: #45e8b4; }
 
-/* =========================================================
-   BACKGROUND GLOWS
-========================================================= */
+@keyframes geplic404Twinkle { 0%,100% { opacity: .45; transform: scale(.9) rotate(0); } 50% { opacity: 1; transform: scale(1.12) rotate(12deg); } }
+@keyframes geplic404Number { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes geplic404DocumentFloat { 0%,100% { transform: translate(-50%,0) rotate(-4deg); } 50% { transform: translate(-50%,-9px) rotate(-1deg); } }
+@keyframes geplic404PaperLeft { 0%,100% { transform: translate(0,0) rotate(-17deg); } 50% { transform: translate(-5px,-12px) rotate(-12deg); } }
+@keyframes geplic404PaperRight { 0%,100% { transform: translate(0,0) rotate(13deg); } 50% { transform: translate(5px,-10px) rotate(18deg); } }
+@keyframes geplic404Pen { 0%,100% { transform: translate(0,0) rotate(36deg); } 35% { transform: translate(-8px,7px) rotate(28deg); } 65% { transform: translate(3px,-6px) rotate(40deg); } }
+@keyframes geplic404Signature { 0%,15% { opacity: .3; transform: scaleX(.4); transform-origin: left; } 55%,100% { opacity: 1; transform: scaleX(1); transform-origin: left; } }
+@keyframes geplic404Seal { 0%,100% { transform: rotate(-7deg) scale(1); } 50% { transform: rotate(7deg) scale(1.06); } }
+@keyframes geplic404Check { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-9px) scale(1.04); } }
+@keyframes geplic404Caption { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
-.geplic-404-glow {
-    position: absolute;
-
-    width: 420px;
-    height: 420px;
-
-    border-radius: 50%;
-
-    pointer-events: none;
-
-    filter: blur(110px);
-
-    opacity: .45;
+@media (max-width: 900px) {
+  .geplic-404-card { padding: 25px 25px 20px; }
+  .geplic-404-hero { grid-template-columns: minmax(0, 1fr) minmax(250px, .8fr); gap: 8px; min-height: 370px; }
+  .geplic-404-scene { height: 350px; transform: scale(.95); transform-origin: center; }
+  .geplic-404-actions .btn { min-width: 0; }
+  .geplic-404-number { font-size: clamp(90px, 12vw, 130px); }
 }
-
-.geplic-404-glow-one {
-    top: -190px;
-    left: 12%;
-
-    background:
-        rgba(25, 207, 227, .16);
+@media (max-width: 680px) {
+  .geplic-404 { align-items: flex-start; padding: 14px 12px; }
+  .geplic-404-card { padding: 21px 17px 17px; border-radius: 22px; }
+  .geplic-404-header .brand-logo { font-size: 29px; }
+  .geplic-404-header-label { font-size: 8px; letter-spacing: .12em; }
+  .geplic-404-hero { grid-template-columns: 1fr; gap: 0; padding-top: 16px; }
+  .geplic-404-copy { padding: 4px 0 0; text-align: center; }
+  .geplic-404-number { font-size: clamp(96px, 27vw, 132px); }
+  .geplic-404-eyebrow { margin-top: 13px; font-size: 11px; }
+  .geplic-404-copy h1 { margin-inline: auto; font-size: clamp(29px, 8vw, 38px); }
+  .geplic-404-description { margin: 14px auto 0; font-size: 14px; }
+  .geplic-404-actions { justify-content: center; margin-top: 21px; }
+  .geplic-404-actions .btn { flex: 1 1 145px; font-size: 13px; }
+  .geplic-404-scene { width: 100%; max-width: 410px; height: 310px; margin: 8px auto 0; transform: none; }
+  .document-main { transform: translateX(-50%) scale(.9) rotate(-4deg); transform-origin: top center; }
+  .geplic-404-scene-caption { left: 0; bottom: 25px; }.geplic-404-floating-check { right: 7%; bottom: 58px; }
+  .geplic-404-footer { text-align: center; line-height: 1.5; }
 }
-
-.geplic-404-glow-two {
-    right: 8%;
-    bottom: -220px;
-
-    background:
-        rgba(124, 92, 255, .15);
+@media (max-width: 380px) {
+  .geplic-404-card { padding-inline: 13px; }
+  .geplic-404-header { gap: 8px; }.geplic-404-header-label { font-size: 7px; }
+  .geplic-404-actions { flex-direction: column; }
+  .geplic-404-actions .btn { width: 100%; }
+  .geplic-404-scene { height: 280px; }
+  .document-main { transform: translateX(-50%) scale(.78) rotate(-4deg); }
+  .document-back-one { left: 2%; }.document-back-two { right: 2%; }
+  .geplic-404-pen { left: 79%; transform: scale(.85) rotate(36deg); }
+  .geplic-404-scene-caption { transform: scale(.9); transform-origin: left bottom; }
 }
-
-
-/* =========================================================
-   MAIN CARD
-========================================================= */
-
-.geplic-404-card {
-    width: 100%;
-    max-width: 960px;
-
-    position: relative;
-    z-index: 1;
-
-    box-sizing: border-box;
-
-    padding: 58px 64px 38px;
-
-    border:
-        1px solid rgba(255, 255, 255, .18);
-
-    border-radius:
-        30px;
-
-    background:
-        transparent;
-
-    box-shadow:
-        0 40px 100px rgba(0, 0, 0, .48),
-        0 0 80px rgba(25, 207, 227, .025);
-
-    backdrop-filter:
-        blur(18px);
-
-    text-align:
-        center;
-}
-
-
-/* =========================================================
-   BRAND
-========================================================= */
-
-.geplic-404-brand {
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    margin-bottom:
-        38px;
-}
-
-
-/*
-   BrandLogo remains the shared Geplic logo.
-
-   The size is intentionally overridden HERE only.
-   BrandLogo.tsx and global typography remain untouched.
-*/
-
-.geplic-404-brand .brand-logo {
-    margin: 0;
-
-    font-size: 42px;
-}
-
-
-/* =========================================================
-   DOCUMENT VISUAL
-========================================================= */
-
-.geplic-404-document {
-    width: 300px;
-    height: 220px;
-
-    position: relative;
-
-    margin:
-        0 auto 28px;
-}
-
-
-/* =========================================================
-   DOCUMENT PAPER
-========================================================= */
-
-.geplic-404-document-paper {
-    position: absolute;
-
-    width: 150px;
-    height: 190px;
-
-    left: 50%;
-    top: 8px;
-
-    transform:
-        translateX(-50%)
-        rotate(-6deg);
-
-    box-sizing: border-box;
-
-    border:
-        1px solid rgba(128, 171, 196, .58);
-
-    border-radius:
-        18px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(22, 38, 50, .96),
-            rgba(5, 15, 24, .96)
-        );
-
-    box-shadow:
-        0 28px 45px rgba(0, 0, 0, .42),
-        0 0 35px rgba(25, 207, 227, .07);
-
-    overflow:
-        hidden;
-}
-
-
-/* =========================================================
-   DOCUMENT FOLD
-========================================================= */
-
-.geplic-404-document-fold {
-    position: absolute;
-
-    top: 0;
-    right: 0;
-
-    width: 48px;
-    height: 48px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(25, 207, 227, .62),
-            rgba(124, 92, 255, .38)
-        );
-
-    clip-path:
-        polygon(
-            0 0,
-            100% 100%,
-            0 100%
-        );
-}
-
-
-/* =========================================================
-   DOCUMENT LINES
-========================================================= */
-
-.geplic-404-document-line {
-    height: 6px;
-
-    width: 82px;
-
-    margin-left: 26px;
-    margin-top: 18px;
-
-    border-radius:
-        999px;
-
-    background:
-        rgba(63, 152, 190, .72);
-}
-
-.geplic-404-document-line.large {
-    width: 102px;
-
-    margin-top: 58px;
-
-    background:
-        linear-gradient(
-            90deg,
-            var(--color-primary),
-            #428DFF
-        );
-
-    box-shadow:
-        0 0 10px rgba(25, 207, 227, .18);
-}
-
-.geplic-404-document-line.short {
-    width: 58px;
-
-    background:
-        rgba(33, 126, 169, .68);
-}
-
-
-/* =========================================================
-   FAKE SIGNATURE
-========================================================= */
-
-.geplic-404-document-sign {
-    position: absolute;
-
-    left: 26px;
-    bottom: 25px;
-
-    width: 78px;
-}
-
-.geplic-404-document-sign span:first-child {
-    display: block;
-
-    width: 52px;
-    height: 15px;
-
-    border-bottom:
-        2px solid var(--color-primary);
-
-    border-radius:
-        50%;
-
-    transform:
-        rotate(-9deg);
-
-    opacity: .9;
-}
-
-.geplic-404-document-sign span:last-child {
-    display: block;
-
-    width: 70px;
-    height: 2px;
-
-    margin-top: 4px;
-
-    border-radius:
-        999px;
-
-    background:
-        #168DCA;
-
-    opacity: .85;
-}
-
-
-/* =========================================================
-   404 NUMBER
-========================================================= */
-
-.geplic-404-number {
-    position: absolute;
-
-    right: 8px;
-    bottom: -2px;
-
-    z-index: 2;
-
-    font-size: 104px;
-    font-weight: 850;
-
-    line-height: .9;
-
-    letter-spacing: -.09em;
-
-    background:
-        var(--gradient-brand);
-
-    -webkit-background-clip:
-        text;
-
-    background-clip:
-        text;
-
-    color:
-        transparent;
-
-    -webkit-text-fill-color:
-        transparent;
-
-    filter:
-        drop-shadow(
-            0 10px 24px
-            rgba(25, 207, 227, .14)
-        );
-}
-
-
-/* =========================================================
-   CONTENT
-========================================================= */
-
-.geplic-404-content {
-    max-width:
-        720px;
-
-    margin:
-        0 auto;
-}
-
-
-/* =========================================================
-   EYEBROW
-========================================================= */
-
-.geplic-404-eyebrow {
-    margin:
-        0 0 14px;
-
-    color:
-        var(--color-primary);
-
-    font-size:
-        13px;
-
-    font-weight:
-        800;
-
-    letter-spacing:
-        .28em;
-
-    text-shadow:
-        0 0 18px
-        rgba(25, 207, 227, .18);
-}
-
-
-/* =========================================================
-   HEADING
-========================================================= */
-
-.geplic-404-content h1 {
-    margin:
-        0;
-
-    color:
-        var(--color-heading);
-
-    font-size:
-        clamp(38px, 5vw, 58px);
-
-    font-weight:
-        780;
-
-    line-height:
-        1.05;
-
-    letter-spacing:
-        -.055em;
-}
-
-
-/* =========================================================
-   DESCRIPTION
-========================================================= */
-
-.geplic-404-description {
-    max-width:
-        650px;
-
-    margin:
-        22px auto 0;
-
-    color:
-        var(--color-text-secondary);
-
-    font-size:
-        17px;
-
-    line-height:
-        1.75;
-}
-
-
-/* =========================================================
-   ACTIONS
-========================================================= */
-
-.geplic-404-actions {
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    gap:
-        14px;
-
-    margin-top:
-        36px;
-}
-
-
-/*
-   IMPORTANT:
-
-   Button geometry comes from Geplic's shared system:
-
-   .btn
-   .btn-primary
-   .btn-secondary
-   .btn-lg
-
-   Do NOT recreate button height, radius, border,
-   gradient, shadow, etc. here.
-*/
-
-.geplic-404-actions .btn {
-    min-width:
-        196px;
-}
-
-
-/* =========================================================
-   404 ARROWS
-========================================================= */
-
-.geplic-404-arrow {
-    font-size:
-        20px;
-
-    line-height:
-        1;
-
-    transition:
-        transform var(--transition-fast);
-}
-
-.geplic-404-actions
-.btn-primary:hover
-.geplic-404-arrow {
-    transform:
-        translateX(4px);
-}
-
-
-/* =========================================================
-   FOOTER
-========================================================= */
-
-.geplic-404-footer {
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    gap:
-        10px;
-
-    margin-top:
-        58px;
-
-    padding-top:
-        26px;
-
-    border-top:
-        1px solid
-        rgba(255, 255, 255, .09);
-
-    color:
-        var(--color-text-muted);
-
-    font-size:
-        13px;
-
-    letter-spacing:
-        .01em;
-}
-
-.geplic-404-footer-dot {
-    color:
-        var(--color-primary);
-
-    font-size:
-        15px;
-
-    text-shadow:
-        0 0 12px
-        rgba(25, 207, 227, .5);
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 700px) {
-
-    .geplic-404 {
-        padding:
-            24px 16px;
-    }
-
-    .geplic-404-card {
-        padding:
-            42px 22px 28px;
-
-        border-radius:
-            24px;
-    }
-
-    .geplic-404-brand {
-        margin-bottom:
-            28px;
-    }
-
-    .geplic-404-brand .brand-logo {
-        font-size:
-            36px;
-    }
-
-    .geplic-404-document {
-        width:
-            280px;
-
-        height:
-            205px;
-
-        transform:
-            scale(.9);
-    }
-
-    .geplic-404-number {
-        font-size:
-            92px;
-    }
-
-    .geplic-404-content h1 {
-        font-size:
-            36px;
-    }
-
-    .geplic-404-description {
-        font-size:
-            15px;
-
-        line-height:
-            1.65;
-    }
-
-    .geplic-404-actions {
-        flex-direction:
-            column;
-
-        width:
-            100%;
-    }
-
-    .geplic-404-actions .btn {
-        width:
-            100%;
-
-        min-width:
-            0;
-    }
-
-    .geplic-404-footer {
-        margin-top:
-            40px;
-    }
-}
-
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media (max-width: 420px) {
-
-    .geplic-404-card {
-        padding-left:
-            18px;
-
-        padding-right:
-            18px;
-    }
-
-    .geplic-404-brand .brand-logo {
-        font-size:
-            32px;
-    }
-
-    .geplic-404-document {
-        transform:
-            scale(.78);
-
-        margin-top:
-            -8px;
-
-        margin-bottom:
-            4px;
-    }
-
-    .geplic-404-content h1 {
-        font-size:
-            32px;
-    }
-
-    .geplic-404-eyebrow {
-        font-size:
-            11px;
-
-        letter-spacing:
-            .22em;
-    }
-
-    .geplic-404-footer {
-        font-size:
-            11px;
-    }
-}
-
-
-/* =========================================================
-   ACCESSIBILITY
-========================================================= */
-
 @media (prefers-reduced-motion: reduce) {
-
-    .geplic-404-actions .btn,
-    .geplic-404-arrow {
-        transition:
-            none;
-    }
+  .geplic-404 *, .geplic-404 *::before, .geplic-404 *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

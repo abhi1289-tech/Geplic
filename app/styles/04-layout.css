@@ -100,6 +100,36 @@
     background: transparent;
 }
 
+.status-page-content {
+    width: min(100%, 560px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.status-page-content .status-page-message {
+    width: 100%;
+    margin: 0;
+}
+
+.status-page-actions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.status-page-actions .btn {
+    min-height: 44px;
+}
+
+.status-page-actions .btn:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+}
+
 .status-page-message {
     width: min(100%, 560px);
 
@@ -111,6 +141,64 @@
     background: var(--color-surface);
 
     text-align: center;
+}
+
+.status-page-loading {
+    align-content: center;
+    justify-items: center;
+    gap: 18px;
+}
+
+.status-page-loading .status-page-content {
+    width: min(100%, 560px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.status-page-content .status-page-message {
+    width: 100%;
+    margin: 0;
+}
+
+.status-page-actions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.status-page-actions .btn {
+    min-height: 44px;
+}
+
+.status-page-actions .btn:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+}
+
+.status-page-message {
+    margin: 0;
+    color: var(--color-text-secondary);
+}
+
+.status-page-spinner {
+    width: 38px;
+    height: 38px;
+    border: 3px solid var(--color-border);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: status-page-spin .8s linear infinite;
+}
+
+@keyframes status-page-spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .status-page-spinner { animation-duration: 2s; }
 }
 
 
@@ -142,6 +230,14 @@
 
     .status-page {
         padding: var(--space-20);
+    }
+
+    .status-page-actions {
+        flex-direction: column;
+    }
+
+    .status-page-actions .btn {
+        width: 100%;
     }
 
 }

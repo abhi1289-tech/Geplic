@@ -41,14 +41,19 @@ export default function AgreementActions({
         type="button"
         onClick={onDownload}
         disabled={downloading}
+        aria-busy={downloading}
+        aria-live="polite"
         className="
           action-button
           action-secondary
         "
       >
-        {downloading
-          ? DEFAULT_TEXT.generatingPdf
-          : DEFAULT_TEXT.downloadPdf}
+        {downloading ? (
+          <span className="pdf-download-progress">
+            <span className="pdf-download-spinner" aria-hidden="true" />
+            <span>{DEFAULT_TEXT.generatingPdf}</span>
+          </span>
+        ) : DEFAULT_TEXT.downloadPdf}
       </button>
 
       {canEdit && (

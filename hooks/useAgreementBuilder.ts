@@ -204,28 +204,55 @@ export default function useAgreementBuilder(
   }
 
   async function downloadPDF() {
+    if (!pactId || downloading) return;
 
-    if (downloading) return;
+    setDownloading(true);
 
     try {
+      // Keep the user on the agreement page while the PDF is generated. This
+      // preserves the existing Dashboard navigation and avoids a blank new tab.
+      const response = await fetch(`/api/pdf/${encodeURIComponent(pactId)}`, {
+        method: "GET",
+        cache: "no-store",
+      });
 
-      setDownloading(true);
+      if (!response.ok) {
+        let message = "Unable to generate the PDF. Please try again.";
+        try {
+          const body = await response.json();
+          if (typeof body?.error === "string" && body.error.trim()) {
+            message = body.error;
+          }
+        } catch {
+          // Keep the friendly fallback when the server did not return JSON.
+        }
+        throw new Error(message);
+      }
 
-      window.open(
-        `/api/pdf/${pactId}`,
-        "_blank"
+      const pdfBlob = await response.blob();
+      if (!pdfBlob.size) {
+        throw new Error("The generated PDF was empty. Please try again.");
+      }
+
+      const objectUrl = URL.createObjectURL(pdfBlob);
+      const link = document.createElement("a");
+      link.href = objectUrl;
+      link.download = `agreement-${pactId}.pdf`;
+      link.style.display = "none";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(objectUrl), 60_000);
+    } catch (error) {
+      console.error("Agreement PDF download failed:", error);
+      window.alert(
+        error instanceof Error
+          ? error.message
+          : "Unable to download the PDF. Please try again."
       );
-
     } finally {
-
-      setTimeout(() => {
-
-        setDownloading(false);
-
-      }, 1000);
-
+      setDownloading(false);
     }
-
   }
 
   return {

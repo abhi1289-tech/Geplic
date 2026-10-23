@@ -230,3 +230,34 @@
         margin-right: 0;
     }
 }
+
+/* Immediate, accessible PDF-generation feedback */
+.pdf-download-progress {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+}
+
+.pdf-download-spinner {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 15px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: pdf-download-spin .7s linear infinite;
+}
+
+.agreement-builder-page .agreement-actions .action-button:disabled {
+    cursor: wait;
+    opacity: .78;
+}
+
+@keyframes pdf-download-spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pdf-download-spinner { animation-duration: 2s; }
+}

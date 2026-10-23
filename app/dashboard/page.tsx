@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 
 import AppHeader from "@/components/AppHeader";
+import StatusPage from "@/components/StatusPage";
 
 import DashboardHero from "@/components/dashboard/DashboardHero";
 import DashboardActions from "@/components/dashboard/DashboardActions";
