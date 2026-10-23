@@ -9,6 +9,7 @@ export const maxDuration = 60;
 // Node/serverless instance. Assign the promise before awaiting executablePath()
 // so two simultaneous requests cannot both attempt to launch Chromium.
 let browserPromise: Promise<Browser> | null = null;
+let browserReady = false;
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -45,31 +46,51 @@ async function launchBrowser(isVercel: boolean): Promise<Browser> {
   }
 }
 
-async function getBrowser(isVercel: boolean): Promise<Browser> {
-  if (browserPromise) {
-    const pendingOrExisting = browserPromise;
+type BrowserAcquisition = {
+  browser: Browser;
+  mode: "existing-browser" | "shared-launch" | "new-launch";
+};
+
+async function getBrowser(isVercel: boolean): Promise<BrowserAcquisition> {
+  const pendingOrExisting = browserPromise;
+  if (pendingOrExisting) {
+    // A resolved browser can be recognized synchronously by this flag, while
+    // callers arriving during launch are recorded as sharing that launch.
+    const launchWasAlreadyInFlight = browserReady !== true;
     try {
       const existing = await pendingOrExisting;
-      if (existing.isConnected()) return existing;
+      if (existing.isConnected()) {
+        return {
+          browser: existing,
+          mode: launchWasAlreadyInFlight ? "shared-launch" : "existing-browser",
+        };
+      }
     } catch {
-      // If another request has already installed a replacement promise,
-      // await that promise instead of starting a competing launch.
+      // If another request has installed a replacement promise, retry against
+      // it instead of starting a competing Chromium launch.
       if (browserPromise !== pendingOrExisting) {
         return getBrowser(isVercel);
       }
     }
-    if (browserPromise === pendingOrExisting) browserPromise = null;
+    if (browserPromise === pendingOrExisting) {
+      browserPromise = null;
+      browserReady = false;
+    }
   }
 
-  // Important: create and store the promise synchronously before its async
-  // body can finish. Concurrent calls will await this same launch.
+  // Store the promise synchronously so concurrent calls share one launch.
   const launchPromise = launchBrowser(isVercel);
   browserPromise = launchPromise;
 
   try {
-    return await launchPromise;
+    const launched = await launchPromise;
+    if (browserPromise === launchPromise) browserReady = true;
+    return { browser: launched, mode: "new-launch" };
   } catch (error) {
-    if (browserPromise === launchPromise) browserPromise = null;
+    if (browserPromise === launchPromise) {
+      browserPromise = null;
+      browserReady = false;
+    }
     throw error;
   }
 }
@@ -82,12 +103,15 @@ export async function GET(
   const startedAt = Date.now();
   const timings: Record<string, number> = {};
   let browser: Browser | undefined;
+  let browserAcquisitionMode: BrowserAcquisition["mode"] | undefined;
   let page: Page | undefined;
 
   try {
     const isVercel = !!process.env.VERCEL;
     const launchStartedAt = Date.now();
-    browser = await getBrowser(isVercel);
+    const browserAcquisition = await getBrowser(isVercel);
+    browser = browserAcquisition.browser;
+    browserAcquisitionMode = browserAcquisition.mode;
     timings.browserAcquireMs = Date.now() - launchStartedAt;
 
     const pageStartedAt = Date.now();
@@ -161,7 +185,8 @@ export async function GET(
     timings.totalMs = Date.now() - startedAt;
     console.info("PDF generation timings", {
       pactId: id,
-      isWarmBrowserReuse: timings.browserAcquireMs !== undefined && timings.browserAcquireMs < 1000,
+      browserAcquisitionMode,
+      isWarmBrowserReuse: browserAcquisitionMode === "existing-browser",
       ...timings,
     });
 
