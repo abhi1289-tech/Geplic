@@ -10,6 +10,9 @@ export const maxDuration = 60;
 const BROWSER_LAUNCH_TIMEOUT_MS = 25000;
 const NAVIGATION_TIMEOUT_MS = 20000;
 const DOCUMENT_READY_TIMEOUT_MS = 10000;
+const PDF_RENDER_TIMEOUT_MS = 15000;
+const PAGE_CLOSE_TIMEOUT_MS = 2000;
+const PDF_ROUTE_BUILD = "pdf-reliability-diagnostic-2026-10-24-r1";
 
 // Share one in-flight launch promise across concurrent requests in this
 // Node/serverless instance. Assign the promise before awaiting executablePath()
@@ -129,37 +132,45 @@ export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = await params;
   const startedAt = Date.now();
   const timings: Record<string, number> = {};
-  let stage = "request-start";
+  let id = "unknown";
+  let stage = "request-entry";
   let browser: Browser | undefined;
   let browserAcquisitionMode: BrowserAcquisition["mode"] | undefined;
   let page: Page | undefined;
+  const requestTrace = request.headers.get("x-vercel-id") ?? request.headers.get("x-request-id") ?? "unavailable";
+
+  // This marker proves which deployed route version handled the request.
+  console.info("PDF route entered", { build: PDF_ROUTE_BUILD, requestTrace, startedAt });
 
   try {
+    stage = "route-params";
+    const resolvedParams = await withTimeout(params, 3000, "Route params");
+    id = resolvedParams.id;
+    console.info("PDF stage completed", { pactId: id, stage, requestTrace });
     const isVercel = !!process.env.VERCEL;
     stage = "browser-acquisition";
-    console.info("PDF stage started", { pactId: id, stage });
+    console.info("PDF stage started", { pactId: id, stage, requestTrace, build: PDF_ROUTE_BUILD });
     const launchStartedAt = Date.now();
     const browserAcquisition = await getBrowser(isVercel);
     browser = browserAcquisition.browser;
     browserAcquisitionMode = browserAcquisition.mode;
     timings.browserAcquireMs = Date.now() - launchStartedAt;
-    console.info("PDF stage completed", { pactId: id, stage, durationMs: timings.browserAcquireMs, browserAcquisitionMode });
+    console.info("PDF stage completed", { pactId: id, stage, requestTrace, build: PDF_ROUTE_BUILD, durationMs: timings.browserAcquireMs, browserAcquisitionMode });
 
     stage = "page-create";
-    console.info("PDF stage started", { pactId: id, stage });
+    console.info("PDF stage started", { pactId: id, stage, requestTrace, build: PDF_ROUTE_BUILD });
     const pageStartedAt = Date.now();
     page = await browser.newPage({
       viewport: { width: 794, height: 1123 },
       deviceScaleFactor: 1,
     });
     timings.pageCreateMs = Date.now() - pageStartedAt;
-    console.info("PDF stage completed", { pactId: id, stage, durationMs: timings.pageCreateMs });
+    console.info("PDF stage completed", { pactId: id, stage, requestTrace, build: PDF_ROUTE_BUILD, durationMs: timings.pageCreateMs });
 
     stage = "print-page-navigation";
-    console.info("PDF stage started", { pactId: id, stage });
+    console.info("PDF stage started", { pactId: id, stage, requestTrace, build: PDF_ROUTE_BUILD });
     const url = new URL(
       `/agreement-print/${encodeURIComponent(id)}`,
       request.nextUrl.origin
@@ -174,7 +185,7 @@ export async function GET(
       timeout: NAVIGATION_TIMEOUT_MS,
     });
     timings.navigationMs = Date.now() - navigationStartedAt;
-    console.info("PDF stage completed", { pactId: id, stage, durationMs: timings.navigationMs, httpStatus: response?.status() });
+    console.info("PDF stage completed", { pactId: id, stage, requestTrace, build: PDF_ROUTE_BUILD, durationMs: timings.navigationMs, httpStatus: response?.status() });
 
     if (!response || !response.ok()) {
       throw new Error(
@@ -183,7 +194,7 @@ export async function GET(
     }
 
     stage = "document-readiness";
-    console.info("PDF stage started", { pactId: id, stage });
+    console.info("PDF stage started", { pactId: id, stage, requestTrace, build: PDF_ROUTE_BUILD });
     const contentStartedAt = Date.now();
     await page.locator(".agreement-document").waitFor({
       state: "visible",
@@ -195,21 +206,21 @@ export async function GET(
       if ("fonts" in document) await document.fonts.ready;
     }), 3000, "Print fonts readiness");
     timings.documentReadyMs = Date.now() - contentStartedAt;
-    console.info("PDF stage completed", { pactId: id, stage, durationMs: timings.documentReadyMs });
+    console.info("PDF stage completed", { pactId: id, stage, requestTrace, build: PDF_ROUTE_BUILD, durationMs: timings.documentReadyMs });
 
     stage = "pdf-render";
-    console.info("PDF stage started", { pactId: id, stage });
+    console.info("PDF stage started", { pactId: id, stage, requestTrace, build: PDF_ROUTE_BUILD });
     const pdfStartedAt = Date.now();
-    const pdfBuffer = await page.pdf({
+    const pdfBuffer = await withTimeout(page.pdf({
       format: "A4",
       preferCSSPageSize: true,
       printBackground: true,
       displayHeaderFooter: false,
       margin: { top: "0", right: "0", bottom: "0", left: "0" },
-    });
+    }), PDF_RENDER_TIMEOUT_MS, "PDF render");
     timings.pdfRenderMs = Date.now() - pdfStartedAt;
     timings.pdfBytes = pdfBuffer.byteLength;
-    console.info("PDF stage completed", { pactId: id, stage, durationMs: timings.pdfRenderMs, pdfBytes: timings.pdfBytes });
+    console.info("PDF stage completed", { pactId: id, stage, requestTrace, build: PDF_ROUTE_BUILD, durationMs: timings.pdfRenderMs, pdfBytes: timings.pdfBytes });
 
     stage = "response";
     return new NextResponse(new Uint8Array(pdfBuffer), {
@@ -222,6 +233,8 @@ export async function GET(
   } catch (error) {
     console.error("PDF Generation Error", {
       pactId: id,
+      requestTrace,
+      build: PDF_ROUTE_BUILD,
       failedStage: stage,
       elapsedMs: Date.now() - startedAt,
       error: error instanceof Error ? error.message : String(error),
@@ -238,6 +251,8 @@ export async function GET(
     timings.totalMs = Date.now() - startedAt;
     console.info("PDF generation timings", {
       pactId: id,
+      requestTrace,
+      build: PDF_ROUTE_BUILD,
       finalStage: stage,
       browserAcquisitionMode,
       isWarmBrowserReuse: browserAcquisitionMode === "existing-browser",
@@ -247,10 +262,25 @@ export async function GET(
     // Close the per-request page, not the shared Chromium process. This lets
     // subsequent downloads reuse Chromium while keeping page state isolated.
     if (page) {
+      const cleanupStartedAt = Date.now();
       try {
-        await page.close();
+        await withTimeout(page.close(), PAGE_CLOSE_TIMEOUT_MS, "Page cleanup");
+        console.info("PDF cleanup completed", {
+          pactId: id,
+          requestTrace,
+          build: PDF_ROUTE_BUILD,
+          durationMs: Date.now() - cleanupStartedAt,
+        });
       } catch (closeError) {
-        console.error("Failed to close PDF page:", closeError);
+        console.error("PDF cleanup failed", {
+          pactId: id,
+          requestTrace,
+          build: PDF_ROUTE_BUILD,
+          durationMs: Date.now() - cleanupStartedAt,
+          error: closeError instanceof Error ? closeError.message : String(closeError),
+        });
+        // Closing a page should not hold the function open indefinitely.
+        void page.close().catch(() => undefined);
       }
     }
   }
