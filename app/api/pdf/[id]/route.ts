@@ -52,9 +52,9 @@ async function getBrowser(isVercel: boolean): Promise<Browser> {
       const existing = await pendingOrExisting;
       if (existing.isConnected()) return existing;
     } catch {
-      // The in-flight launch failed. Only clear the promise we awaited.
-      if (browserPromise !== pendingOrExisting && browserPromise) {
-        // Another request has already started a replacement launch.
+      // If another request has already installed a replacement promise,
+      // await that promise instead of starting a competing launch.
+      if (browserPromise !== pendingOrExisting) {
         return getBrowser(isVercel);
       }
     }
