@@ -5,38 +5,71 @@ import chromium from "@sparticuz/chromium";
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
-// Reuse Chromium in warm Node/serverless instances. Launching a fresh Chromium
-// process for every download is expensive; each request still gets its own page.
+// Share one in-flight launch promise across concurrent requests in this
+// Node/serverless instance. Assign the promise before awaiting executablePath()
+// so two simultaneous requests cannot both attempt to launch Chromium.
 let browserPromise: Promise<Browser> | null = null;
+
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function isTextBusyError(error: unknown): boolean {
+  return (
+    !!error &&
+    typeof error === "object" &&
+    "message" in error &&
+    String((error as { message?: unknown }).message ?? "").includes("ETXTBSY")
+  );
+}
+
+async function launchBrowser(isVercel: boolean): Promise<Browser> {
+  const options = isVercel
+    ? {
+        headless: true,
+        args: chromium.args,
+        executablePath: await chromium.executablePath(),
+      }
+    : {
+        headless: true,
+        channel: "chrome",
+      };
+
+  try {
+    return await playwright.launch(options);
+  } catch (error) {
+    // ETXTBSY can be transient when the runtime is preparing/using the
+    // executable. Retry once, with a short delay; do not retry other errors.
+    if (!isTextBusyError(error)) throw error;
+    console.warn("Chromium launch returned ETXTBSY; retrying once.");
+    await delay(250);
+    return await playwright.launch(options);
+  }
+}
 
 async function getBrowser(isVercel: boolean): Promise<Browser> {
   if (browserPromise) {
+    const pendingOrExisting = browserPromise;
     try {
-      const existing = await browserPromise;
+      const existing = await pendingOrExisting;
       if (existing.isConnected()) return existing;
     } catch {
-      // A previous launch failed; clear it and retry below.
+      // The in-flight launch failed. Only clear the promise we awaited.
+      if (browserPromise !== pendingOrExisting && browserPromise) {
+        // Another request has already started a replacement launch.
+        return getBrowser(isVercel);
+      }
     }
-    browserPromise = null;
+    if (browserPromise === pendingOrExisting) browserPromise = null;
   }
 
-  browserPromise = playwright.launch(
-    isVercel
-      ? {
-          headless: true,
-          args: chromium.args,
-          executablePath: await chromium.executablePath(),
-        }
-      : {
-          headless: true,
-          channel: "chrome",
-        }
-  );
+  // Important: create and store the promise synchronously before its async
+  // body can finish. Concurrent calls will await this same launch.
+  const launchPromise = launchBrowser(isVercel);
+  browserPromise = launchPromise;
 
   try {
-    return await browserPromise;
+    return await launchPromise;
   } catch (error) {
-    browserPromise = null;
+    if (browserPromise === launchPromise) browserPromise = null;
     throw error;
   }
 }
